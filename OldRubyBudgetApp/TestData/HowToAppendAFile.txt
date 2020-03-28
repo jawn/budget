@@ -1,0 +1,5 @@
+if A is the file you want to append to your MAIN file, just type:
+
+  cat A >> MAIN
+
+caution: do it only once!
