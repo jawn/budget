@@ -1,4 +1,3 @@
-require "./Category.rb"
 require "./Expense.rb"
 
 require "Date"

@@ -1,4 +1,4 @@
-#require "./Category.rb"
+require "./Category.rb"
 
 describe "A category"  do
 	it "should know its name, type and amount, and allowable expense factor" do
