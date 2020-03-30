@@ -3,14 +3,27 @@ class Report
 
 	def initialize()
 		@amount = 0
-		@category = ""
+		@totals = Hash.new
 		@lines = [""]
 	end		
 
 	def addExpense(expense)
-		@category = expense.category
-		@amount = @amount + expense.amount
-		@lines[0] = "%-29s:%11.2f" % [@category, @amount]	
+		category = expense.category
+		amount   = expense.amount
+		if !@totals.has_key?(category)
+			@totals[category] = amount
+		else
+			@totals[category] = @totals[category] + amount
+		end
+		updateLines()
+		print @totals
+			
 	end	
+	def updateLines() 
+		@lines = []
+		@totals.each { |cat, amt|
+			@lines << ("%-29s:%11.2f" % [cat, amt])	
+		}
+	end
 
 end
