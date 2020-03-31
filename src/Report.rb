@@ -3,11 +3,12 @@ class Report
 	attr_reader :lines
 
 	def initialize()
-		@amount = 0
-		@totals = Hash.new
-		@lines = [""]
+        @totals = Hash.new # e.g. { "Household" => 230.00, "Automobile" => "189.00" ... }
+		@lines = []
 	end		
 
+    # add an expense to the totals, creating a total for the category if its not present yet 
+    # then update the report lines
 	def addExpense(expense)
 		category = expense.category
 		amount   = expense.amount
@@ -17,9 +18,10 @@ class Report
 			@totals[category] = @totals[category] + amount
 		end
 		updateLines()
-		print @totals
 			
 	end	
+    
+    # recreate the report lines, one line per category
 	def updateLines() 
 		@lines = []
 		@totals.each { |cat, amt|
