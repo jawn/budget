@@ -1,3 +1,4 @@
+# the Report class takes care of reporting totals by category 
 class Report
 	attr_reader :lines
 
