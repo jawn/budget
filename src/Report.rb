@@ -1,3 +1,14 @@
+#!/usr/bin/env ruby
+require 'csv'
+
+# this is a ruby script file calculate expenses, totaled by category
+
+# example:
+#  ./Report.rb ./data/BusinessChecking.csv' "Business Checking"
+#
+# This will import the expenses (with account given as 2d parameter)
+# with second column (account) equals to: Business Chekcing
+
 # the Report class takes care of reporting totals by category 
 class Report
 	attr_reader :lines
@@ -65,3 +76,5 @@ class Report
       end
     end
 end
+
+
