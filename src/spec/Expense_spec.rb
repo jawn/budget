@@ -3,8 +3,8 @@ require "./Expense.rb"
 require "Date"
 describe "Expense"  do 
 	it "should know its Account,Date,Description,Category,Amount,Notes" do
-	 	category = Category.new("Groceries","top",nil, 300)
-		expense = Expense.new("Costco", Date.new(2016,04,13) , "safeway", category, 14.07, "dog food" )
+	 	category = "Groceries"
+		expense = Expense.new("posted","Costco", Date.new(2016,04,13) , "safeway", category, 14.07, "dog food" )
 		expect(expense.account).to eq "Costco"
 		expect(expense.date).to eq Date.new(2016,04,13)
 		expect(expense.description).to eq "safeway"

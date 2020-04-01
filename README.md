@@ -3,7 +3,10 @@ USAA download based interfaces for spreadsheet
 
 # to do
 
+## read expenses from the bank csv, sum by category
 
-- [ ] add bank account field to expense Class 
-- [ ] import expenses from CSV
+- [x] add field to expense Class 
+- [x] import expenses from bank CSV
+- [x] create main report executable
+
 

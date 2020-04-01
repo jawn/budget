@@ -29,4 +29,39 @@ class Report
 		}
 	end
 
+  # fields in expense csv files
+  STATUS=0
+  DATE=2
+  NOTES=3
+  DESCRIPTION=4
+  CATEGORY=5
+  AMOUNT=6
+    def importFromBankCSV (fileName, account)
+      expenses=CSV.read(fileName)[0..-1]
+      expenses.each do |row|
+        expenseDate = 	[]
+        status = 		row[STATUS]
+        if row[DATE].nil?
+          raise "date not found:#{row.to_s}" 
+        end 
+        expenseDate = 	row[DATE].split("/")
+        year = expenseDate[2].to_i
+        if year < 100 
+          year += 2000 
+        end
+        month = expenseDate[0].to_i
+        day   = expenseDate[1].to_i
+        date = 			Date.new(year, month, day)
+        description = 	row[DESCRIPTION]
+        category = row[CATEGORY]
+        bankAmount = row[AMOUNT]
+        if bankAmount[0,2] == "--" 
+          bankAmount = bankAmount[2..-1]
+        end
+        amount = 		Float(bankAmount)
+
+        notes = 		row[NOTES] 
+        addExpense(Expense.new(status,account,date,description, category,amount,notes))
+      end
+    end
 end
