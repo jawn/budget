@@ -7,4 +7,4 @@ USAA download based interfaces for spreadsheet
 
 - [x] add field to expense Class 
 - [x] import expenses from bank CSV
-- [ ] create main report executable
+- [x] create main report executable
