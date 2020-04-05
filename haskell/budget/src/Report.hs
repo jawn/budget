@@ -6,12 +6,13 @@ import Expense
 
 report :: [Expense] -> [String]
 report [] = []
-report exps = map (uncurry pretty) totals
+report exps = map (uncurry pretty) totals ++ [pretty "TOTAL" grandTotal]
     where 
         totals = map total groups
         total grp = (fst (head grp), sum (map snd grp))
         groups = groupBy (\a b -> fst a == fst b) categsAndAmounts
         categsAndAmounts = sort $ map (\exp -> (category exp, amount exp)) exps
+        grandTotal = sum (map amount exps)
 
 pretty :: Category -> Amount -> String
 pretty c a = (prettyCategory c)  ++ ":" ++ (prettyAmount a)

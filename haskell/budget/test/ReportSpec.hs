@@ -11,17 +11,23 @@ spec = do
             let exp1 = Expense "Online Services" 4807 
             let exp2 = Expense "Online Services" 5000 
             let expenses = [exp1, exp2]
-            report expenses  `shouldBe` [
-                    "Online Services                                  :     98.07"
-                    ]
+            head (report expenses)  `shouldBe` "Online Services                                  :     98.07"
 
         it "show the total for two categories" $ do
             let exp1 = Expense  "Special" 4807 
             let exp2 = Expense  "Online Services" 5000 
             let exp3 = Expense  "Online Services" 4200
             let expenses = [exp1, exp2, exp3]
+            take 2 (report expenses)  `shouldBe` ["Online Services                                  :     92.00"
+                                                 ,"Special                                          :     48.07"]
+        it "show the grand total" $ do
+            let exp1 = Expense  "Special" 4807 
+            let exp2 = Expense  "Online Services" 5000 
+            let exp3 = Expense  "Online Services" 4200
+            let expenses = [exp1, exp2, exp3]
             report expenses  `shouldBe` ["Online Services                                  :     92.00"
-                                        ,"Special                                          :     48.07"]
+                                        ,"Special                                          :     48.07"
+                                        ,"TOTAL                                            :    140.07"]
 
     describe "pretty amount" $ do
         it "print zero on ten positions" $ do
