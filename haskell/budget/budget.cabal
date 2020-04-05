@@ -1,0 +1,83 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: b38ddfb8ccf1c0b8e1f525a457d4af7c0f9cc048f2931b8a2d8361adc82bd982
+
+name:           budget
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/budget#readme>
+homepage:       https://github.com/githubuser/budget#readme
+bug-reports:    https://github.com/githubuser/budget/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2020 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/budget
+
+library
+  exposed-modules:
+      Bank
+      Expense
+      Lib
+      Report
+  other-modules:
+      Paths_budget
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , bytestring
+    , cassava
+    , dates
+    , split
+    , vector
+  default-language: Haskell2010
+
+executable budget-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_budget
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , budget
+    , bytestring
+    , cassava
+    , dates
+    , split
+    , vector
+  default-language: Haskell2010
+
+test-suite budget-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      BankCsvSpec
+      ReportSpec
+      Paths_budget
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , budget
+    , bytestring
+    , cassava
+    , dates
+    , hspec
+    , split
+    , vector
+  default-language: Haskell2010
