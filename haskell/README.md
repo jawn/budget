@@ -25,4 +25,18 @@ from the budget repository directory
 
 (make sure that your path contains `$HOME/.local/bin` or `/Users/<you>/.local/bin`)
 
+## usage
+
+    budget-exe <CSVFILE>
+
+will print the total by category for the given bank CSV file
+
+    budget-exe <CSVFILE> <CATEGORIES>
+
+will print the total by category for the given bank CSV file and the selection of categories included in the categories file.
+
+Typical categories file should contain one category per line, in double quotes:
+
+    "My category"
+    "My other category"
 
