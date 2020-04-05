@@ -14,6 +14,11 @@ report exps = map (uncurry pretty) totals ++ [pretty "TOTAL" grandTotal]
         categsAndAmounts = sort $ map (\exp -> (category exp, amount exp)) exps
         grandTotal = sum (map amount exps)
 
+reportForCategories :: [Category] -> [Expense] -> [String]
+reportForCategories cats exps = report selection
+    where 
+    selection = filter (\exp -> category exp `elem` cats) exps
+
 pretty :: Category -> Amount -> String
 pretty c a = (prettyCategory c)  ++ ":" ++ (prettyAmount a)
 

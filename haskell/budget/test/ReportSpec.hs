@@ -29,6 +29,16 @@ spec = do
                                         ,"Special                                          :     48.07"
                                         ,"TOTAL                                            :    140.07"]
 
+        it "can select categories from a list of categories" $ do
+            let exp1 = Expense  "Special" 4807 
+            let exp2 = Expense  "Online Services" 5000 
+            let exp3 = Expense  "Online Services" 4200
+            let expenses = [exp1, exp2, exp3]
+            let cats = ["Online Services"]
+            reportForCategories cats expenses  `shouldBe` ["Online Services                                  :     92.00"
+                                                          ,"TOTAL                                            :     92.00"]
+
+
     describe "pretty amount" $ do
         it "print zero on ten positions" $ do
             prettyAmount 0  `shouldBe` "      0.00"
