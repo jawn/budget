@@ -2,7 +2,7 @@
 
 ## to do
 
-- [ ] total all categories at the bottom of the report "TOTAL         : 4807.00"
+- [X] total all categories at the bottom of the report "TOTAL         : 4807.00"
 - [ ] filter on one or several categories: `budget <CSVFILE> <CATEGORIES-FILE>` and total these categories
 
 ## how to run the tests
