@@ -4,6 +4,8 @@
 
 - [X] total all categories at the bottom of the report "TOTAL         : 4807.00"
 - [X] filter on one or several categories: `budget <CSVFILE> <CATEGORIES-FILE>` and total these categories
+- [ ] display the name of the csv file the report is made on, and the name of the categories selection file
+- [ ] include a header : REPORT from YYYY/MM/DD to YYYY/MM/DD and footer : TOTAL from YYYY/MM/DD to YYYY/MM/DD
 
 ## how to run the tests
 
