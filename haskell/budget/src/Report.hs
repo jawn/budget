@@ -7,26 +7,25 @@ import Data.Dates
 import Text.Printf
 
 type Period = (DateTime, DateTime)
+type FileName = String
 
 report :: [Expense] -> [String]
 report [] = []
-report exps = map (uncurry pretty) totals ++ [pretty (totalLabel (period exps)) grandTotal]
+report exps = map (uncurry prettyLine) totals 
     where 
         totals = map total groups
         total grp = (fst (head grp), sum (map snd grp))
         groups = groupBy (\a b -> fst a == fst b) categsAndAmounts
         categsAndAmounts = sort $ map (\exp -> (category exp, amount exp)) exps
-        grandTotal = sum (map amount exps)
+
+grandTotal :: [Expense] -> Amount
+grandTotal = sum . map amount
+
+reportAllCategories :: [Expense] -> [String]
+reportAllCategories exps = report exps ++ [prettyLine (totalLabel (period exps)) (grandTotal exps)]
 
 reportForPeriod :: Period -> [Expense] -> [String]
-reportForPeriod _ [] = []
-reportForPeriod p exps = map (uncurry pretty) totals ++ [pretty (totalLabel p) grandTotal]
-    where 
-        totals = map total groups
-        total grp = (fst (head grp), sum (map snd grp))
-        groups = groupBy (\a b -> fst a == fst b) categsAndAmounts
-        categsAndAmounts = sort $ map (\exp -> (category exp, amount exp)) exps
-        grandTotal = sum (map amount exps)
+reportForPeriod p exps = report exps ++ [prettyLine (totalLabel p) (grandTotal exps)]
 
 period :: [Expense] -> Period
 period exps = (head dates, last dates) 
@@ -35,35 +34,45 @@ period exps = (head dates, last dates)
 
 
 totalLabel :: Period -> String
-totalLabel p = "TOTAL " ++ prettyPeriod p 
+totalLabel p = printf "TOTAL %s" (prettyPeriod p) 
 
 prettyPeriod :: Period -> String 
-prettyPeriod (d1,d2) = "from " ++ formatDate d1 ++ " to " ++ formatDate d2
+prettyPeriod (d1,d2) = printf "from %s to %s" (formatDate d1) (formatDate d2)
 
 formatDate :: DateTime -> String
 formatDate (DateTime y m d _ _ _) = printf "%02d/%02d/%04d" m d y
 
-reportForCategories :: [Category] -> [Expense] -> [String]
-reportForCategories cats exps = reportForPeriod (period exps) selection
-    where 
-    selection = filter (\exp -> category exp `elem` cats) exps
+reportForCategories :: (Category -> Bool) -> [Expense] -> [String]
+reportForCategories isValid exps = reportForPeriod (period exps) selection
+    where
+        selection = filter (isValid . category) exps
 
-pretty :: Category -> Amount -> String
-pretty c a = (prettyCategory c)  ++ ":" ++ (prettyAmount a)
+prettyLine :: Category -> Amount -> String
+prettyLine c a = (prettyCategory c)  ++ ":" ++ (prettyAmount a)
 
 prettyCategory :: Category -> String
 prettyCategory c = take 49 (c ++ replicate 70 ' ')
 
-prettyAmount :: Amount -> String
-prettyAmount n = pad (sign n ++  reverse (prettyAmountPos 0 (abs n)))
+foo :: Amount -> String
+foo n = pad (sign n ++  reverse (fooPos 0 (abs n)))
     where 
         pad s = replicate p ' ' ++ s where p = 10 - length s
         sign n | n >= 0 = ""
                | otherwise = "-"
-        prettyAmountPos 2 n = '.' : prettyAmountPos 3 n
-        prettyAmountPos p 0 | p < 4 = '0' : prettyAmountPos (succ p) 0
-        prettyAmountPos p 0 = ""
-        prettyAmountPos p n = intToDigit (n `mod` 10) : prettyAmountPos (succ p) (n `div` 10)
+        fooPos 2 n = '.' : fooPos 3 n
+        fooPos p 0 | p < 4 = '0' : fooPos (succ p) 0
+        fooPos p 0 = ""
+        fooPos p n = intToDigit (n `mod` 10) : fooPos (succ p) (n `div` 10)
+
+prettyAmount :: Amount -> String
+prettyAmount a = printf "%7d.%02d" n d
+    where
+        (n,d) = normal a
+        normal :: Amount -> (Int,Int)
+        normal a | a < 0     = (negate ((abs a) `div` 100), (abs a) `mod` 100)
+                 | otherwise = (a `div` 100, a `mod` 100) 
        
 
-
+reportTitle :: FileName -> Maybe FileName -> Period -> String
+reportTitle name Nothing       p = printf "Report for file:%s (all categories) %s" name (prettyPeriod p)
+reportTitle name1 (Just name2) p = printf "Report for file:%s (%s) %s" name1 name2 (prettyPeriod p)

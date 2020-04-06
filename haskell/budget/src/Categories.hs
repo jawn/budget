@@ -3,5 +3,5 @@ module Categories
 import Expense
 
 
-importCategories :: String -> [Category]
-importCategories = map read . lines 
+importCategoriesFromList :: String -> [Category]
+importCategoriesFromList = map read . lines 

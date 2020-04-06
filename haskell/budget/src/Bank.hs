@@ -13,8 +13,8 @@ type CsvExpense = (String, String, String, String, String, String, String)
 decodeExpenses :: B.ByteString -> Either String (V.Vector CsvExpense)
 decodeExpenses = Data.Csv.decode NoHeader
 
-importFromBank :: B.ByteString -> Either String [Expense]
-importFromBank = fmap (map makeExpense . V.toList) . decodeExpenses
+importExpensesFromBank :: B.ByteString -> Either String [Expense]
+importExpensesFromBank = fmap (map makeExpense . V.toList) . decodeExpenses
     where
         makeExpense (_,_,d,_,_,c,a) = Expense (stringToDate d) c (stringToAmount a)
         stringToAmount ('-':'-':s) = stringToAmount s -- because the bank sends double negative like "--42.00"
