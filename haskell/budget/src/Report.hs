@@ -3,10 +3,14 @@ module Report
 import Data.Char
 import Data.List
 import Expense
+import Data.Dates
+import Text.Printf
+
+type Period = (DateTime, DateTime)
 
 report :: [Expense] -> [String]
 report [] = []
-report exps = map (uncurry pretty) totals ++ [pretty "TOTAL" grandTotal]
+report exps = map (uncurry pretty) totals ++ [pretty (totalLabel (period exps)) grandTotal]
     where 
         totals = map total groups
         total grp = (fst (head grp), sum (map snd grp))
@@ -14,8 +18,33 @@ report exps = map (uncurry pretty) totals ++ [pretty "TOTAL" grandTotal]
         categsAndAmounts = sort $ map (\exp -> (category exp, amount exp)) exps
         grandTotal = sum (map amount exps)
 
+reportForPeriod :: Period -> [Expense] -> [String]
+reportForPeriod _ [] = []
+reportForPeriod p exps = map (uncurry pretty) totals ++ [pretty (totalLabel p) grandTotal]
+    where 
+        totals = map total groups
+        total grp = (fst (head grp), sum (map snd grp))
+        groups = groupBy (\a b -> fst a == fst b) categsAndAmounts
+        categsAndAmounts = sort $ map (\exp -> (category exp, amount exp)) exps
+        grandTotal = sum (map amount exps)
+
+period :: [Expense] -> Period
+period exps = (head dates, last dates) 
+    where dates = sort (map date exps)
+          date (Expense d _ _) = d
+
+
+totalLabel :: Period -> String
+totalLabel p = "TOTAL " ++ prettyPeriod p 
+
+prettyPeriod :: Period -> String 
+prettyPeriod (d1,d2) = "from " ++ formatDate d1 ++ " to " ++ formatDate d2
+
+formatDate :: DateTime -> String
+formatDate (DateTime y m d _ _ _) = printf "%02d/%02d/%04d" m d y
+
 reportForCategories :: [Category] -> [Expense] -> [String]
-reportForCategories cats exps = report selection
+reportForCategories cats exps = reportForPeriod (period exps) selection
     where 
     selection = filter (\exp -> category exp `elem` cats) exps
 
