@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1683b5c66fbf8929a3c71ad6bd300ab1b15798353e5c5588d50750efb11566aa
+-- hash: c116a561f0fcc77cf23f5307edc64f0b941593c47003ea600c151e555351bad7
 
 name:           budget
 version:        0.1.0.0
@@ -27,6 +27,7 @@ source-repository head
 
 library
   exposed-modules:
+      Amount
       Bank
       Categories
       Expense
@@ -66,8 +67,10 @@ test-suite budget-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      AmountSpec
       BankCsvSpec
       CategoriesCsv_Spec
+      ExpenseSpec
       ReportSpec
       Paths_budget
   hs-source-dirs:

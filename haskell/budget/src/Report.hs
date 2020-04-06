@@ -1,6 +1,7 @@
 module Report
     where
 import Data.Char
+import Amount
 import Data.List
 import Expense
 import Data.Dates
@@ -14,12 +15,12 @@ report [] = []
 report exps = map (uncurry prettyLine) totals 
     where 
         totals = map total groups
-        total grp = (fst (head grp), sum (map snd grp))
+        total grp = (fst (head grp), totalAmount (map snd grp))
         groups = groupBy (\a b -> fst a == fst b) categsAndAmounts
         categsAndAmounts = sort $ map (\exp -> (category exp, amount exp)) exps
 
 grandTotal :: [Expense] -> Amount
-grandTotal = sum . map amount
+grandTotal = totalAmount . map amount
 
 reportAllCategories :: [Expense] -> [String]
 reportAllCategories exps = report exps ++ [prettyLine (totalLabel (period exps)) (grandTotal exps)]
@@ -48,30 +49,10 @@ reportForCategories isValid exps = reportForPeriod (period exps) selection
         selection = filter (isValid . category) exps
 
 prettyLine :: Category -> Amount -> String
-prettyLine c a = (prettyCategory c)  ++ ":" ++ (prettyAmount a)
+prettyLine c a = printf "%-49s:%10s" c (show a)
 
 prettyCategory :: Category -> String
 prettyCategory c = take 49 (c ++ replicate 70 ' ')
-
-foo :: Amount -> String
-foo n = pad (sign n ++  reverse (fooPos 0 (abs n)))
-    where 
-        pad s = replicate p ' ' ++ s where p = 10 - length s
-        sign n | n >= 0 = ""
-               | otherwise = "-"
-        fooPos 2 n = '.' : fooPos 3 n
-        fooPos p 0 | p < 4 = '0' : fooPos (succ p) 0
-        fooPos p 0 = ""
-        fooPos p n = intToDigit (n `mod` 10) : fooPos (succ p) (n `div` 10)
-
-prettyAmount :: Amount -> String
-prettyAmount a = printf "%7d.%02d" n d
-    where
-        (n,d) = normal a
-        normal :: Amount -> (Int,Int)
-        normal a | a < 0     = (negate ((abs a) `div` 100), (abs a) `mod` 100)
-                 | otherwise = (a `div` 100, a `mod` 100) 
-       
 
 reportTitle :: FileName -> Maybe FileName -> Period -> String
 reportTitle name Nothing       p = printf "Report for file:%s (all categories) %s" name (prettyPeriod p)
