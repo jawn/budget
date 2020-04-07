@@ -37,8 +37,9 @@ will print the total by category for the given bank CSV file
 
 will print the total by category for the given bank CSV file and the selection of categories included in the categories file.
 
-Typical categories file should contain one category per line, in double quotes:
+Typical categories file should contain one category per line, optionally in double quotes:
 
-    "My category"
-    "My other category"
+    My category
+    "Small Expenses"
+    Transfers
 

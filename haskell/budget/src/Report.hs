@@ -6,33 +6,23 @@ import Data.List
 import Expense
 import Data.Dates
 import Text.Printf
+import Data.Ord
 
-type Period = (DateTime, DateTime)
 type FileName = String
 
-report :: [Expense] -> [String]
-report [] = []
-report exps = map (uncurry prettyLine) totals 
-    where 
-        totals = map total groups
-        total grp = (fst (head grp), totalAmount (map snd grp))
-        groups = groupBy (\a b -> fst a == fst b) categsAndAmounts
-        categsAndAmounts = sort $ map (\exp -> (category exp, amount exp)) exps
+same f a b = f a == f b
 
-grandTotal :: [Expense] -> Amount
-grandTotal = totalAmount . map amount
+report :: [Expense] -> [String]
+report = map (uncurry prettyLine) 
+        . map summarizeExpenses
+        . groupBy (same category) 
+        . sortBy (comparing category) 
 
 reportAllCategories :: [Expense] -> [String]
-reportAllCategories exps = report exps ++ [prettyLine (totalLabel (period exps)) (grandTotal exps)]
+reportAllCategories exps = report exps ++ [prettyLine (totalLabel (expensesPeriod exps)) (totalExpenses exps)]
 
 reportForPeriod :: Period -> [Expense] -> [String]
-reportForPeriod p exps = report exps ++ [prettyLine (totalLabel p) (grandTotal exps)]
-
-period :: [Expense] -> Period
-period exps = (head dates, last dates) 
-    where dates = sort (map date exps)
-          date (Expense d _ _) = d
-
+reportForPeriod p exps = report exps ++ [prettyLine (totalLabel p) (totalExpenses exps)]
 
 totalLabel :: Period -> String
 totalLabel p = printf "TOTAL %s" (prettyPeriod p) 
@@ -44,15 +34,12 @@ formatDate :: DateTime -> String
 formatDate (DateTime y m d _ _ _) = printf "%02d/%02d/%04d" m d y
 
 reportForCategories :: (Category -> Bool) -> [Expense] -> [String]
-reportForCategories isValid exps = reportForPeriod (period exps) selection
+reportForCategories isValid exps = reportForPeriod (expensesPeriod exps) selection
     where
         selection = filter (isValid . category) exps
 
 prettyLine :: Category -> Amount -> String
 prettyLine c a = printf "%-49s:%10s" c (show a)
-
-prettyCategory :: Category -> String
-prettyCategory c = take 49 (c ++ replicate 70 ' ')
 
 reportTitle :: FileName -> Maybe FileName -> Period -> String
 reportTitle name Nothing       p = printf "Report for file:%s (all categories) %s" name (prettyPeriod p)

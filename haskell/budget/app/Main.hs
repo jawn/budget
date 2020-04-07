@@ -23,33 +23,36 @@ importExpenses fileName = do
     let expenses = importExpensesFromBank contents
     return expenses
 
-importCategorySelector :: (Maybe FileName) -> IO (Category -> Bool)
-importCategorySelector Nothing = return (const True)
+importCategorySelector :: (Maybe FileName) -> IO (Either String (Category -> Bool))
+importCategorySelector Nothing = return $ return (const True)
 importCategorySelector (Just fileName) = do
     contents <- readFile fileName
     let categories = importCategoriesFromList contents
-    return (`elem` categories)
+    return $ fmap (\cats -> (`elem` cats)) categories
 
 main :: IO ()
 main = do
     args <- getArgs
     unless (length args >= 1) 
-        (exitWithMsg "usage: Report <BankData.Csv>\n       Report <BankData.Csv> <CatagorieSelection.Csv>")
+        (exitWithMsg $ unlines ["usage: Report <BankData.Csv>"
+                               ,"       Report <BankData.Csv> <CatagorieSelection.Csv>"])
 
     let fileName = args !! 0
 
     let categoryFileName = if length args > 1 then Just (args !! 1) else Nothing
 
-    expenses <- importExpenses fileName
+    importExpenses <- importExpenses fileName
     selector <- importCategorySelector categoryFileName
 
     let rep = case categoryFileName of
                 Nothing -> reportAllCategories
-                Just _ -> reportForCategories selector
+                Just _ -> case selector of
+                            Right f -> reportForCategories f
+                            Left msg -> error $ printf "while importing categories: %s" msg
 
-    case expenses of
+    case importExpenses of
       Left msg -> exitWithMsg msg
       Right exps -> do
-          putStrLn (reportTitle fileName categoryFileName (period exps))
+          putStrLn (reportTitle fileName categoryFileName (expensesPeriod exps))
           putStrLn (unlines (rep exps))
           exitSuccess
