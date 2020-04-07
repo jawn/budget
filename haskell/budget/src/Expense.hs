@@ -2,17 +2,19 @@ module Expense
     where
 
 import Data.Dates
+import Data.Time 
+import qualified Data.Time as Time
 import Amount
+import Category
 import Data.Ord
 import Data.List
 
-type Category = String
-type Period = (DateTime, DateTime)
+type Period = (Day, Day)
 
-data Expense = Expense DateTime Category Amount 
+data Expense = Expense Day Category Amount 
     deriving (Eq, Ord, Show)
 
-mkDate y m d = DateTime y m d 0 0 0
+mkDate y m d = fromGregorian y m d 
 
 category :: Expense -> Category
 category (Expense _ c _ ) = c
@@ -20,7 +22,7 @@ category (Expense _ c _ ) = c
 amount :: Expense -> Amount
 amount (Expense _ _ a) = a
 
-date :: Expense -> DateTime
+date :: Expense -> Day
 date (Expense d _ _) = d
 
 totalExpenses :: [Expense] -> Amount

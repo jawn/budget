@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 79167181b878eba02c0376ace5447adc4480db74e29d3f6d306280feae4f14fe
+-- hash: 31c5c85383aaedf04ea3f2fe09fc1582f6693e1421627e42a6e158b9d8559985
 
 name:           budget
 version:        0.1.0.0
@@ -28,12 +28,11 @@ source-repository head
 library
   exposed-modules:
       Amount
-      Bank
       CatchShowIO
-      Categories
       CategoriesCsv
       Category
       Expense
+      ExpensesCsv
       Lib
       Report
   other-modules:
@@ -46,6 +45,8 @@ library
     , cassava
     , dates
     , split
+    , text
+    , time
     , vector
   default-language: Haskell2010
 
@@ -63,6 +64,8 @@ executable budget-exe
     , cassava
     , dates
     , split
+    , text
+    , time
     , vector
   default-language: Haskell2010
 
@@ -71,10 +74,9 @@ test-suite budget-test
   main-is: Spec.hs
   other-modules:
       AmountSpec
-      BankCsvSpec
       CategoriesCsvSpec
-      CategoriesSpec
       CategorySpec
+      ExpensesCsvSpec
       ExpenseSpec
       ReportSpec
       Paths_budget
@@ -89,5 +91,7 @@ test-suite budget-test
     , dates
     , hspec
     , split
+    , text
+    , time
     , vector
   default-language: Haskell2010

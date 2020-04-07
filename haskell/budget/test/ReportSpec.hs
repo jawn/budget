@@ -2,6 +2,7 @@ module ReportSpec
     where
 import Test.Hspec
 import Expense
+import Category
 import Report
 import Data.Dates
 
@@ -11,33 +12,33 @@ day3 = mkDate 2020 04 13
 spec = do
     describe "report" $ do
         it "show the total for a category" $ do
-            let exp1 = Expense day1 "Online Services" 4807 
-            let exp2 = Expense day2 "Online Services" 5000 
+            let exp1 = Expense day1 (Category "Online Services") 4807 
+            let exp2 = Expense day2 (Category "Online Services") 5000 
             let expenses = [exp1, exp2]
             head (reportAllCategories expenses)  `shouldBe` "Online Services                                  :     98.07"
 
         it "show the total for two categories" $ do
-            let exp1 = Expense day1 "Special" 4807 
-            let exp2 = Expense day2 "Online Services" 5000 
-            let exp3 = Expense day3 "Online Services" 4200
+            let exp1 = Expense day1 (Category "Special") 4807 
+            let exp2 = Expense day2 (Category "Online Services") 5000 
+            let exp3 = Expense day3 (Category "Online Services") 4200
             let expenses = [exp1, exp2, exp3]
             take 2 (reportAllCategories expenses)  `shouldBe` ["Online Services                                  :     92.00"
                                                  ,"Special                                          :     48.07"]
         it "show the grand total, mentionning the min and max date" $ do
-            let exp1 = Expense day1 "Special" 4807 
-            let exp2 = Expense day2 "Online Services" 5000 
-            let exp3 = Expense day3 "Online Services" 4200
+            let exp1 = Expense day1 (Category "Special") 4807 
+            let exp2 = Expense day2 (Category "Online Services") 5000 
+            let exp3 = Expense day3 (Category "Online Services") 4200
             let expenses = [exp1, exp2, exp3]
             reportAllCategories expenses  `shouldBe` ["Online Services                                  :     92.00"
                                         ,"Special                                          :     48.07"
                                         ,"TOTAL from 04/01/2020 to 04/13/2020              :    140.07"]
 
         it "can select categories from a list of categories, for the period of the whole csv file" $ do
-            let exp1 = Expense day1 "Special" 4807 
-            let exp2 = Expense day2 "Online Services" 5000 
-            let exp3 = Expense day3 "Online Services" 4200
+            let exp1 = Expense day1 (Category "Special") 4807 
+            let exp2 = Expense day2 (Category "Online Services") 5000 
+            let exp3 = Expense day3 (Category "Online Services") 4200
             let expenses = [exp1, exp2, exp3]
-            let cats = ["Online Services"]
+            let cats = [(Category "Online Services")]
             reportForCategories (`elem` cats) expenses  `shouldBe` ["Online Services                                  :     92.00"
                                                               ,"TOTAL from 04/01/2020 to 04/13/2020              :     92.00"]
 

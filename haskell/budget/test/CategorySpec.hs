@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedStrings #-}
 module CategorySpec
     where
 import Test.Hspec
