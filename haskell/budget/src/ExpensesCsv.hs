@@ -13,7 +13,7 @@ import CatchShowIO
 
 import Data.ByteString.Lazy (ByteString)
 import qualified Data.ByteString.Lazy as ByteString
-import qualified Data.ByteString.Char8 as S8
+import qualified Data.ByteString.Char8 as Char8 (unpack, pack)
 
 
 import Data.Vector (Vector)
@@ -49,9 +49,20 @@ instance FromField Category where
     parseField s = pure $ Category $ unpack $ decodeLatin1 s
 
 instance FromField Amount where
+    parseField s | head (Char8.unpack s) == '-' = fmap negate $ parseField (Char8.pack (tail (Char8.unpack s)))
     parseField s = case runParser (parseField s :: Parser Double) of
                      Right n -> pure $ mkAmount n
+                     Left msg -> fail msg
 
                     
-decodeExpenses :: ByteString -> Either String (Vector Expense)
+decodeExpenses 
+    :: ByteString 
+    -> Either String (Vector Expense)
 decodeExpenses = decode NoHeader
+
+decodeExpensesFromFile 
+    :: FilePath 
+    -> IO (Either String (Vector Expense))
+decodeExpensesFromFile filePath = 
+    catchShowIO (ByteString.readFile filePath)
+    >>= return . either Left decodeExpenses
