@@ -6,7 +6,7 @@
 - [X] filter on one or several categories: `budget <CSVFILE> <CATEGORIES-FILE>` and total these categories
 - [X] display the name of the csv file the report is made on, and the name of the categories selection file
 - [X] include a header : REPORT from YYYY/MM/DD to YYYY/MM/DD and footer : TOTAL from YYYY/MM/DD to YYYY/MM/DD
-- [ ] display each categories average amount, which is total (per category) / number of months of the period
+- [X] display each categories average amount, which is total (per category) / number of months of the period
 
 ## how to run the tests
 
