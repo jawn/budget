@@ -41,6 +41,7 @@ instance FromRecord Expense where
       | length v == 7 = Expense <$> v .! 2
                                <*> v .! 5
                                <*> v .! 6
+      | otherwise = fail (show v)
 
 instance FromField Time.Day where
     parseField = parseTimeM True defaultTimeLocale "%m/%d/%Y" . unpack . decodeLatin1

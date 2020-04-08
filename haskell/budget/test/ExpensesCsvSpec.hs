@@ -35,6 +35,10 @@ spec = do
                 exps = fmap toList $ decodeExpenses bs
             exps `shouldBe` Left "parse error (Failed reading: conversion error: expected Double, got \"1foo2\" (incomplete field parse, leftover: [102,111,111,50])) at \"\\n\""
 
+            let bs = "hello world\nthis is not a csv file\n"
+                exps = fmap toList $ decodeExpenses bs
+            exps `shouldBe` Left "parse error (Failed reading: conversion error: [\"hello world\"]) at \"\\nthis is not a csv file\\n\""
+
         it "can be imported from a csv file" $ do
             let bs = "posted,,02/25/2020,,GOOGLE  DOMAINS,Online Services,12\nposted,,02/24/2020,Adventures in Clean,TRANSFERWISE INC,Training,-1242.26\n"
                 fp = "test/test-expenses.csv" 
