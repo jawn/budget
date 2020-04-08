@@ -42,3 +42,6 @@ number (Amount n) = n
 
 totalAmount :: [Amount] -> Amount
 totalAmount = Amount . sum . map number
+
+divideAmount :: Amount -> Integer -> Amount
+divideAmount (Amount n) i = Amount (n `div` fromIntegral i)

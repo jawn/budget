@@ -15,23 +15,26 @@ spec = do
             let exp1 = Expense day1 (Category "Online Services") 4807 
             let exp2 = Expense day2 (Category "Online Services") 5000 
             let expenses = [exp1, exp2]
-            head (reportAllCategories expenses)  `shouldBe` "Online Services                                  :     98.07"
+            take 60 (head (reportAllCategories expenses))
+                `shouldBe` "Online Services                                  :     98.07"
 
         it "show the total for two categories" $ do
             let exp1 = Expense day1 (Category "Special") 4807 
             let exp2 = Expense day2 (Category "Online Services") 5000 
             let exp3 = Expense day3 (Category "Online Services") 4200
             let expenses = [exp1, exp2, exp3]
-            take 2 (reportAllCategories expenses)  `shouldBe` ["Online Services                                  :     92.00"
-                                                 ,"Special                                          :     48.07"]
+            map (take 60) (take 2 (reportAllCategories expenses))
+            `shouldBe` ["Online Services                                  :     92.00"
+                       ,"Special                                          :     48.07"]
         it "show the grand total, mentionning the min and max date" $ do
             let exp1 = Expense day1 (Category "Special") 4807 
             let exp2 = Expense day2 (Category "Online Services") 5000 
             let exp3 = Expense day3 (Category "Online Services") 4200
             let expenses = [exp1, exp2, exp3]
-            reportAllCategories expenses  `shouldBe` ["Online Services                                  :     92.00"
-                                        ,"Special                                          :     48.07"
-                                        ,"TOTAL from 04/01/2020 to 04/13/2020              :    140.07"]
+            map (take 60) (reportAllCategories expenses) 
+            `shouldBe` ["Online Services                                  :     92.00"
+                       ,"Special                                          :     48.07"
+                       ,"TOTAL from 04/01/2020 to 04/13/2020              :    140.07"]
 
         it "can select categories from a list of categories, for the period of the whole csv file" $ do
             let exp1 = Expense day1 (Category "Special") 4807 
@@ -39,8 +42,25 @@ spec = do
             let exp3 = Expense day3 (Category "Online Services") 4200
             let expenses = [exp1, exp2, exp3]
             let cats = [(Category "Online Services")]
-            reportForCategories (`elem` cats) expenses  `shouldBe` ["Online Services                                  :     92.00"
-                                                              ,"TOTAL from 04/01/2020 to 04/13/2020              :     92.00"]
+            map (take 60) (reportForCategories (`elem` cats) expenses)
+            `shouldBe` ["Online Services                                  :     92.00"
+                       ,"TOTAL from 04/01/2020 to 04/13/2020              :     92.00"]
+
+    describe "show the average amount of each category according to the number of month in the period" $ do
+        it "for a one month period" $ do
+            let exp1 = Expense (mkDate 2020 4 1) (Category "Online Services") 4807 
+            let exp2 = Expense (mkDate 2020 4 5) (Category "Online Services") 5000 
+            let expenses = [exp1, exp2]
+            head (reportAllCategories expenses)
+                `shouldBe` "Online Services                                  :     98.07 |     98.07"
+        -- it "for a two months period" $ do
+        --     let exp1 = Expense (mkDate 2020 4 1) (Category "Online Services") 4807 
+        --     let exp2 = Expense (mkDate 2020 5 5) (Category "Online Services") 5000 
+        --     let expenses = [exp1, exp2]
+        --     head (reportAllCategories expenses)
+        --         `shouldBe` "Online Services                                  :     98.07 |     49.04"
+
+
 
     describe "report title" $ do
         it "show a header for the given filename and period" $ do

@@ -31,6 +31,10 @@ spec = do
             let a = mkAmount (-123.45)
             number a  `shouldBe` (-12345)
 
+        it "can be divided by an integer" $ do
+            let a = mkAmount 1000.00
+            show (divideAmount a 4) `shouldBe` "250.00"
+
     describe "a list of amounts" $ do
         it "can be totaled" $ do
             let as = map mkAmount [42.17,-30.00,4807.00]

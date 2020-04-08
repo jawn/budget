@@ -14,7 +14,7 @@ import qualified Data.Time as Time
 same f a b = f a == f b
 
 report :: [Expense] -> [String]
-report = map (uncurry prettyLine) 
+report = map (\(c,a,m) -> prettyLine c a m) 
         . map summarizeExpenses
         . groupBy (same category) 
         . sortBy (comparing category) 
@@ -39,8 +39,8 @@ reportForCategories isValid exps = reportForPeriod (expensesPeriod exps) selecti
     where
         selection = filter (isValid . category) exps
 
-prettyLine :: Category -> Amount -> String
-prettyLine c a = printf "%-49s:%10s" (categoryName c) (show a)
+prettyLine :: Category -> Amount -> Amount -> String
+prettyLine c a m = printf "%-49s:%10s |%10s" (categoryName c) (show a) (show m)
 
 reportTitle :: FilePath -> Maybe FilePath -> Period -> String
 reportTitle name Nothing       p = printf "Report for file:%s (all categories) %s" name (prettyPeriod p)
