@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 31c5c85383aaedf04ea3f2fe09fc1582f6693e1421627e42a6e158b9d8559985
+-- hash: ec8ba99954d8a05a9b52d3641a1827009fcd3e729ed89c188ccae967f384a640
 
 name:           budget
 version:        0.1.0.0
@@ -34,6 +34,7 @@ library
       Expense
       ExpensesCsv
       Lib
+      Period
       Report
   other-modules:
       Paths_budget
