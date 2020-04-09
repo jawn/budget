@@ -28,6 +28,7 @@ dependencies:
 - split
 - time
 - text
+- directory
 
 library:
   source-dirs: src

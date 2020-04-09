@@ -78,12 +78,23 @@ spec = do
         it "show a header for the given filename and period" $ do
             let begin = theDay 2020 01 01
                 end = theDay 2020 03 31
-            reportTitle "Bank.csv" Nothing (begin,end) `shouldBe` 
+            reportTitle (Just "Bank.csv") Nothing (begin,end) `shouldBe` 
                 "Report for file:Bank.csv (all categories) from 01/01/2020 to 03/31/2020"
 
         it "show a header for the given filename and category list and period" $ do
             let begin = theDay 2020 01 01
                 end = theDay 2020 03 31
-            reportTitle "Bank.csv" (Just "categs.csv") (begin,end) `shouldBe` 
+            reportTitle (Just "Bank.csv") (Just "categs.csv") (begin,end) `shouldBe` 
                 "Report for file:Bank.csv (categs.csv) from 01/01/2020 to 03/31/2020"
 
+        it "show a header for the period" $ do
+            let begin = theDay 2020 01 01
+                end = theDay 2020 03 31
+            reportTitle Nothing Nothing (begin,end) `shouldBe` 
+                "Report (all categories) from 01/01/2020 to 03/31/2020"
+
+        it "show a header for a selection of categories and the period" $ do
+            let begin = theDay 2020 01 01
+                end = theDay 2020 03 31
+            reportTitle Nothing (Just "categs.csv") (begin,end) `shouldBe` 
+                "Report (categs.csv) from 01/01/2020 to 03/31/2020"

@@ -10,7 +10,7 @@
 - [X] rename budget-exe to budget
 - [X] change "budget <CSVFILE> [CATEGORIES-SELECTION-FILE]" into  "budget summary <CSVFILE> [CATEGORIES-SELECTION-FILE]"
 - [X] add a help command
-- [ ] have the budget app find its main CSV file in ~/.budget/budget_conf containing TRANSACTIONS:file/path/to/transactions.CSV 
+- [X] have the budget app find its main CSV file in ~/.budget/budget_conf containing TRANSACTIONS:file/path/to/transactions.CSV 
 - [ ] add a command "budget import <DOWNLOADED-CSVFILE-FOLDER>" that adds all the new transactions files from that folder to the transaction csv file, checking for format and duplicates
 - [ ] add a qualifier for specific parameters in the command  like -t for transaction file -c for category selection file -p for period, e.g. budget summary -c MyCategories.csv -t MySpecificTransaction.csv
 - [ ] change "budget summary <CSVFILE> [CATEGORY-SELECTION-FILE]" to "budget summary [-c CATEGORY-SELECTION-FILE]" (the app knows where to find the transactions csv file).

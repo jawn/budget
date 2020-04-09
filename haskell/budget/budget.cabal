@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 2a62eeb9127da6a4d67d86088a05a15c453335d36bdb2809a1f530ffab449e2b
+-- hash: 312481dfcba470ab59909764a5f3fa9f877ae91743f1633630db78f17c597958
 
 name:           budget
 version:        0.1.0.0
@@ -32,6 +32,7 @@ library
       CategoriesCsv
       Category
       Command
+      Config
       Expense
       ExpensesCsv
       Period
@@ -45,6 +46,7 @@ library
     , bytestring
     , cassava
     , dates
+    , directory
     , split
     , text
     , time
@@ -64,6 +66,7 @@ executable budget
     , bytestring
     , cassava
     , dates
+    , directory
     , split
     , text
     , time
@@ -78,6 +81,7 @@ test-suite budget-test
       CategoriesCsvSpec
       CategorySpec
       CommandSpec
+      ConfigSpec
       ExpensesCsvSpec
       ExpenseSpec
       ReportSpec
@@ -91,6 +95,7 @@ test-suite budget-test
     , bytestring
     , cassava
     , dates
+    , directory
     , hspec
     , split
     , text

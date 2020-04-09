@@ -9,22 +9,22 @@ spec = do
             it "recognize the summary command with a file" $ do
                 let args = words "summary foo.csv"
                 command args `shouldBe` 
-                    Right (Summary "foo.csv" Nothing)
+                    Right (Summary (Just "foo.csv") Nothing)
 
             it "recognize the summary command with any file" $ do
                 let args = words "summary bar.csv"
                 command args `shouldBe` 
-                    Right (Summary "bar.csv" Nothing)
+                    Right (Summary (Just "bar.csv") Nothing)
 
             it "recognize the summary command with a file and another optional file" $ do
                 let args = words "summary bar.csv foo.csv"
                 command args `shouldBe` 
-                    Right (Summary "bar.csv" (Just "foo.csv"))
+                    Right (Summary (Just "bar.csv") (Just "foo.csv"))
 
-            it "doesn't recognize when missing arguments" $ do
+            it "recognize the summary command with no arguments" $ do
                 let args = words "summary" 
                 command args `shouldBe` 
-                    Left "budget summary: missing parameter"
+                    Right (Summary Nothing Nothing)
 
         describe "Help" $ do
             it "recognize the help command" $ do
@@ -34,15 +34,15 @@ spec = do
         it "recognize the command in uppercase or lowercase" $ do
             let args = words "SUmmary foo.csv" 
             command args `shouldBe` 
-                Right (Summary "foo.csv" Nothing)
+                Right (Summary (Just "foo.csv") Nothing)
 
         it "recognize a prefix of the command" $ do
             let args = words "SU foo.csv" 
             command args `shouldBe` 
-                Right (Summary "foo.csv" Nothing)
+                Right (Summary (Just "foo.csv") Nothing)
             let args = words "sum foo.csv" 
             command args `shouldBe` 
-                Right (Summary "foo.csv" Nothing)
+                Right (Summary (Just "foo.csv") Nothing)
 
         it "doesn't recognize a unknown command" $ do
             let args = words "foo bar.csv" 

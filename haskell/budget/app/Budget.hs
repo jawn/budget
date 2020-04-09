@@ -8,8 +8,10 @@ import Category
 import CategoriesCsv
 import ExpensesCsv
 import Command
+import Config
 import System.Environment
 import System.Exit
+import System.Directory
 import Control.Monad
 import Data.Vector (toList)
 import qualified Data.Vector as Vector 
@@ -42,14 +44,43 @@ validArgs args =
 
 main :: IO ()
 main = do
+    home <- getHomeDirectory
+    cfg <- retrieveFromFile $ home ++ "/.budget_conf"
+    either exitWithMsg runProgram cfg
+
+
+runProgram 
+    ::  Config 
+    -> IO ()
+runProgram cfg = do 
     cmd <- fmap command getArgs
-    either exitWithMsg processCommand cmd
+    either exitWithMsg (processCommand cfg) cmd
 
-processCommand :: Command -> IO ()
-processCommand Help = help
-processCommand (Summary expenseFilePath categoryFilePath) = do
+retrieveExpenses 
+    :: Config
+    -> Maybe FilePath
+    -> IO (Either String [Expense])
+retrieveExpenses config expenseFilePath = do
+    let filePath = case expenseFilePath of
+                     Nothing -> lookup "TRANSACTIONS" config 
+                     other -> other
+    home <- getHomeDirectory
+    case filePath of
+      Nothing -> do 
+          let msg = "error: TRANSACTION file path not found in " ++ home ++ "/.budget_conf"
+          return $ Left msg
 
-    expenses <- fmap (fmap toList) $ decodeExpensesFromFile expenseFilePath
+      Just fp -> do
+          let filePath = if (take 2 fp) == ".~" then home ++ (drop 2 fp) else fp
+          expenses <- fmap (fmap toList) $ decodeExpensesFromFile filePath
+          return expenses
+
+
+processCommand :: Config -> Command -> IO ()
+processCommand _ Help = help
+processCommand config (Summary expenseFilePath categoryFilePath) = do
+
+    expenses <- retrieveExpenses config expenseFilePath 
     selector <- importCategorySelector categoryFilePath
 
     let report = case categoryFilePath of

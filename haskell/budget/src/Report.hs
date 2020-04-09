@@ -45,6 +45,8 @@ reportForCategories isValid exps = reportForPeriod period selection
 prettyLine :: Category -> Amount -> Amount -> String
 prettyLine c a m = printf "%-49s:%10s |%10s" (categoryName c) (show a) (show m)
 
-reportTitle :: FilePath -> Maybe FilePath -> Period -> String
-reportTitle name Nothing       p = printf "Report for file:%s (all categories) %s" name (prettyPeriod p)
-reportTitle name1 (Just name2) p = printf "Report for file:%s (%s) %s" name1 name2 (prettyPeriod p)
+reportTitle :: Maybe FilePath -> Maybe FilePath -> Period -> String
+reportTitle Nothing Nothing           p = printf "Report (all categories) %s" (prettyPeriod p)
+reportTitle Nothing (Just name)       p = printf "Report (%s) %s" name (prettyPeriod p)
+reportTitle (Just name) Nothing       p = printf "Report for file:%s (all categories) %s" name (prettyPeriod p)
+reportTitle (Just name1) (Just name2) p = printf "Report for file:%s (%s) %s" name1 name2 (prettyPeriod p)
