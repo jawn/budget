@@ -39,3 +39,10 @@ decodeCategoriesFromFile filePath =
     catchShowIO (ByteString.readFile filePath)
     >>= return . either Left decodeCategories
 
+importCategorySelector 
+    :: (Maybe FilePath) 
+    -> IO (Either String (Category -> Bool))
+importCategorySelector Nothing = return $ pure (const True)
+importCategorySelector (Just filePath) = do
+    let categories = decodeCategoriesFromFile filePath
+    fmap (fmap (flip elem . Vector.toList)) categories

@@ -5,18 +5,20 @@ module ExpensesCsv
 import Expense
 import Category
 import Amount
+import Config
 
 import Data.Time
 import qualified Data.Time as Time
 
 import CatchShowIO
+import System.Directory
 
 import Data.ByteString.Lazy (ByteString)
 import qualified Data.ByteString.Lazy as ByteString
 import qualified Data.ByteString.Char8 as Char8 (unpack, pack)
 
 
-import Data.Vector (Vector)
+import Data.Vector (Vector, toList)
 import qualified Data.Vector as Vector 
 
 import Data.Text (Text, unpack)
@@ -67,3 +69,23 @@ decodeExpensesFromFile
 decodeExpensesFromFile filePath = 
     catchShowIO (ByteString.readFile filePath)
     >>= return . either Left decodeExpenses
+
+retrieveExpenses 
+    :: Config
+    -> Maybe FilePath
+    -> IO (Either String [Expense])
+retrieveExpenses cfg fp = do
+    let filePath = case fp of
+                     Nothing -> lookup "TRANSACTIONS" cfg 
+                     other -> other
+    home <- getHomeDirectory
+    case filePath of
+      Nothing -> do 
+          let msg = "error: TRANSACTION file path not found in " ++ home ++ "/.budget_conf"
+          return $ Left msg
+
+      Just fp -> do
+          let filePath = if (take 2 fp) == ".~" then home ++ (drop 2 fp) else fp
+          expenses <- fmap (fmap toList) $ decodeExpensesFromFile filePath
+          return expenses
+

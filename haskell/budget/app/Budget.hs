@@ -8,7 +8,7 @@ import Category
 import CategoriesCsv
 import ExpensesCsv
 import Command
-import Config
+import qualified Config as Config
 import ExitWithMsg
 import Help
 import System.Environment
@@ -20,53 +20,21 @@ import qualified Data.Vector as Vector
 import qualified Data.ByteString.Lazy as B (ByteString, readFile)
 import Text.Printf
 
-importCategorySelector :: (Maybe FilePath) -> IO (Either String (Category -> Bool))
-importCategorySelector Nothing 
-    = return $ pure (const True)
-importCategorySelector (Just filePath) = do
-    let categories = decodeCategoriesFromFile filePath
-    fmap (fmap (flip elem . Vector.toList)) categories
-
-validArgs :: [String] -> Bool
-validArgs args = 
-    (length args >= 2)
-    && args !! 0 == "summary"
 
 main :: IO ()
 main = do
     home <- getHomeDirectory
-    cfg <- retrieveFromFile $ home ++ "/.budget_conf"
+    cfg <- Config.fromFile $ home ++ "/.budget_conf"
     either exitWithMsg runProgram cfg
 
 
-runProgram 
-    ::  Config 
-    -> IO ()
+runProgram ::  Config.Config -> IO ()
 runProgram cfg = do 
     cmd <- fmap command getArgs
     either exitWithMsg (processCommand cfg) cmd
 
-retrieveExpenses 
-    :: Config
-    -> Maybe FilePath
-    -> IO (Either String [Expense])
-retrieveExpenses config expenseFilePath = do
-    let filePath = case expenseFilePath of
-                     Nothing -> lookup "TRANSACTIONS" config 
-                     other -> other
-    home <- getHomeDirectory
-    case filePath of
-      Nothing -> do 
-          let msg = "error: TRANSACTION file path not found in " ++ home ++ "/.budget_conf"
-          return $ Left msg
 
-      Just fp -> do
-          let filePath = if (take 2 fp) == ".~" then home ++ (drop 2 fp) else fp
-          expenses <- fmap (fmap toList) $ decodeExpensesFromFile filePath
-          return expenses
-
-
-processCommand :: Config -> Command -> IO ()
+processCommand :: Config.Config -> Command -> IO ()
 processCommand _ Help = help
 processCommand config (Summary expenseFilePath categoryFilePath) = do
 

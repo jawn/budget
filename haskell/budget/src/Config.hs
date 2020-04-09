@@ -7,10 +7,10 @@ import CatchShowIO
 type Config = [(String, String)]
 
 
-retrieve 
+fromString 
     :: String 
     -> Either String Config
-retrieve = sequence . map toKeyValuePair . lines
+fromString = sequence . map toKeyValuePair . lines
     where
         toKeyValuePair :: String -> Either String (String,String)
         toKeyValuePair s = 
@@ -20,9 +20,9 @@ retrieve = sequence . map toKeyValuePair . lines
         strip :: Text.Text -> String
         strip = Text.unpack . Text.strip
 
-retrieveFromFile 
+fromFile 
     :: FilePath
     -> IO (Either String Config)
-retrieveFromFile filePath =
+fromFile filePath =
     catchShowIO (readFile filePath)
-    >>= return . either Left retrieve
+    >>= return . either Left fromString
