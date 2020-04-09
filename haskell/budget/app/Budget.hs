@@ -7,6 +7,7 @@ import Expense
 import Category
 import CategoriesCsv
 import ExpensesCsv
+import Command
 import System.Environment
 import System.Exit
 import Control.Monad
@@ -15,8 +16,16 @@ import qualified Data.Vector as Vector
 import qualified Data.ByteString.Lazy as B (ByteString, readFile)
 import Text.Printf
 
+help :: IO ()
+help = do 
+    putStrLn $ unlines ["usage: budget help"
+                       ,"       budget summary <BankData.Csv>"
+                       ,"       budget summary <BankData.Csv> <CategorySelection.Csv>"]
+
+exitWithMsg :: String -> IO ()
 exitWithMsg msg = do
     putStrLn msg
+    help
     exitFailure
 
 importCategorySelector :: (Maybe FilePath) -> IO (Either String (Category -> Bool))
@@ -26,21 +35,24 @@ importCategorySelector (Just filePath) = do
     let categories = decodeCategoriesFromFile filePath
     fmap (fmap (flip elem . Vector.toList)) categories
 
+validArgs :: [String] -> Bool
+validArgs args = 
+    (length args >= 2)
+    && args !! 0 == "summary"
+
 main :: IO ()
 main = do
-    args <- getArgs
-    unless (length args >= 1) 
-        (exitWithMsg $ unlines ["usage: Report <BankData.Csv>"
-                               ,"       Report <BankData.Csv> <CatagorieSelection.Csv>"])
+    cmd <- fmap command getArgs
+    either exitWithMsg processCommand cmd
 
-    let filePath = args !! 0
+processCommand :: Command -> IO ()
+processCommand Help = help
+processCommand (Summary expenseFilePath categoryFilePath) = do
 
-    let categoryFilePath = if length args > 1 then Just (args !! 1) else Nothing
-
-    expenses <- fmap (fmap toList) $ decodeExpensesFromFile filePath
+    expenses <- fmap (fmap toList) $ decodeExpensesFromFile expenseFilePath
     selector <- importCategorySelector categoryFilePath
 
-    let rep = case categoryFilePath of
+    let report = case categoryFilePath of
                 Nothing -> reportAllCategories
                 Just _ -> case selector of
                             Right f -> reportForCategories f
@@ -49,6 +61,6 @@ main = do
     case expenses of
       Left msg -> exitWithMsg msg
       Right exps -> do
-          putStrLn (reportTitle filePath categoryFilePath (expensesPeriod exps))
-          putStrLn (unlines (rep exps))
+          putStrLn (reportTitle expenseFilePath categoryFilePath (expensesPeriod exps))
+          putStrLn (unlines (report exps))
           exitSuccess

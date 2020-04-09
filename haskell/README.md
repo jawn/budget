@@ -8,7 +8,8 @@
 - [X] include a header : REPORT from YYYY/MM/DD to YYYY/MM/DD and footer : TOTAL from YYYY/MM/DD to YYYY/MM/DD
 - [X] display each categories average amount, which is total (per category) / number of months of the period
 - [X] rename budget-exe to budget
-- [ ] change "budget <CSVFILE> [CATEGORIES-SELECTION-FILE]" into  "budget summary <CSVFILE> [CATEGORIES-SELECTION-FILE]"
+- [X] change "budget <CSVFILE> [CATEGORIES-SELECTION-FILE]" into  "budget summary <CSVFILE> [CATEGORIES-SELECTION-FILE]"
+- [X] add a help command
 - [ ] have the budget app find its main CSV file in ~/.budget/budget_conf containing TRANSACTIONS:file/path/to/transactions.CSV 
 - [ ] change "budget summary <CSVFILE> [CATEGORY-SELECTION-FILE]" to "budget summary [CATEGORY-SELECTION-FILE]" (the app knows where to find the transactions csv file).
 - [ ] add a command "budget import <DOWNLOADED-CSVFILE-FOLDER>" that adds all the new transactions files from that folder to the transaction csv file, checking for format and duplicates
