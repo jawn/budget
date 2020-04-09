@@ -23,6 +23,7 @@ import qualified Data.Vector as Vector
 
 import Data.Text (Text, unpack)
 import Data.Text.Encoding as Text
+import Data.Maybe
 
 
 import Data.Csv
@@ -74,18 +75,18 @@ retrieveExpenses
     :: Config
     -> Maybe FilePath
     -> IO (Either String [Expense])
-retrieveExpenses cfg fp = do
-    let filePath = case fp of
-                     Nothing -> lookup "TRANSACTIONS" cfg 
-                     other -> other
+retrieveExpenses cfg Nothing = do
     home <- getHomeDirectory
-    case filePath of
-      Nothing -> do 
-          let msg = "error: TRANSACTION file path not found in " ++ home ++ "/.budget_conf"
-          return $ Left msg
+    let fp = maybeToEither ("error: TRANSACTION file path not found in " ++ home ++ "/.budget_conf") (lookup "TRANSACTIONS" cfg) 
+    either (return . Left) (retrieveExpenses cfg . Just) fp
 
-      Just fp -> do
-          let filePath = if (take 2 fp) == ".~" then home ++ (drop 2 fp) else fp
-          expenses <- fmap (fmap toList) $ decodeExpensesFromFile filePath
-          return expenses
+retrieveExpenses cfg (Just fp) = do
+    home <- getHomeDirectory
+    (fmap (fmap toList) . decodeExpensesFromFile . canonical home) fp
 
+maybeToEither :: a -> Maybe b -> Either a b
+maybeToEither = flip maybe Right . Left
+
+canonical :: String -> FilePath -> FilePath
+canonical home ('.':'~':fp) = home ++ fp
+canonical _ fp = fp
