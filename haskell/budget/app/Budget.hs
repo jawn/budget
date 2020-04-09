@@ -9,9 +9,10 @@ import CategoriesCsv
 import ExpensesCsv
 import Command
 import Config
+import ExitWithMsg
 import System.Environment
-import System.Exit
 import System.Directory
+import System.Exit
 import Control.Monad
 import Data.Vector (toList)
 import qualified Data.Vector as Vector 
@@ -23,12 +24,6 @@ help = do
     putStrLn $ unlines ["usage: budget help"
                        ,"       budget summary <BankData.Csv>"
                        ,"       budget summary <BankData.Csv> <CategorySelection.Csv>"]
-
-exitWithMsg :: String -> IO ()
-exitWithMsg msg = do
-    putStrLn msg
-    help
-    exitFailure
 
 importCategorySelector :: (Maybe FilePath) -> IO (Either String (Category -> Bool))
 importCategorySelector Nothing 
@@ -83,15 +78,7 @@ processCommand config (Summary expenseFilePath categoryFilePath) = do
     expenses <- retrieveExpenses config expenseFilePath 
     selector <- importCategorySelector categoryFilePath
 
-    let report = case categoryFilePath of
-                Nothing -> reportAllCategories
-                Just _ -> case selector of
-                            Right f -> reportForCategories f
-                            Left msg -> error $ printf "while importing categories: %s" msg
 
-    case expenses of
-      Left msg -> exitWithMsg msg
-      Right exps -> do
-          putStrLn (reportTitle expenseFilePath categoryFilePath (expensesPeriod exps))
-          putStrLn (unlines (report exps))
-          exitSuccess
+    summary expenseFilePath categoryFilePath selector expenses
+
+    exitSuccess
