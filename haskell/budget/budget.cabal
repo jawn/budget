@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7469b510e8577463f071e0874892a958d99d14f0c7b3d1b8c980ccae2186fe77
+-- hash: 603fb1c72c8a956be224913a77f0e9f5e35480c72fd389553fc3a63408963a1e
 
 name:           budget
 version:        0.1.0.0
@@ -36,6 +36,7 @@ library
       ExitWithMsg
       Expense
       ExpensesCsv
+      Help
       Period
       Report
   other-modules:

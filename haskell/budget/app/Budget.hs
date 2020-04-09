@@ -10,6 +10,7 @@ import ExpensesCsv
 import Command
 import Config
 import ExitWithMsg
+import Help
 import System.Environment
 import System.Directory
 import System.Exit
@@ -18,12 +19,6 @@ import Data.Vector (toList)
 import qualified Data.Vector as Vector 
 import qualified Data.ByteString.Lazy as B (ByteString, readFile)
 import Text.Printf
-
-help :: IO ()
-help = do 
-    putStrLn $ unlines ["usage: budget help"
-                       ,"       budget summary <BankData.Csv>"
-                       ,"       budget summary <BankData.Csv> <CategorySelection.Csv>"]
 
 importCategorySelector :: (Maybe FilePath) -> IO (Either String (Category -> Bool))
 importCategorySelector Nothing 
