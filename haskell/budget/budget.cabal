@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: d59c9b8c40e8d0c6bdbda0954fe6ad6a6d8289acc35ca0a5050b6c21bbd4fef7
+-- hash: 1ba4b84b1376d305494eb6b0838d1183e11c920e7e3a662114788f98d196b1a0
 
 name:           budget
 version:        0.1.0.0
@@ -27,6 +27,7 @@ source-repository head
 
 library
   exposed-modules:
+      Account
       Amount
       CatchShowIO
       CategoriesCsv
@@ -61,7 +62,7 @@ executable budget
       Paths_budget
   hs-source-dirs:
       app
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N -freverse-errors
   build-depends:
       base >=4.7 && <5
     , budget
@@ -79,6 +80,7 @@ test-suite budget-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      AccountSpec
       AmountSpec
       CategoriesCsvSpec
       CategorySpec
@@ -90,7 +92,7 @@ test-suite budget-test
       Paths_budget
   hs-source-dirs:
       test
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N -freverse-errors
   build-depends:
       base >=4.7 && <5
     , budget

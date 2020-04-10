@@ -1,10 +1,11 @@
-
+{-# LANGUAGE OverloadedStrings #-}
 module TransactionsCsv
     where
 
 import Transaction
 import Category
 import Amount
+import Account
 import Config
 
 import Data.Time
@@ -41,16 +42,18 @@ import qualified Control.Monad as Monad (mzero)
 
 instance FromRecord Transaction where
     parseRecord v
-      | length v == 7 = Transaction <$> v .! 2
-                               <*> v .! 5
-                               <*> v .! 6
+      | length v == 7 = Transaction <$> v .! 0 <*> v .! 2 <*> v .! 3 <*> v .! 4 <*> v .! 5 <*> v .! 6
       | otherwise = fail (show v)
+
+instance FromField Account where
+    parseField "" = fail "account name required"
+    parseField s = (pure . Account . unpack . decodeLatin1) s
 
 instance FromField Time.Day where
     parseField = parseTimeM True defaultTimeLocale "%m/%d/%Y" . unpack . decodeLatin1
 
 instance FromField Category where
-    parseField s = pure $ Category $ unpack $ decodeLatin1 s
+    parseField = pure . Category . unpack . decodeLatin1 
 
 instance FromField Amount where
     parseField s | head (Char8.unpack s) == '-' = fmap negate $ parseField (Char8.pack (tail (Char8.unpack s)))

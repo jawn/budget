@@ -6,13 +6,17 @@ import Data.Time.Calendar (Day,diffGregorianDurationClip, fromGregorian, Calenda
 import Data.Time 
 import qualified Data.Time as Time
 import Amount
+import Account
 import Period
 import Category
 import Data.Ord
 import Data.List
 
 
-data Transaction = Transaction { transactionDate     :: Day
+data Transaction = Transaction { transactionAccount  :: Account
+                               , transactionDate     :: Day
+                               , transactionNotes    :: Maybe String
+                               , transactionName     :: Maybe String
                                , transactionCategory :: Category
                                , transactionAmount   :: Amount 
                                }

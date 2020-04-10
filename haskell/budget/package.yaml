@@ -41,6 +41,7 @@ executables:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
+    - -freverse-errors
     dependencies:
     - budget
 
@@ -52,6 +53,7 @@ tests:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
+    - -freverse-errors
     dependencies:
     - budget
     - hspec
