@@ -8,11 +8,12 @@
 - [X] include a header : REPORT from YYYY/MM/DD to YYYY/MM/DD and footer : TOTAL from YYYY/MM/DD to YYYY/MM/DD
 - [X] display each categories average amount, which is total (per category) / number of months of the period
 - [X] rename budget-exe to budget
-- [X] change "budget <CSVFILE> [CATEGORIES-SELECTION-FILE]" into  "budget summary <CSVFILE> [CATEGORIES-SELECTION-FILE]"
+- [X] change `budget <CSVFILE> [CATEGORIES-SELECTION-FILE]` into  budget summary `<CSVFILE> [CATEGORIES-SELECTION-FILE]`
 - [X] add a help command
-- [X] have the budget app find its main CSV file in ~/.budget/budget_conf containing TRANSACTIONS:file/path/to/transactions.CSV 
-- [X] add a qualifier for specific parameters in the command  like -t for transaction file -c for category selection file -p for period, e.g. budget summary -c MyCategories.csv -t MySpecificTransaction.csv
-- [ ] add a command "budget import <DOWNLOADED-CSVFILE-FOLDER>" that adds all the new transactions files from that folder to the transaction csv file, checking for format and duplicates
+- [X] have the budget app find its main CSV file in `~/.budget/budget_conf` containing `TRANSACTIONS:file/path/to/transactions.CSV` 
+- [X] add a qualifier for specific parameters in the command  like `-t` for transaction file `-c` for category selection file `-p` for period, e.g. `budget summary -c MyCategories.csv -t MySpecificTransaction.csv`
+- [ ] add a command `budget import <DOWNLOADED-CSVFILE-FOLDER>` that adds all the new transactions files from that folder to the transaction csv file, checking for format and duplicates
+- [ ] add a command `budget details [-m YYYY MM] [-c CATEGORY]` that shows all the transactions for a given months or a given category (or for all months or for all categories)
 
 ## how to run the tests
 
@@ -67,7 +68,7 @@ Comma separated values file, without header.
 
 | column | information | used | format | comment |
 | :--    | :--         | :--  | :--    | :--     |
-| 0  |  Status |  | string | "posted" |
+| 0  |  Status/Account |  | string | should always be "posted" in bank files, replaced with account when importing transactions |
 | 1 |  ??? |     | | |
 | 2 |  Date | yes |     | MM/DD/YYYY |
 | 3 |  Notes |   | | |
