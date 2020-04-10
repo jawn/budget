@@ -28,13 +28,13 @@ instance FromRecord Category where
 
 decodeCategories
     :: ByteString
-    -> Either String (Vector Category)
+    -> Either String [Category]
 decodeCategories = 
-    decode NoHeader
+    fmap Vector.toList . decode NoHeader
 
 decodeCategoriesFromFile 
     :: FilePath
-    -> IO (Either String (Vector Category))
+    -> IO (Either String [Category])
 decodeCategoriesFromFile filePath = 
     catchShowIO (ByteString.readFile filePath)
     >>= return . either Left decodeCategories
@@ -45,4 +45,4 @@ importCategorySelector
 importCategorySelector Nothing = return $ pure (const True)
 importCategorySelector (Just filePath) = do
     let categories = decodeCategoriesFromFile filePath
-    fmap (fmap (flip elem . Vector.toList)) categories
+    fmap (fmap (flip elem)) categories

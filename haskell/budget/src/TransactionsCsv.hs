@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings #-}
+
 module TransactionsCsv
     where
 
@@ -61,12 +61,12 @@ instance FromField Amount where
                     
 decodeTransactions 
     :: ByteString 
-    -> Either String (Vector Transaction)
-decodeTransactions = decode NoHeader
+    -> Either String [Transaction]
+decodeTransactions = fmap toList . decode NoHeader
 
 decodeTransactionsFromFile 
     :: FilePath 
-    -> IO (Either String (Vector Transaction))
+    -> IO (Either String [Transaction])
 decodeTransactionsFromFile filePath = 
     catchShowIO (ByteString.readFile filePath)
     >>= return . either Left decodeTransactions
@@ -82,7 +82,7 @@ retrieveTransactions cfg Nothing = do
 
 retrieveTransactions cfg (Just fp) = do
     home <- getHomeDirectory
-    (fmap (fmap toList) . decodeTransactionsFromFile . canonical home) fp
+    (decodeTransactionsFromFile . canonical home) fp
 
 maybeToEither :: a -> Maybe b -> Either a b
 maybeToEither = flip maybe Right . Left

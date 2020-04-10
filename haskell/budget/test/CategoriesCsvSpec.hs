@@ -18,21 +18,21 @@ spec = do
     describe "categories" $ do
         it "can be decoded from a ByteString containing simple values" $ do
             let bs = "Traning\nBusiness Expenses\nAuto\n"
-                cats = fmap toList $ decodeCategories bs
+                cats = decodeCategories bs
             cats `shouldBe` Right [ Category {categoryName = "Traning"}
                                   , Category {categoryName = "Business Expenses"}
                                   , Category {categoryName = "Auto"}]
 
         it "can be decoded from a ByteString containing values in between quotes" $ do
             let bs = "\"Traning\"\n\"Business Expenses\"\n\"Auto\"\n"
-                cats = fmap toList $ decodeCategories bs
+                cats = decodeCategories bs
             cats `shouldBe` Right [ Category {categoryName = "Traning"}
                                   , Category {categoryName = "Business Expenses"}
                                   , Category {categoryName = "Auto"}]
 
         it "can notify an error when decoded from ill-formed data" $ do
             let bs = "Traning\nBusiness Expenses\"\nAuto\n"
-                cats = fmap toList $ decodeCategories bs
+                cats = decodeCategories bs
             cats `shouldBe` 
                 Left "parse error (Failed reading: satisfy) at \"\\\"\\nAuto\\n\""
 
@@ -41,13 +41,13 @@ spec = do
                 fp = "test/test-categories.csv" 
             ByteString.writeFile fp bs
             cats <- decodeCategoriesFromFile fp
-            fmap toList cats `shouldBe` Right [ Category {categoryName = "Traning"}
+            cats `shouldBe` Right [ Category {categoryName = "Traning"}
                                               , Category {categoryName = "Business Expenses"}
                                               , Category {categoryName = "Auto"}]
 
         it "can notify an error when failing from importing from file" $ do
             let fp = "foo.csv"
             cats <- decodeCategoriesFromFile fp
-            fmap toList cats `shouldBe` 
+            cats `shouldBe` 
                 Left "foo.csv: openBinaryFile: does not exist (No such file or directory)"
 
