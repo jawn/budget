@@ -36,6 +36,7 @@ runProgram cfg = do
 
 processCommand :: Config.Config -> Command -> IO ()
 processCommand _ Help = help
+processCommand _ (Detail transactionFilePath category period) = return ()
 processCommand config (Summary transactionFilePath categoryFilePath) = do
 
     transactions <- retrieveTransactions config transactionFilePath 

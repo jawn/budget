@@ -2,7 +2,11 @@ module CommandSpec
     where
 import Test.Hspec
 import Command
+import Category
+import Period
+import Data.Time.Calendar
 
+theDay = fromGregorian
 spec = do
     describe "Command" $ do
         describe "Summary" $ do
@@ -30,6 +34,32 @@ spec = do
                 let args = words "summary" 
                 command args `shouldBe` 
                     Right (Summary Nothing Nothing)
+
+        describe "Detail" $ do
+            it "recognize the detail command with no arguments" $ do
+                let args = words "detail"
+                command args `shouldBe` 
+                    Right (Detail Nothing Nothing Nothing)
+            it "recognize the detail command with a transaction file name argument" $ do
+                let args = words "detail -t MyTransaction.csv"
+                command args `shouldBe` 
+                    Right (Detail (Just "MyTransaction.csv") Nothing Nothing)
+            it "recognize the detail command with a category argument" $ do
+                let args = words "detail -c Groceries"
+                command args `shouldBe` 
+                    Right (Detail Nothing (Just (Category "Groceries")) Nothing)
+            it "recognize the detail command with a transaction file and a category arguments" $ do
+                let args = words "detail -t MyTransactions.csv -c Groceries"
+                command args `shouldBe` 
+                    Right (Detail (Just "MyTransactions.csv") (Just (Category "Groceries")) Nothing)
+            it "recognize the detail command with a category and a transaction arguments" $ do
+                let args = words "detail -c Groceries -t MyTransactions.csv"
+                command args `shouldBe` 
+                    Right (Detail (Just "MyTransactions.csv") (Just (Category "Groceries")) Nothing)
+            it "recognize the detail command with a full period argument" $ do
+                let args = words "detail -p 04/30/2020 05/31/2020"
+                command args `shouldBe` 
+                    Right (Detail Nothing Nothing (Just (theDay 2020 04 30, theDay 2020 05 31)))
 
         describe "Help" $ do
             it "recognize the help command" $ do
