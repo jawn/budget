@@ -1,8 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
-module ExpensesCsv
+module TransactionsCsv
     where
 
-import Expense
+import Transaction
 import Category
 import Amount
 import Config
@@ -39,9 +39,9 @@ import Data.Csv
 import Control.Monad
 import qualified Control.Monad as Monad (mzero)
 
-instance FromRecord Expense where
+instance FromRecord Transaction where
     parseRecord v
-      | length v == 7 = Expense <$> v .! 2
+      | length v == 7 = Transaction <$> v .! 2
                                <*> v .! 5
                                <*> v .! 6
       | otherwise = fail (show v)
@@ -59,30 +59,30 @@ instance FromField Amount where
                      Left msg -> fail msg
 
                     
-decodeExpenses 
+decodeTransactions 
     :: ByteString 
-    -> Either String (Vector Expense)
-decodeExpenses = decode NoHeader
+    -> Either String (Vector Transaction)
+decodeTransactions = decode NoHeader
 
-decodeExpensesFromFile 
+decodeTransactionsFromFile 
     :: FilePath 
-    -> IO (Either String (Vector Expense))
-decodeExpensesFromFile filePath = 
+    -> IO (Either String (Vector Transaction))
+decodeTransactionsFromFile filePath = 
     catchShowIO (ByteString.readFile filePath)
-    >>= return . either Left decodeExpenses
+    >>= return . either Left decodeTransactions
 
-retrieveExpenses 
+retrieveTransactions 
     :: Config
     -> Maybe FilePath
-    -> IO (Either String [Expense])
-retrieveExpenses cfg Nothing = do
+    -> IO (Either String [Transaction])
+retrieveTransactions cfg Nothing = do
     home <- getHomeDirectory
     let fp = maybeToEither ("error: TRANSACTION file path not found in " ++ home ++ "/.budget_conf") (lookup "TRANSACTIONS" cfg) 
-    either (return . Left) (retrieveExpenses cfg . Just) fp
+    either (return . Left) (retrieveTransactions cfg . Just) fp
 
-retrieveExpenses cfg (Just fp) = do
+retrieveTransactions cfg (Just fp) = do
     home <- getHomeDirectory
-    (fmap (fmap toList) . decodeExpensesFromFile . canonical home) fp
+    (fmap (fmap toList) . decodeTransactionsFromFile . canonical home) fp
 
 maybeToEither :: a -> Maybe b -> Either a b
 maybeToEither = flip maybe Right . Left

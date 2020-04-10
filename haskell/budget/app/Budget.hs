@@ -3,10 +3,10 @@
 module Main where
 
 import Report
-import Expense
+import Transaction
 import Category
 import CategoriesCsv
-import ExpensesCsv
+import TransactionsCsv
 import Command
 import qualified Config as Config
 import ExitWithMsg
@@ -36,12 +36,12 @@ runProgram cfg = do
 
 processCommand :: Config.Config -> Command -> IO ()
 processCommand _ Help = help
-processCommand config (Summary expenseFilePath categoryFilePath) = do
+processCommand config (Summary transactionFilePath categoryFilePath) = do
 
-    expenses <- retrieveExpenses config expenseFilePath 
+    transactions <- retrieveTransactions config transactionFilePath 
     selector <- importCategorySelector categoryFilePath
 
 
-    summary expenseFilePath categoryFilePath selector expenses
+    summary transactionFilePath categoryFilePath selector transactions
 
     exitSuccess

@@ -4,7 +4,7 @@ import Data.Char
 import Amount
 import Category
 import Data.List
-import Expense
+import Transaction
 import Data.Dates
 import Period
 import Text.Printf
@@ -15,18 +15,18 @@ import qualified Data.Time as Time
 
 same f a b = f a == f b
 
-report :: Integer -> [Expense] -> [String]
-report nbMonths exps = 
+report :: Integer -> [Transaction] -> [String]
+report nbMonths ts = 
         (map (\(c,a,m) -> prettyLine c a m) 
-        . map (summarizeExpensesMonths nbMonths)
-        . groupBy (same expenseCategory) 
-        . sortBy (comparing expenseCategory)) exps
+        . map (summarizeTransactionsMonths nbMonths)
+        . groupBy (same transactionCategory) 
+        . sortBy (comparing transactionCategory)) ts
 
-reportAllCategories :: [Expense] -> [String]
-reportAllCategories exps = report (Period.months (expensesPeriod exps)) exps ++ [totalLabel (expensesPeriod exps) (totalExpenses exps)]
+reportAllCategories :: [Transaction] -> [String]
+reportAllCategories ts = report (Period.months (transactionsPeriod ts)) ts ++ [totalLabel (transactionsPeriod ts) (totalTransactions ts)]
 
-reportForPeriod :: Period -> [Expense] -> [String]
-reportForPeriod p exps = report (Period.months p) exps ++ [totalLabel p (totalExpenses exps)]
+reportForPeriod :: Period -> [Transaction] -> [String]
+reportForPeriod p ts = report (Period.months p) ts ++ [totalLabel p (totalTransactions ts)]
 
 totalLabel :: Period -> Amount -> String
 totalLabel p a = printf "%-49s:%10s |%10s" ("TOTAL "++ (prettyPeriod p)) (show a) (show (divideAmount a (Period.months p))) 
@@ -37,11 +37,11 @@ prettyPeriod (d1,d2) = printf "from %s to %s" (formatDate d1) (formatDate d2)
 formatDate :: Day -> String
 formatDate day = formatTime defaultTimeLocale "%m/%d/%Y" day
 
-reportForCategories :: (Category -> Bool) -> [Expense] -> [String]
-reportForCategories isValid exps = reportForPeriod period selection
+reportForCategories :: (Category -> Bool) -> [Transaction] -> [String]
+reportForCategories isValid ts = reportForPeriod period selection
     where
-        period = expensesPeriod exps 
-        selection = filter (isValid . expenseCategory) exps
+        period = transactionsPeriod ts 
+        selection = filter (isValid . transactionCategory) ts
 
 prettyLine :: Category -> Amount -> Amount -> String
 prettyLine c a m = printf "%-49s:%10s |%10s" (categoryName c) (show a) (show m)
@@ -56,17 +56,17 @@ summary
     :: Maybe FilePath
     -> Maybe FilePath
     -> Either String (Category -> Bool)
-    -> Either String [Expense]
+    -> Either String [Transaction]
     -> IO ()
-summary expenseFilePath categoryFilePath selector expenses = do
-    either exitWithMsg processSummary expenses
+summary transactionFilePath categoryFilePath selector transactions = do
+    either exitWithMsg processSummary transactions
         where
-            processSummary :: [Expense] -> IO ()
-            processSummary expenses = do
+            processSummary :: [Transaction] -> IO ()
+            processSummary transactions = do
                 let report = case categoryFilePath of
                             Nothing -> reportAllCategories
                             Just _ -> case selector of
                                         Right f -> reportForCategories f
                                         Left msg -> error $ printf "while importing categories: %s" msg
-                putStrLn (reportTitle expenseFilePath categoryFilePath (expensesPeriod expenses))
-                putStrLn (unlines (report expenses))
+                putStrLn (reportTitle transactionFilePath categoryFilePath (transactionsPeriod transactions))
+                putStrLn (unlines (report transactions))

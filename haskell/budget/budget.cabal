@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 603fb1c72c8a956be224913a77f0e9f5e35480c72fd389553fc3a63408963a1e
+-- hash: 0c879e13d5cfdad5543286d0299ce83c8a8cee3e5560954881b0e2a33871ae80
 
 name:           budget
 version:        0.1.0.0
@@ -34,11 +34,11 @@ library
       Command
       Config
       ExitWithMsg
-      Expense
-      ExpensesCsv
       Help
       Period
       Report
+      Transaction
+      TransactionsCsv
   other-modules:
       Paths_budget
   hs-source-dirs:
@@ -84,9 +84,9 @@ test-suite budget-test
       CategorySpec
       CommandSpec
       ConfigSpec
-      ExpensesCsvSpec
-      ExpenseSpec
       ReportSpec
+      TransactionsCsvSpec
+      TransactionSpec
       Paths_budget
   hs-source-dirs:
       test
