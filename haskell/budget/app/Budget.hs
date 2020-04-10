@@ -2,7 +2,7 @@
 
 module Main where
 
-import Report
+import Summary
 import Transaction
 import Category
 import CategoriesCsv
@@ -42,6 +42,6 @@ processCommand config (Summary transactionFilePath categoryFilePath) = do
     selector <- importCategorySelector categoryFilePath
 
 
-    summary transactionFilePath categoryFilePath selector transactions
+    printSummary transactionFilePath categoryFilePath selector transactions
 
     exitSuccess
