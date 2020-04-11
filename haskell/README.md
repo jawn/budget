@@ -71,7 +71,7 @@ Comma separated values file, without header.
 | 0  |  Status/Account |  | string | should always be "posted" in bank files, replaced with account when importing transactions |
 | 1 |  ??? |     | | |
 | 2 |  Date | yes |     | MM/DD/YYYY |
-| 3 |  Notes |   | | |
+| 3 |  Notes |   |S42 | |
 | 4 |  Name |    | | |
 | 5 |  Category | yes       | string | |
 | 6 |  Amount | yes        | --999999.99 | (yes, possibly double negative) |

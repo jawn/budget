@@ -3,6 +3,7 @@
 module Main where
 
 import Summary
+import Detail
 import Transaction
 import Category
 import CategoriesCsv
@@ -35,14 +36,18 @@ runProgram cfg = do
 
 
 processCommand :: Config.Config -> Command -> IO ()
+
 processCommand _ Help = help
-processCommand _ (Detail transactionFilePath category period) = return ()
+
+processCommand config (Detail transactionFilePath category period) = do
+    transactions <- retrieveTransactions config transactionFilePath 
+    printDetail transactionFilePath category period transactions
+
 processCommand config (Summary transactionFilePath categoryFilePath) = do
 
     transactions <- retrieveTransactions config transactionFilePath 
     selector <- importCategorySelector categoryFilePath
-
-
     printSummary transactionFilePath categoryFilePath selector transactions
 
     exitSuccess
+
