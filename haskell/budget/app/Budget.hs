@@ -9,6 +9,7 @@ import Category
 import CategoriesCsv
 import TransactionsCsv
 import Command
+import Import
 import qualified Config as Config
 import ExitWithMsg
 import Help
@@ -42,12 +43,20 @@ processCommand _ Help = help
 processCommand config (Detail transactionFilePath category period) = do
     transactions <- retrieveTransactions config transactionFilePath 
     printDetail transactionFilePath category period transactions
+    exitSuccess
 
 processCommand config (Summary transactionFilePath categoryFilePath) = do
-
     transactions <- retrieveTransactions config transactionFilePath 
     selector <- importCategorySelector categoryFilePath
     printSummary transactionFilePath categoryFilePath selector transactions
-
     exitSuccess
+
+processCommand config (Import importFilePath account) = do
+    transactions <- retrieveTransactions config Nothing
+    toImport <- retrieveTransactions config (Just importFilePath)
+    case transactions of
+        Left msg -> exitWithMsg msg
+        Right ts -> case toImport of
+                      Right imp -> importTransactionFile config ts imp account
+                      Left msg -> exitWithMsg msg
 

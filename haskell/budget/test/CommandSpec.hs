@@ -68,6 +68,15 @@ spec = do
                 command args `shouldBe` 
                     Right (Detail Nothing Nothing (Just (Period (theDay 2020 04 01) (theDay 2020 04 30))))
 
+        describe "Import" $ do
+            it "recognize the import command" $ do
+                let args = words "import myImport2020Feb.csv ChaseBank"
+                command args `shouldBe` Right (Import "myImport2020Feb.csv" "ChaseBank")
+
+            it "doesn't recognize the import command without two supplementary arguments" $ do
+                let args = words "import chasebank"
+                command args `shouldBe` Left "import: missing argument (import <filename> <accountname>)" 
+
         describe "Help" $ do
             it "recognize the help command" $ do
                 let args = words "help"

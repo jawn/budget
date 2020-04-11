@@ -8,6 +8,7 @@ import Same
 data Command 
     = Summary (Maybe FilePath) (Maybe FilePath)
     | Detail  (Maybe FilePath) (Maybe Category) (Maybe Period)
+    | Import FilePath String
     | Help
             
     deriving (Eq, Show)
@@ -19,6 +20,8 @@ command [] = Right (Summary Nothing Nothing)
 command (cmd:args) 
   | cmd `equals` "summary" = Right $ addParameters (Summary Nothing Nothing) args
   | cmd `equals` "detail" = Right $ addParameters (Detail Nothing Nothing Nothing) args
+  | cmd `equals` "import" && length args == 2 = Right (Import (args!!0) (args!!1))
+  | cmd `equals` "import" && length args < 2 = Left "import: missing argument (import <filename> <accountname>)" 
   | cmd `equals` "help" = Right Help
 command (cmd:args) = Left $ "unknown command: "++ unwords (cmd:args)
 

@@ -7,6 +7,7 @@ import Category
 import Amount
 import Account
 import Config
+import ExitWithMsg
 
 import Data.Time
 import qualified Data.Time as Time
@@ -86,6 +87,18 @@ retrieveTransactions cfg Nothing = do
 retrieveTransactions cfg (Just fp) = do
     home <- getHomeDirectory
     (decodeTransactionsFromFile . canonical home) fp
+
+saveTransactions 
+    :: Config
+    -> [Transaction]
+    -> IO ()
+saveTransactions cfg ts = do
+    home <- getHomeDirectory
+    let fp = maybeToEither ("error: TRANSACTION file path not found in " ++ home ++ "/.budget_conf") (lookup "TRANSACTIONS" cfg) 
+    case fp of
+      Left msg -> exitWithMsg msg
+      Right filePath -> undefined
+        
 
 maybeToEither :: a -> Maybe b -> Either a b
 maybeToEither = flip maybe Right . Left

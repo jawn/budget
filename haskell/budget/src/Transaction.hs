@@ -13,10 +13,11 @@ import Data.Ord
 import Data.List
 
 
+type Name = String
 data Transaction = Transaction { transactionAccount  :: Account
                                , transactionDate     :: Day
                                , transactionNotes    :: Maybe String
-                               , transactionName     :: Maybe String
+                               , transactionName     :: Maybe Name
                                , transactionCategory :: Category
                                , transactionAmount   :: Amount 
                                }
