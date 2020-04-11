@@ -41,7 +41,10 @@ addParameters (Summary tf sf)   ("-t":arg:args) = addParameters (Summary (Just a
 addParameters (Summary tf sf)   ("-c":arg:args) = addParameters (Summary tf (Just arg)) args
 addParameters (Detail tf ca pe) ("-t":arg:args) = addParameters (Detail (Just arg) ca pe) args
 addParameters (Detail tf ca pe) ("-c":arg:args) = addParameters (Detail tf (Just (Category arg)) pe) args
-addParameters (Detail tf ca pe) ("-p":day1:day2:args) = case periodFromStrings day1 day2 of
+addParameters (Detail tf ca pe) ("-p":arg1:arg2:args) = case periodFromStrings arg1 arg2 of
                                                           Right p -> addParameters (Detail tf ca (Just p)) args
-                                                          Left p -> error p
+                                                          Left msg -> error msg
+addParameters (Detail tf ca pe) ("-m":arg1:arg2:args) = case periodFromMonthString arg1 arg2 of
+                                                          Right p -> addParameters (Detail tf ca (Just p)) args
+                                                          Left msg -> error msg
 

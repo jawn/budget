@@ -56,10 +56,14 @@ spec = do
                 let args = words "detail -c Groceries -t MyTransactions.csv"
                 command args `shouldBe` 
                     Right (Detail (Just "MyTransactions.csv") (Just (Category "Groceries")) Nothing)
-            it "recognize the detail command with a full period argument" $ do
+            it "recognize the detail command with a period argument" $ do
                 let args = words "detail -p 04/30/2020 05/31/2020"
                 command args `shouldBe` 
                     Right (Detail Nothing Nothing (Just (theDay 2020 04 30, theDay 2020 05 31)))
+            it "recognize the detail command with a month argument" $ do
+                let args = words "detail -m 2020 4"
+                command args `shouldBe` 
+                    Right (Detail Nothing Nothing (Just (theDay 2020 04 01, theDay 2020 04 30)))
 
         describe "Help" $ do
             it "recognize the help command" $ do

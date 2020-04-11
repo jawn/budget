@@ -19,8 +19,15 @@ periodFromStrings s t = period <$> parse s <*> parse t
     where 
         parse :: String -> Either String Day
         parse s = case parseTimeM True defaultTimeLocale "%m/%d/%Y" s :: Maybe Day of
-                    Nothing -> Left $ "parse error: wrond date format: " ++ s 
+                    Nothing -> Left $ "parse error: wrong date format: " ++ s 
                     Just d -> Right d
 
 periodFromMonth :: Integer -> Int -> Period
 periodFromMonth y m  = (fromGregorian y m 1, fromGregorian y m (gregorianMonthLength y m))
+
+periodFromMonthString :: String -> String -> Either String Period
+periodFromMonthString s t  = case reads s of
+                               []  -> Left $ "parser error: wrong year format: " ++ s 
+                               [(y,_)] -> case reads t of
+                                            [] -> Left $ "parser error: wrong month format: " ++ t
+                                            [(m,_)] -> Right $ periodFromMonth y m
