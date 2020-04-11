@@ -8,6 +8,10 @@ import Data.Time.Calendar
 
 spec = do
     describe "Command" $ do
+        describe "No command given" $ do
+            it "means summary" $ do
+                let args = words ""
+                command args `shouldBe` Right (Summary Nothing Nothing) 
         describe "Summary" $ do
             it "recognize the summary command with a transaction file" $ do
                 let args = words "summary -t foo.csv"
@@ -87,6 +91,3 @@ spec = do
             command args `shouldBe` 
                 Left "unknown command: foo bar.csv"
 
-        it "doesn't recognize the absence of a command" $ do
-            let args = []
-            command args  `shouldBe` Left "no command given"

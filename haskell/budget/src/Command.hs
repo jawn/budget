@@ -14,7 +14,7 @@ data Command
 command 
     :: [String]
     -> Either String Command
-command [] = Left "no command given"
+command [] = Right (Summary Nothing Nothing)
 command (cmd:args) 
   | cmd `equals` "summary" = Right $ addParameters (Summary Nothing Nothing) args
   | cmd `equals` "detail" = Right $ addParameters (Detail Nothing Nothing Nothing) args
