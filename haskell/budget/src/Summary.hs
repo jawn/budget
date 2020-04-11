@@ -12,8 +12,7 @@ import Data.Ord
 import Data.Time
 import ExitWithMsg
 import qualified Data.Time as Time
-
-same f a b = f a == f b
+import Same
 
 summary :: Integer -> [Transaction] -> [String]
 summary nbMonths ts = 

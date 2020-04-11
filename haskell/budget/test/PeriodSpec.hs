@@ -26,6 +26,14 @@ spec = do
         it "can be shown" $ do
             let p = period (theDay 2020 01 01) (theDay 2020 12 31)
             show p `shouldBe` "from 01/01/2020 to 12/31/2020"
+
+        it "can include a date" $ do
+            let p = period (theDay 2020 04 01) (theDay 2020 04 30)
+            (theDay 2020 03 31) `within` p `shouldBe` False
+            (theDay 2020 04 01) `within` p `shouldBe` True
+            (theDay 2020 04 30) `within` p `shouldBe` True
+            (theDay 2020 05 01) `within` p `shouldBe` False
+
             
 
 

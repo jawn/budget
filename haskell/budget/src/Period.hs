@@ -44,3 +44,6 @@ periodFromMonthString s t  = case reads s of
 
 theDay :: Integer -> Int -> Int -> Day
 theDay = fromGregorian
+
+within :: Day -> Period -> Bool
+within d (Period begin end) = d >= begin && d <= end

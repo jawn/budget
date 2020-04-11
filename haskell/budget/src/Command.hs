@@ -3,6 +3,7 @@ module Command
 import Data.Char
 import Category
 import Period
+import Same
 
 data Command 
     = Summary (Maybe FilePath) (Maybe FilePath)
@@ -20,9 +21,6 @@ command (cmd:args)
   | cmd `equals` "detail" = Right $ addParameters (Detail Nothing Nothing Nothing) args
   | cmd `equals` "help" = Right Help
 command (cmd:args) = Left $ "unknown command: "++ unwords (cmd:args)
-
-same :: Eq a =>  (b -> a) -> b -> b -> Bool
-same f x y= f x == f y 
 
 lowerCase :: String -> String
 lowerCase = map toLower 

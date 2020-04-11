@@ -7,6 +7,7 @@ import Account
 import Amount
 import Period
 import ExitWithMsg
+import Same
 
 import Data.List 
 import Data.Ord
@@ -40,16 +41,32 @@ total
     -> String
 total ts = totalLabel (transactionsPeriod ts) (totalTransactions ts) 
 
+
+detailTitle 
+    :: Maybe FilePath
+    -> Maybe Category
+    -> Maybe Period
+    -> String
+detailTitle Nothing Nothing Nothing = "Transactions (all)"
+detailTitle fp c p = 
+    "Transactions " 
+    ++ (maybe "" ("from file: "++) fp)
+    ++ (maybe "" (("with category: "++) . categoryName) c)
+    ++ (maybe "" show p)
+
 printDetail
     :: Maybe FilePath
     -> Maybe Category
     -> Maybe Period
     -> Either String [Transaction]
     -> IO ()
-printDetail fp c p ts = do
-    either exitWithMsg processDetail ts
+printDetail transactionFilePath category period transactions = do
+    either exitWithMsg processDetail transactions 
         where
             processDetail :: [Transaction] -> IO ()
-            processDetail transactions = do
-                putStr   (unlines (detail transactions))
-                putStrLn (total transactions)
+            processDetail transactions = do 
+                let selection = (maybe id (\c -> filter (\t -> same categoryName c (transactionCategory t))) category)
+                              . (maybe id (\p -> filter (\t -> (transactionDate t) `within` p)) period)
+                putStrLn (detailTitle transactionFilePath category period)
+                putStr (unlines (detail (selection transactions)))
+                putStrLn (total (selection transactions))
