@@ -14,6 +14,7 @@
 - [X] add a qualifier for specific parameters in the command  like `-t` for transaction file `-c` for category selection file `-p` for period, e.g. `budget summary -c MyCategories.csv -t MySpecificTransaction.csv`
 - [ ] add a command `budget import <DOWNLOADED-CSVFILE-FOLDER>` that adds all the new transactions files from that folder to the transaction csv file, checking for format and duplicates
 - [ ] add a command `budget details [-p MM/DD/YYYY MM/DD/YYYY] [-m YYYY MM] [-c CATEGORY]` that shows all the transactions for a given months or a given category (or for all months or for all categories)
+- [ ] strip the spaces from the labels name and notes from import files
 
 ## how to run the tests
 
@@ -68,7 +69,7 @@ Comma separated values file, without header.
 
 | column | information | used | format | comment |
 | :--    | :--         | :--  | :--    | :--     |
-| 0  |  Status/Account |  | string | should always be "posted" in bank files, replaced with account when importing transactions |
+| 0  |  Status/Account |  | string | should always be "posted" in bank files, replaced with account when importing transactions, do not import transactions that are "pending" |
 | 1 |  ??? |     | | |
 | 2 |  Date | yes |     | MM/DD/YYYY |
 | 3 |  Notes |   |S42 | |
