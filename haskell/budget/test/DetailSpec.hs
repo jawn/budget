@@ -6,10 +6,10 @@ import Transaction
 import Account
 import Category
 import Amount
+import Period
 import Detail
 import Data.Time.Calendar
 
-theDay = fromGregorian 
 spec = do
     let t1 = Transaction { transactionAccount = Account "MyBank"
                          , transactionDate    = theDay 2020 6 1
@@ -33,7 +33,7 @@ spec = do
                  ,"MyBank               06/01/2020 some notes           Joe's shop           Groceries           |    -48.07"]
 
     describe "total" $ do
-        it "show the total for the transactions" $ do
+        it "show the total for the transactions, mentionning the min and max date " $ do
             total [t1,t2] `shouldBe` 
-                 "TOTAL                                                                                         :  -1048.07"
+                 "TOTAL from 05/01/2020 to 06/01/2020                                                           :  -1048.07"
 

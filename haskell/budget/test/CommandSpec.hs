@@ -6,7 +6,6 @@ import Category
 import Period
 import Data.Time.Calendar
 
-theDay = fromGregorian
 spec = do
     describe "Command" $ do
         describe "Summary" $ do
@@ -59,11 +58,11 @@ spec = do
             it "recognize the detail command with a period argument" $ do
                 let args = words "detail -p 04/30/2020 05/31/2020"
                 command args `shouldBe` 
-                    Right (Detail Nothing Nothing (Just (theDay 2020 04 30, theDay 2020 05 31)))
+                    Right (Detail Nothing Nothing (Just (Period (theDay 2020 04 30) (theDay 2020 05 31))))
             it "recognize the detail command with a month argument" $ do
                 let args = words "detail -m 2020 4"
                 command args `shouldBe` 
-                    Right (Detail Nothing Nothing (Just (theDay 2020 04 01, theDay 2020 04 30)))
+                    Right (Detail Nothing Nothing (Just (Period (theDay 2020 04 01) (theDay 2020 04 30))))
 
         describe "Help" $ do
             it "recognize the help command" $ do

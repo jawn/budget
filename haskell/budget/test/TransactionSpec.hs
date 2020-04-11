@@ -4,6 +4,7 @@ import Test.Hspec
 import Amount
 import Account
 import Category
+import Period
 import Transaction
 import Data.List
 import Data.Time.Calendar
@@ -56,7 +57,7 @@ spec = do
             let ts = [ simplified 2020 4 31 "Training" 48.07 
                      , simplified 2020 4 7  "Training" 42.17 
                      , simplified 2020 3 4  "Training" 1000.00 ]
-            transactionsPeriod ts `shouldBe` (mkDate 2020 3 4, mkDate 2020 4 31)
+            transactionsPeriod ts `shouldBe` Period (mkDate 2020 3 4) (mkDate 2020 4 31)
 
 
 

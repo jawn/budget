@@ -33,7 +33,7 @@ summarizeTransactionsMonths months ts =
     (transactionCategory (head ts), totalTransactions ts, averageTransactionsPerMonth months ts) 
 
 transactionsPeriod :: [Transaction] -> Period
-transactionsPeriod ts = (date1, date2)
+transactionsPeriod ts = Period date1 date2
     where
         date1 = minimum dates
         date2 = maximum dates

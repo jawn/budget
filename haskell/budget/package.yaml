@@ -38,10 +38,10 @@ executables:
     main:                Budget.hs
     source-dirs:         app
     ghc-options:
+    - -freverse-errors
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
-    - -freverse-errors
     dependencies:
     - budget
 
@@ -50,10 +50,10 @@ tests:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
+    - -freverse-errors
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
-    - -freverse-errors
     dependencies:
     - budget
     - hspec

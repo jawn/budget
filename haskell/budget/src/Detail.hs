@@ -29,10 +29,17 @@ prettyLine t = printf "%-20s %10s %-20s %-20s %-20s|%10s"
              (take 20 (categoryName (transactionCategory t)))
              (show (transactionAmount t))
 
+totalLabel :: Period -> Amount -> String
+totalLabel p a = printf "%-94s:%10s" ("TOTAL "++ (show p)) (show a) 
+
+formatDate :: Day -> String
+formatDate day = formatTime defaultTimeLocale "%m/%d/%Y" day
+
 total 
     :: [Transaction]
     -> String
-total ts = printf "%-94s:%10s" "TOTAL" (show (totalTransactions ts))
+total ts = totalLabel (transactionsPeriod ts) (totalTransactions ts) 
+
 printDetail
     :: Maybe FilePath
     -> Maybe Category
@@ -46,4 +53,3 @@ printDetail fp c p ts = do
             processDetail transactions = do
                 putStr   (unlines (detail transactions))
                 putStrLn (total transactions)
-
