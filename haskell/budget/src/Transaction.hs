@@ -39,3 +39,7 @@ transactionsPeriod ts = Period date1 date2
         date1 = minimum dates
         date2 = maximum dates
         dates = sort $ map transactionDate ts
+
+checkNotEmpty :: [Transaction] -> Either String [Transaction]
+checkNotEmpty [] = Left "no transaction"
+checkNotEmpty ts = Right ts 

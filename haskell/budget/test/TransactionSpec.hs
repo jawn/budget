@@ -59,5 +59,10 @@ spec = do
                      , simplified 2020 3 4  "Training" 1000.00 ]
             transactionsPeriod ts `shouldBe` Period (mkDate 2020 3 4) (mkDate 2020 4 31)
 
+    describe "check not empty" $ do
+        it "yields a message is transaction list is empty" $ do
+            let ts = [simplified 2020 4 5 "Training" 48.07] 
+            checkNotEmpty ts `shouldBe` Right ts
+            checkNotEmpty [] `shouldBe` Left "no transaction" 
 
 

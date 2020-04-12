@@ -83,26 +83,6 @@ spec = do
             encodeTransactionsToFile ts fp
             us <- decodeTransactionsFromFile fp
             us `shouldBe` Right ts
-        it "can be appended to a csv file" $ do
-            let ts = [ Transaction { transactionAccount = Account "MyBank"
-                                   , transactionDate = theDay 2020 1 23
-                                   , transactionNotes = Just "some notes"
-                                   , transactionName = Just "a name"
-                                   , transactionCategory = Category "Groceries"
-                                   , transactionAmount = mkAmount (-48.07) }
-                     , Transaction { transactionAccount = Account "Invest"
-                                   , transactionDate = theDay 2020 6 1
-                                   , transactionNotes = Nothing
-                                   , transactionName = Just "commerce"
-                                   , transactionCategory = Category "Investments"
-                                   , transactionAmount = mkAmount (-48.07) }
-                     ]
-                fp = "test/test-encoded-transactions.csv"
-            encodeTransactionsToFile ts fp
-            encodeTransactionsToFileAdditive ts fp
-            us <- decodeTransactionsFromFile fp
-            fmap length us `shouldBe` Right 4
-            us `shouldBe` Right (ts ++ ts)
         
         it "can be imported from a csv file" $ do
             let bs = "MyBank,,02/25/2020,some note,GOOGLE  DOMAINS,Online Services,12\nMyBank,,02/24/2020,,TRANSFERWISE INC,Training,-1242.26\n"

@@ -55,7 +55,7 @@ printSummary
     -> Either String [Transaction]
     -> IO ()
 printSummary transactionFilePath categoryFilePath selector transactions = do
-    either exitWithMsg processSummary transactions
+    either exitWithMsg processSummary (transactions >>= checkNotEmpty)
         where
             processSummary :: [Transaction] -> IO ()
             processSummary transactions = do

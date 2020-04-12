@@ -61,7 +61,7 @@ printDetail
     -> Either String [Transaction]
     -> IO ()
 printDetail transactionFilePath category period transactions = do
-    either exitWithMsg processDetail transactions 
+    either exitWithMsg processDetail (transactions >>= checkNotEmpty)
         where
             processDetail :: [Transaction] -> IO ()
             processDetail transactions = do 
