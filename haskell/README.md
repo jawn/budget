@@ -14,8 +14,9 @@
 - [X] add a qualifier for specific parameters in the command  like `-t` for transaction file `-c` for category selection file `-p` for period, e.g. `budget summary -c MyCategories.csv -t MySpecificTransaction.csv`
 - [X] add a command `budget import <DOWNLOADED-CSVFILE-FOLDER>` that adds all the new transactions files from that folder to the transaction csv file, checking for format and duplicates
 - [X] add a command `budget details [-p MM/DD/YYYY MM/DD/YYYY] [-m YYYY MM] [-c CATEGORY]` that shows all the transactions for a given months or a given category (or for all months or for all categories)
-- [ ] strip the spaces from the labels name and notes from import files
+- [X] strip the spaces from the labels name and notes from import files
 - [X] sorting options!
+- [X] update Help
 
 ## how to run the tests
 
@@ -49,18 +50,81 @@ then the command `budget summary` will display a summary report of these transac
 
 ## usage
 
-    budget-exe summary 
+### Summary
+
+    budget summary 
+
+or 
+    budget sum
+
+or 
+    budget s
 
 will print the total by category for all the transactions in the main transactions csv file.
 
-    budget-exe summary -t <OtherTransactions.csv>
+    budget summary -t OtherTransactions.csv
 
-will print the total by category for all the transactions in the alternative csv file.
+will print the total by category for all the transactions in the alternative file `OtherTransactions.csv`.
 
 
-    budget-exe summary -c <Categories.csv>
+    budget summary -c Categories.csv
 
-will print the total by category for categories given in the selection file only.
+will print the total by category for categories given in the selection file `Categories.csv` only.
+
+### Detail
+
+    budget detail
+
+or
+    budget d
+
+will print the transactions in the main transactions file.
+
+    budget d -t OtherTransactions.csv
+
+will print the transactions in the alternative file `OtherTransactions.csv`.
+
+    budget d -c "Business Expenses"
+
+will print the transactions having the category *Business Expenses*.
+
+    budget d -p 01/01/2020 03/31/2020
+
+will print the transactions having their date between the January 1st 2020 and the March 31st 2020.
+
+    budget d -m 2020 4
+
+will print the transactions having their date in April 2020. 
+
+    budget d -s AD
+
+will print the transactions sorted by Account, then Date
+
+    budget d -s Cm
+
+will print the transactions sorteds by Category (ascending) then Amount (descending) 
+
+Sort criteria (they can all be mixed) :
+
+- A : Account (asc)
+- a : Account (desc)
+- C : Category (asc)
+- c : Category (desc)
+- D : Date (asc)
+- d : Date (desc)
+- M : Amount (asc)
+- m : Amount (desc)
+- N : Name (asc)
+- n : Name (desc)
+- O : Note (asc)
+- o : Note (desc)
+
+### Import
+
+    budget import MyTransactions.csv Checking
+
+will import the transactions from the file `MyTransactions.csv` into the main transactions file, assigning *Checking* as the Account for these transactions. If the transactions have already been imported (based on the same Name, Date, and Amount) the import will be cancelled. Any transaction with a status different from "posted" will not be imported.
+
 
 ## File Format
 
