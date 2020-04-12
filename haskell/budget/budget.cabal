@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7c5c753aafd8bfbddedeb58fc0ae00c9c1450ea6815fa55c881e084c5925b457
+-- hash: 4743d9d130ae230d38f1c2373f8333e634b41dd88c98f22f7b773c6e4f8cb02b
 
 name:           budget
 version:        0.1.0.0
@@ -40,6 +40,7 @@ library
       Import
       Period
       Same
+      Sorting
       Summary
       Transaction
       TransactionsCsv
@@ -92,6 +93,7 @@ test-suite budget-test
       DetailSpec
       ImportSpec
       PeriodSpec
+      SortSpec
       SummarySpec
       TransactionsCsvSpec
       TransactionSpec

@@ -7,7 +7,7 @@ import Same
 
 data Command 
     = Summary (Maybe FilePath) (Maybe FilePath)
-    | Detail  (Maybe FilePath) (Maybe Category) (Maybe Period)
+    | Detail  (Maybe FilePath) (Maybe Category) (Maybe Period) 
     | Import FilePath String
     | Help
             
