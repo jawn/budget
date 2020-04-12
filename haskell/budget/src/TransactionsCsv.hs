@@ -118,13 +118,6 @@ encodeTransactionsToFile
 encodeTransactionsToFile ts filePath =
     catchShowIO (ByteString.writeFile filePath (encodeTransactions ts))
 
-encodeTransactionsToFileAdditive
-    :: [Transaction]
-    -> FilePath
-    -> IO (Either String ())
-encodeTransactionsToFileAdditive ts filePath =
-    catchShowIO (ByteString.appendFile filePath (encodeTransactions ts))
-
 retrieveTransactions 
     :: Config
     -> Maybe FilePath
@@ -148,7 +141,7 @@ saveTransactions cfg ts = do
     case fp of
       Left msg -> exitWithMsg msg
       Right filePath -> do
-          result <- encodeTransactionsToFileAdditive ts filePath
+          result <- encodeTransactionsToFile ts filePath
           case result of
             Left msg -> exitWithMsg msg
             Right _ -> return ()

@@ -57,6 +57,11 @@ processCommand config (Import importFilePath account) = do
     case transactions of
         Left msg -> exitWithMsg msg
         Right ts -> case toImport of
-                      Right imp -> importTransactionFile config ts imp account
+                      Right imp -> do
+                          result <- importTransactionFile config ts imp account
+                          case result of 
+                            Right n -> do putStrLn $ show n ++ " transactions imported"
+                                          exitSuccess
+                            Left msg -> exitWithMsg msg
                       Left msg -> exitWithMsg msg
 

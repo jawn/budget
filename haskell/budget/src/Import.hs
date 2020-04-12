@@ -29,9 +29,12 @@ importTransactions ts imp name =
     attributes :: Transaction -> Attributes
     attributes t = (transactionDate t, transactionName t, transactionAmount t)
 
-importTransactionFile :: Config -> [Transaction] -> [Transaction] -> String -> IO ()
+importTransactionFile :: Config -> [Transaction] -> [Transaction] -> String -> IO (Either String Int)
 importTransactionFile config ts imp name = do
     case importTransactions ts imp name of
-      Right result -> saveTransactions config result
-      Left msg -> exitWithMsg msg
+      Right result -> do 
+         saveTransactions config result
+         return $ Right (length imp)
+         
+      Left msg -> return $ Left msg
 
