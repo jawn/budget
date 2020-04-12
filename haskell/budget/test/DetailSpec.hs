@@ -29,14 +29,16 @@ spec = do
                          }
     describe "detail" $ do
         it "show transactions" $ do
-            take 2 (detail (sortBy (comparing transactionDate) [t1,t2]))) `shouldBe` 
+            take 2 (detail (sortBy (comparing transactionDate) [t1,t2])) `shouldBe` 
                  ["Investment           05/01/2020 a long category name Another very long na Devices             |  -1000.00"
 
                  ,"MyBank               06/01/2020 some notes           Joe's shop           Groceries           |    -48.07"]
 
         it "show the total for the transactions, mentionning the min and max date " $ do
-            total [t1,t2] `shouldBe` 
-                 "TOTAL from 05/01/2020 to 06/01/2020                                                           :  -1048.07"
+            lines (total [t1,t2]) `shouldBe` 
+                 [ "TOTAL from 05/01/2020 to 06/01/2020                                                           :  -1048.07"
+                 , "2 transactions"
+                 ]
 
     describe "title" $ do
         it "show a header for the detail report for all transactions" $ do

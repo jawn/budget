@@ -15,6 +15,7 @@ import Data.Ord
 import Text.Printf
 import Data.Time
 import qualified Data.Time as Time
+import Data.Maybe
 
 
 detail 
@@ -37,10 +38,15 @@ totalLabel p a = printf "%-94s:%10s" ("TOTAL "++ (show p)) (show a)
 formatDate :: Day -> String
 formatDate day = formatTime defaultTimeLocale "%m/%d/%Y" day
 
+lengthLabel :: Int -> String
+lengthLabel n = printf "%d transactions" n
+
 total 
     :: [Transaction]
     -> String
-total ts = totalLabel (transactionsPeriod ts) (totalTransactions ts) 
+total ts = unlines [ totalLabel (transactionsPeriod ts) (totalTransactions ts) 
+                   , lengthLabel (length ts)
+                   ]
 
 
 detailTitle 
@@ -49,11 +55,12 @@ detailTitle
     -> Maybe Period
     -> String
 detailTitle Nothing Nothing Nothing = "Transactions (all)"
-detailTitle fp c p = 
-    "Transactions " 
-    ++ (maybe "" ("from file: "++) fp)
-    ++ (maybe "" (("with category: "++) . categoryName) c)
-    ++ (maybe "" show p)
+detailTitle fp c p = "Transactions " ++ intercalate " " (catMaybes options)
+    where
+        options = [ fmap ("from file: "++) fp
+                  , fmap (("with category: "++) . categoryName) c
+                  , fmap show p
+                  ]
 
 printDetail
     :: Maybe FilePath
@@ -63,12 +70,13 @@ printDetail
     -> Maybe SortingCriteria
     -> IO ()
 printDetail transactionFilePath category period transactions sortingCriteria = do
-    either exitWithMsg (processDetail (maybe "" id sortingCriteria)) transactions -- ) transactions >>= checkNotEmpty
+    either exitWithMsg (processDetail (maybe "" id sortingCriteria)) (transactions >>= checkNotEmpty)
         where
             processDetail :: SortingCriteria -> [Transaction] -> IO ()
             processDetail sortingCriteria transactions = do 
                 let selection = (maybe id (\c -> filter (\t -> same categoryName c (transactionCategory t))) category)
                               . (maybe id (\p -> filter (\t -> (transactionDate t) `within` p)) period)
                 putStrLn (detailTitle transactionFilePath category period)
-                putStr (unlines (detail (sortWithCriteria sortingCriteria (selection transactions))))
+                either exitWithMsg (putStr . unlines . detail) (checkNotEmpty (sortWithCriteria sortingCriteria (selection transactions)))
+                -- ((sortWithCriteria sortingCriteria (selection transactions)) >>= checkNotEmpty)
                 putStrLn (total (selection transactions))

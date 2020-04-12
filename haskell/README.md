@@ -12,10 +12,10 @@
 - [X] add a help command
 - [X] have the budget app find its main CSV file in `~/.budget/budget_conf` containing `TRANSACTIONS:file/path/to/transactions.CSV` 
 - [X] add a qualifier for specific parameters in the command  like `-t` for transaction file `-c` for category selection file `-p` for period, e.g. `budget summary -c MyCategories.csv -t MySpecificTransaction.csv`
-- [ ] add a command `budget import <DOWNLOADED-CSVFILE-FOLDER>` that adds all the new transactions files from that folder to the transaction csv file, checking for format and duplicates
-- [ ] add a command `budget details [-p MM/DD/YYYY MM/DD/YYYY] [-m YYYY MM] [-c CATEGORY]` that shows all the transactions for a given months or a given category (or for all months or for all categories)
+- [X] add a command `budget import <DOWNLOADED-CSVFILE-FOLDER>` that adds all the new transactions files from that folder to the transaction csv file, checking for format and duplicates
+- [X] add a command `budget details [-p MM/DD/YYYY MM/DD/YYYY] [-m YYYY MM] [-c CATEGORY]` that shows all the transactions for a given months or a given category (or for all months or for all categories)
 - [ ] strip the spaces from the labels name and notes from import files
-- [ ] sorting options!
+- [X] sorting options!
 
 ## how to run the tests
 
