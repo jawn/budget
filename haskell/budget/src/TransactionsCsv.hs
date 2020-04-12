@@ -8,6 +8,8 @@ import Amount
 import Account
 import Period
 import Config
+import Name
+import Note
 import ExitWithMsg
 
 import Data.Time
@@ -24,7 +26,7 @@ import qualified Data.ByteString.Char8 as Char8 (unpack, pack)
 import Data.Vector (Vector, toList)
 import qualified Data.Vector as Vector 
 
-import Data.Text (Text, unpack)
+import Data.Text (Text, unpack, strip)
 import Data.Text.Encoding as Text
 import Data.Maybe
 
@@ -50,20 +52,37 @@ import Data.Csv
 import Control.Monad
 import qualified Control.Monad as Monad (mzero)
 
+decodeString = unpack . strip . decodeLatin1 
+
+data FieldNo = ACCOUNT | VOID1 | DAY | NOTES | NAME | CATEGORY | AMOUNT
+    deriving (Eq, Enum)
+
 instance FromRecord Transaction where
     parseRecord v
-      | length v == 7 = Transaction <$> v .! 0 <*> v .! 2 <*> v .! 3 <*> v .! 4 <*> v .! 5 <*> v .! 6
+      | length v == 7 = Transaction 
+                        <$> v .! fromEnum ACCOUNT
+                        <*>   v .! fromEnum DAY
+                        <*>   v .! fromEnum NOTES
+                        <*>   v .! fromEnum NAME
+                        <*>   v .! fromEnum CATEGORY 
+                        <*>   v .! fromEnum AMOUNT
       | otherwise = fail (show v)
+
+instance FromField Name where
+    parseField = pure . Name . decodeString
+
+instance FromField Note where
+    parseField = pure . Note . decodeString
 
 instance FromField Account where
     parseField "" = fail "account name required"
-    parseField s = (pure . Account . unpack . decodeLatin1) s
+    parseField s = (pure . Account . decodeString) s
 
 instance FromField Time.Day where
-    parseField = parseTimeM True defaultTimeLocale "%m/%d/%Y" . unpack . decodeLatin1
+    parseField = parseTimeM True defaultTimeLocale "%m/%d/%Y" . decodeString
 
 instance FromField Category where
-    parseField = pure . Category . unpack . decodeLatin1 
+    parseField = pure . Category . decodeString
 
 instance FromField Amount where
     parseField s | head (Char8.unpack s) == '-' = fmap negate $ parseField (Char8.pack (tail (Char8.unpack s)))
@@ -80,6 +99,12 @@ instance ToRecord Transaction
                               , toField (transactionCategory t)
                               , toField (transactionAmount t)
                               ]
+
+instance ToField Name where
+    toField (Name n) = Char8.pack $ n 
+
+instance ToField Note where
+    toField (Note n) = Char8.pack $ n
 
 instance ToField Account where
     toField = Char8.pack . accountName

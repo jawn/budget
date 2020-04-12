@@ -4,6 +4,8 @@ module DetailSpec
 import Test.Hspec
 import Transaction
 import Account
+import Name
+import Note
 import Category
 import Amount
 import Period
@@ -15,15 +17,15 @@ import Data.List
 spec = do
     let t1 = Transaction { transactionAccount = Account "MyBank"
                          , transactionDate    = theDay 2020 6 1
-                         , transactionNotes   = Just "some notes"
-                         , transactionName    = Just "Joe's shop"
+                         , transactionNotes   = Just $ Note "some notes"
+                         , transactionName    = Just (Name "Joe's shop")
                          , transactionCategory = Category "Groceries"
                          , transactionAmount   = mkAmount (-48.07)
                          }
     let t2 = Transaction { transactionAccount = Account "Investment"
                          , transactionDate    = theDay 2020 5 1
-                         , transactionNotes   = Just "a long category name indeed"
-                         , transactionName    = Just "Another very long name,Apple"
+                         , transactionNotes   = Just $ Note "a long category name indeed"
+                         , transactionName    = Just (Name "Another very long name,Apple")
                          , transactionCategory = Category "Devices"
                          , transactionAmount   = mkAmount (-1000.00)
                          }

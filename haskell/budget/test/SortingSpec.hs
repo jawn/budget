@@ -5,6 +5,8 @@ module SortingSpec
 import Test.Hspec
 import Amount
 import Category
+import Name
+import Note
 import Account
 import Transaction
 import Sorting
@@ -14,29 +16,29 @@ import Data.Ord
 
 ts = [ Transaction { transactionAccount  = Account "Savings"
                    , transactionDate     = theDay 2020 1 23
-                   , transactionNotes    = Just "some notes"
-                   , transactionName     = Just "Chez François"
+                   , transactionNotes    = Just $ Note "some notes"
+                   , transactionName     = Just $ Name "Chez François"
                    , transactionCategory = Category "Business Expenses"
                    , transactionAmount   = mkAmount 48.07
                    }
      , Transaction { transactionAccount  = Account "Expenses"
                    , transactionDate     = theDay 2020 4 23
                    , transactionNotes    = Nothing
-                   , transactionName     = Just "Lego"
+                   , transactionName     = Just $ Name "Lego"
                    , transactionCategory = Category "Playing"
                    , transactionAmount   = mkAmount 23.17
                    }
      , Transaction { transactionAccount  = Account "Savings"
                    , transactionDate     = theDay 2020 3 23
                    , transactionNotes    = Nothing
-                   , transactionName     = Just "Apple"
+                   , transactionName     = Just $ Name "Apple"
                    , transactionCategory = Category "Business Expenses"
                    , transactionAmount   = mkAmount 1024.00
                    }
      , Transaction { transactionAccount  = Account "Expenses"
                    , transactionDate     = theDay 2020 1 22
                    , transactionNotes    = Nothing
-                   , transactionName     = Just "Disney"
+                   , transactionName     = Just $ Name "Disney"
                    , transactionCategory = Category "Entertainment"
                    , transactionAmount   = mkAmount 500.00
                    }

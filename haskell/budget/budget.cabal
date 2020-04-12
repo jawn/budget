@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e1e99f283dac7286b0c7d330d2114088586100f28ce497830f59384993861de2
+-- hash: 6c89a02a14a53fa4f7ab7c1e8b9a4123971adb1ab9736321715cb5df5c74f133
 
 name:           budget
 version:        0.1.0.0
@@ -38,6 +38,8 @@ library
       ExitWithMsg
       Help
       Import
+      Name
+      Note
       Period
       Same
       Sorting

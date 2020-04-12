@@ -2,6 +2,8 @@ module ImportSpec
     where
 import Test.Hspec
 import Transaction
+import Name
+import Note
 import Account
 import Category
 import Period
@@ -11,29 +13,29 @@ import Import
 spec = do
     let t1 = Transaction { transactionAccount = Account "MyBank"
                          , transactionDate    = theDay 2020 6 1
-                         , transactionNotes   = Just "some notes"
-                         , transactionName    = Just "Joe's shop"
+                         , transactionNotes   = Just $ Note "some notes"
+                         , transactionName    = Just $ Name "Joe's shop"
                          , transactionCategory = Category "Groceries"
                          , transactionAmount   = mkAmount (-48.07)
                          }
     let t2 = Transaction { transactionAccount = Account "Investment"
                          , transactionDate    = theDay 2020 5 1
-                         , transactionNotes   = Just "a long category name indeed"
-                         , transactionName    = Just "Another very long name,Apple"
+                         , transactionNotes   = Just $ Note "a long category name indeed"
+                         , transactionName    = Just $ Name "Another very long name,Apple"
                          , transactionCategory = Category "Devices"
                          , transactionAmount   = mkAmount (-1000.00)
                          }
     let t3 = Transaction { transactionAccount = Account "posted"
                          , transactionDate    = theDay 2020 7 1
-                         , transactionNotes   = Just "notes"
-                         , transactionName    = Just "Jack shop"
+                         , transactionNotes   = Just $ Note "notes"
+                         , transactionName    = Just $ Name "Jack shop"
                          , transactionCategory = Category "Groceries"
                          , transactionAmount   = mkAmount (-100.00)
                          }
     let t4 = Transaction { transactionAccount = Account "posted"
                          , transactionDate    = theDay 2020 8 1
-                         , transactionNotes   = Just "NOTES"
-                         , transactionName    = Just "General"
+                         , transactionNotes   = Just $ Note "NOTES"
+                         , transactionName    = Just $ Name "General"
                          , transactionCategory = Category "Devices"
                          , transactionAmount   = mkAmount (-50.00)
                          }
@@ -57,15 +59,15 @@ spec = do
             it "doesn't append transactions where status is differet from posting" $ do
                 let t5 = Transaction { transactionAccount = Account "pending"
                                      , transactionDate    = theDay 2020 9 1
-                                     , transactionNotes   = Just "bad transaction"
-                                     , transactionName    = Just "General"
+                                     , transactionNotes   = Just $ Note "bad transaction"
+                                     , transactionName    = Just $ Name "General"
                                      , transactionCategory = Category "Devices"
                                      , transactionAmount   = mkAmount (-40050.00)
                                      }
                 let t6 = Transaction { transactionAccount = Account "forecasted"
                                      , transactionDate    = theDay 2020 9 1
-                                     , transactionNotes   = Just "bad transaction"
-                                     , transactionName    = Just "General"
+                                     , transactionNotes   = Just $ Note "bad transaction"
+                                     , transactionName    = Just $ Name "General"
                                      , transactionCategory = Category "Devices"
                                      , transactionAmount   = mkAmount (-40050.00)
                                      }

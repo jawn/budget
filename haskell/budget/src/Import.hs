@@ -4,6 +4,7 @@ module Import
 import Transaction
 import Account
 import Amount
+import Name
 import Data.Time
 import ExitWithMsg
 import Config

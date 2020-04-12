@@ -9,6 +9,8 @@ import TransactionSpec (simplified)
 import Transaction
 import Amount
 import Account
+import Name
+import Note
 import Category
 import TransactionsCsv
 
@@ -26,9 +28,14 @@ spec = do
             let bs = "MyBank,,02/25/2020,some note,GOOGLE  DOMAINS,Online Services,12\nMyBank,,02/24/2020,,TRANSFERWISE INC,Training,-1242.26\n"
                 ts = decodeTransactions bs
             ts `shouldBe` Right 
-                [ Transaction (Account "MyBank") (theDay 2020 02 25) (Just "some note") (Just "GOOGLE  DOMAINS") (Category "Online Services") (mkAmount 12.00)
-                , Transaction (Account "MyBank") (theDay 2020 02 24) Nothing (Just "TRANSFERWISE INC") (Category "Training") (mkAmount (-1242.26))
+                [ Transaction (Account "MyBank") (theDay 2020 02 25) (Just $ Note "some note") (Just $ Name "GOOGLE  DOMAINS") (Category "Online Services") (mkAmount 12.00)
+                , Transaction (Account "MyBank") (theDay 2020 02 24) Nothing (Just $ Name "TRANSFERWISE INC") (Category "Training") (mkAmount (-1242.26))
                 ]
+        it "strips the strings values from useless space" $ do
+            let bs = "  MyBank  ,  ,  02/25/2020  ,  some note  ,  GOOGLE  DOMAINS  ,  Online Services  ,  12\n"
+                ts = decodeTransactions bs
+            ts `shouldBe` Right 
+                [ Transaction (Account "MyBank") (theDay 2020 02 25) (Just $ Note "some note") (Just $ Name "GOOGLE  DOMAINS") (Category "Online Services") (mkAmount 12.00)]
         it "can be decoded from a ByteString containing values with double minus sign" $ do
             let bs = "MyBank,,02/25/2020,,GOOGLE  DOMAINS,Online Services,--12\n"
                 ts = decodeTransactions bs
@@ -51,14 +58,14 @@ spec = do
         it "can be encoded to a ByteString containing values" $ do
             let ts = [ Transaction { transactionAccount = Account "MyBank"
                                    , transactionDate = theDay 2020 1 23
-                                   , transactionNotes = Just "some notes"
-                                   , transactionName = Just "a name"
+                                   , transactionNotes = Just $ Note "some notes"
+                                   , transactionName = Just $ Name "a name"
                                    , transactionCategory = Category "Groceries"
                                    , transactionAmount = mkAmount (-48.07) }
                      , Transaction { transactionAccount = Account "Invest"
                                    , transactionDate = theDay 2020 6 1
                                    , transactionNotes = Nothing
-                                   , transactionName = Just "commerce"
+                                   , transactionName = Just $ Name "commerce"
                                    , transactionCategory = Category "Investments"
                                    , transactionAmount = mkAmount (-48.07) }
                      ]
@@ -68,14 +75,14 @@ spec = do
         it "can be saved to a csv file" $ do
             let ts = [ Transaction { transactionAccount = Account "MyBank"
                                    , transactionDate = theDay 2020 1 23
-                                   , transactionNotes = Just "some notes"
-                                   , transactionName = Just "a name"
+                                   , transactionNotes = Just $ Note "some notes"
+                                   , transactionName = Just $ Name "a name"
                                    , transactionCategory = Category "Groceries"
                                    , transactionAmount = mkAmount (-48.07) }
                      , Transaction { transactionAccount = Account "Invest"
                                    , transactionDate = theDay 2020 6 1
                                    , transactionNotes = Nothing
-                                   , transactionName = Just "commerce"
+                                   , transactionName = Just $ Name "commerce"
                                    , transactionCategory = Category "Investments"
                                    , transactionAmount = mkAmount (-48.07) }
                      ]
@@ -90,8 +97,8 @@ spec = do
             ByteString.writeFile fp bs
             ts <- decodeTransactionsFromFile fp
             ts `shouldBe` Right 
-                [ Transaction (Account "MyBank") (theDay 2020 02 25) (Just "some note") (Just "GOOGLE  DOMAINS") (Category "Online Services") (mkAmount 12.00)
-                , Transaction (Account "MyBank") (theDay 2020 02 24) Nothing (Just "TRANSFERWISE INC") (Category "Training") (mkAmount (-1242.26))
+                [ Transaction (Account "MyBank") (theDay 2020 02 25) (Just $ Note "some note") (Just $ Name "GOOGLE  DOMAINS") (Category "Online Services") (mkAmount 12.00)
+                , Transaction (Account "MyBank") (theDay 2020 02 24) Nothing (Just $ Name "TRANSFERWISE INC") (Category "Training") (mkAmount (-1242.26))
                 ]
         it "can notify an error when failing from importing from file" $ do
             let fp = "foo.csv"

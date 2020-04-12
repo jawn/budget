@@ -2,6 +2,8 @@ module TransactionSpec
     where
 import Test.Hspec
 import Amount
+import Name
+import Note
 import Account
 import Category
 import Period
@@ -12,8 +14,8 @@ import Data.Time.Calendar
 simplified :: Integer -> Int -> Int -> String -> Double -> Transaction
 simplified y m d c a = Transaction { transactionAccount = Account "MyBank"
                                    , transactionDate = fromGregorian y m d
-                                   , transactionNotes = Just "some notes"
-                                   , transactionName = Just "a name"
+                                   , transactionNotes = Just $ Note "some notes"
+                                   , transactionName = Just $ Name "a name"
                                    , transactionCategory = Category c
                                    , transactionAmount = mkAmount a }
 mkDate = fromGregorian
@@ -27,10 +29,10 @@ spec = do
             transactionAmount   t `shouldBe` (mkAmount 48.07)
 
         it "also has an account, notes, and a name" $ do
-            let t = Transaction (Account "MyBank") (mkDate 2020 4 5) (Just "some notes") (Just "a name") (Category "Groceries") (mkAmount 48.07)
+            let t = Transaction (Account "MyBank") (mkDate 2020 4 5) (Just $ Note "some notes") (Just $ Name "a name") (Category "Groceries") (mkAmount 48.07)
             transactionAccount  t `shouldBe` Account "MyBank"
-            transactionName t  `shouldBe` Just "a name"
-            transactionNotes t `shouldBe` Just "some notes"
+            transactionName t  `shouldBe` Just (Name "a name")
+            transactionNotes t `shouldBe` Just (Note "some notes")
 
     describe "a list of Transactions" $ do
         it "can be totaled" $ do

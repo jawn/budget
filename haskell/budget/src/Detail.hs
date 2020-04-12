@@ -27,8 +27,8 @@ prettyLine :: Transaction -> String
 prettyLine t = printf "%-20s %10s %-20s %-20s %-20s|%10s"
              (take 20 (accountName (transactionAccount t)))
              (formatTime defaultTimeLocale "%m/%d/%Y" (transactionDate t))
-             (take 20 (maybe "" id (transactionNotes t)))
-             (take 20 (maybe "" id (transactionName t)))
+             (take 20 (maybe "" show (transactionNotes t)))
+             (take 20 (maybe "" show (transactionName t)))
              (take 20 (categoryName (transactionCategory t)))
              (show (transactionAmount t))
 
