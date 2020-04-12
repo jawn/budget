@@ -40,9 +40,9 @@ processCommand :: Config.Config -> Command -> IO ()
 
 processCommand _ Help = help
 
-processCommand config (Detail transactionFilePath category period) = do
+processCommand config (Detail transactionFilePath category period sortingCriteria) = do
     transactions <- retrieveTransactions config transactionFilePath 
-    printDetail transactionFilePath category period transactions
+    printDetail transactionFilePath category period transactions sortingCriteria
     exitSuccess
 
 processCommand config (Summary transactionFilePath categoryFilePath) = do

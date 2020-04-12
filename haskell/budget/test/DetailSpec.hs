@@ -9,6 +9,8 @@ import Amount
 import Period
 import Detail
 import Data.Time.Calendar
+import Data.Ord
+import Data.List
 
 spec = do
     let t1 = Transaction { transactionAccount = Account "MyBank"
@@ -27,7 +29,7 @@ spec = do
                          }
     describe "detail" $ do
         it "show transactions" $ do
-            take 2 (detail [t1,t2]) `shouldBe` 
+            take 2 (detail (sortBy (comparing transactionDate) [t1,t2]))) `shouldBe` 
                  ["Investment           05/01/2020 a long category name Another very long na Devices             |  -1000.00"
 
                  ,"MyBank               06/01/2020 some notes           Joe's shop           Groceries           |    -48.07"]

@@ -1,4 +1,5 @@
-module SortSpec
+{-# LANGUAGE OverloadedStrings #-}
+module SortingSpec
     where
 
 import Test.Hspec
@@ -13,7 +14,7 @@ import Data.Ord
 
 ts = [ Transaction { transactionAccount  = Account "Savings"
                    , transactionDate     = theDay 2020 1 23
-                   , transactionNotes    = Nothing
+                   , transactionNotes    = Just "some notes"
                    , transactionName     = Just "Chez François"
                    , transactionCategory = Category "Business Expenses"
                    , transactionAmount   = mkAmount 48.07
@@ -42,19 +43,53 @@ ts = [ Transaction { transactionAccount  = Account "Savings"
      ]
 
 spec = do 
-    describe "sorting detail creates sort criteria" $ do
-        it "on amount" $ do
-            let st = sortByCriteria "M" ts
-                result = unwords $ map (show . transactionAmount) st
-            result `shouldBe` "23.17 48.07 500.00 1024.00"
+    let [t1,t2,t3,t4] = ts
+    describe "foldOrdering" $ do
+        it "folds a list of orderings, yielding an ordering" $ do
+            foldOrdering [] `shouldBe` EQ
+            foldOrdering [GT,LT] `shouldBe` GT
+            foldOrdering [LT,GT] `shouldBe` LT
+            foldOrdering [EQ,GT] `shouldBe` GT
+            foldOrdering [EQ,EQ,LT] `shouldBe` LT
+            foldOrdering [EQ,EQ,EQ] `shouldBe` EQ
 
-        it "on name then amount" $ do
-            let st = sortByCriteria "NM" ts
-                result = unwords $ map (\t -> (maybe "" id (transactionName t)) ++ " " ++ show (transactionAmount t)) st
-            result `shouldBe` "Apple 1024.00 Chez Fran\231ois 48.07 Disney 500.00 Lego 23.17"
+    describe "ordering" $ do
+        it "yields an ordering between two transactions, given a char" $ do
+            ordering 'M' t1 t2 `shouldBe` GT
+            ordering 'm' t1 t2 `shouldBe` LT
+            ordering 'N' t1 t2 `shouldBe` LT
+            ordering 'n' t1 t2 `shouldBe` GT
+            ordering 'C' t1 t3 `shouldBe` EQ
+            ordering 'c' t1 t3 `shouldBe` EQ
+            ordering 'D' t1 t3 `shouldBe` LT
+            ordering 'd' t1 t3 `shouldBe` GT
+            ordering 'A' t2 t4 `shouldBe` EQ 
+            ordering 'a' t2 t4 `shouldBe` EQ 
+            ordering 'O' t1 t4 `shouldBe` GT
+            ordering 'o' t1 t4 `shouldBe` LT
 
-        it "on account then date" $ do
-            let st = sortByCriteria "AD" ts
-                result = unwords $ map (\t -> (accountName (transactionAccount t) ++ " " ++ (showDate (transactionDate t)))) st
-            result `shouldBe` "Expenses 01/22/2020 Expenses 04/23/2020 Savings 01/23/2020 Savings 03/23/2020"
+    describe "orderings" $ do
+        it "yields a list of orderings between two transactions, given a string" $ do
+            orderings t1 t2 "A"  `shouldBe` GT
+            orderings t2 t4 "A"  `shouldBe` EQ
+            orderings t2 t4 "AM" `shouldBe` LT
+            orderings t2 t4 "Am" `shouldBe` GT
+
+    describe "sortWithCriteria" $ do
+        it "sorts a list of transaction according to a set of criteria" $ do
+            sortWithCriteria "Am" ts `shouldBe` [t4,t2,t3,t1]
+
+    describe "validateCriteria" $ do
+        it "yields a message if not given a valid criteria" $ do
+            validateCriteria "MaD" `shouldBe` Right "MaD" 
+            validateCriteria "ADX" `shouldBe` 
+                    (Left $ unlines [ "wrong sorting criteria: ADX"
+                                    , "Available criteria are one or many of:"
+                                    , "A : Account ascending (a : descending)"
+                                    , "C : Category ascending (c : descending)"
+                                    , "D : Date ascending (d : descending)"
+                                    , "M : Amount ascending (m : descending)"
+                                    , "N : Name ascending (n : descending)"
+                                    , "O : Notes ascending (o : descending)"
+                                    ])
 

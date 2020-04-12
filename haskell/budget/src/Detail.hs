@@ -8,6 +8,7 @@ import Amount
 import Period
 import ExitWithMsg
 import Same
+import Sorting
 
 import Data.List 
 import Data.Ord
@@ -19,7 +20,7 @@ import qualified Data.Time as Time
 detail 
     :: [Transaction] 
     -> [String]
-detail = map prettyLine . sortBy (comparing transactionDate) 
+detail = map prettyLine 
 
 prettyLine :: Transaction -> String
 prettyLine t = printf "%-20s %10s %-20s %-20s %-20s|%10s"
@@ -59,14 +60,15 @@ printDetail
     -> Maybe Category
     -> Maybe Period
     -> Either String [Transaction]
+    -> Maybe SortingCriteria
     -> IO ()
-printDetail transactionFilePath category period transactions = do
-    either exitWithMsg processDetail (transactions >>= checkNotEmpty)
+printDetail transactionFilePath category period transactions sortingCriteria = do
+    either exitWithMsg (processDetail (maybe "" id sortingCriteria)) transactions -- ) transactions >>= checkNotEmpty
         where
-            processDetail :: [Transaction] -> IO ()
-            processDetail transactions = do 
+            processDetail :: SortingCriteria -> [Transaction] -> IO ()
+            processDetail sortingCriteria transactions = do 
                 let selection = (maybe id (\c -> filter (\t -> same categoryName c (transactionCategory t))) category)
                               . (maybe id (\p -> filter (\t -> (transactionDate t) `within` p)) period)
                 putStrLn (detailTitle transactionFilePath category period)
-                putStr (unlines (detail (selection transactions)))
+                putStr (unlines (detail (sortWithCriteria sortingCriteria (selection transactions))))
                 putStrLn (total (selection transactions))
