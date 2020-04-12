@@ -6,6 +6,7 @@ import Transaction
 import Category
 import Amount
 import Account
+import Period
 import Config
 import ExitWithMsg
 
@@ -32,10 +33,18 @@ import Data.Csv
     ( FromRecord(parseRecord)
     , (.!)
     , HasHeader(NoHeader)
+    , EncodeOptions(..)
+    , defaultEncodeOptions
     , decode
+    , encodeWith
     , FromField(parseField)
     , runParser
     , Parser
+    , toRecord
+    , record
+    , ToRecord
+    , ToField
+    , toField
     )
 
 import Control.Monad
@@ -62,11 +71,38 @@ instance FromField Amount where
                      Right n -> pure $ mkAmount n
                      Left msg -> fail msg
 
+instance ToRecord Transaction
+    where toRecord t = record [ toField (transactionAccount t)
+                              , toField ByteString.empty -- dummy empty field
+                              , toField (transactionDate t)
+                              , toField (transactionNotes t)
+                              , toField (transactionName t)
+                              , toField (transactionCategory t)
+                              , toField (transactionAmount t)
+                              ]
+
+instance ToField Account where
+    toField = Char8.pack . accountName
+
+instance ToField Day where
+    toField = Char8.pack . showDate
+
+instance ToField Category where
+    toField = Char8.pack . categoryName
+
+instance ToField Amount where
+    toField = Char8.pack . show
+
                     
 decodeTransactions 
     :: ByteString 
     -> Either String [Transaction]
 decodeTransactions = fmap toList . decode NoHeader
+
+encodeTransactions
+    :: [Transaction]
+    ->  ByteString
+encodeTransactions = encodeWith defaultEncodeOptions { encUseCrLf = False }
 
 decodeTransactionsFromFile 
     :: FilePath 
@@ -74,6 +110,20 @@ decodeTransactionsFromFile
 decodeTransactionsFromFile filePath = 
     catchShowIO (ByteString.readFile filePath)
     >>= return . either Left decodeTransactions
+
+encodeTransactionsToFile
+    :: [Transaction]
+    -> FilePath
+    -> IO (Either String ())
+encodeTransactionsToFile ts filePath =
+    catchShowIO (ByteString.writeFile filePath (encodeTransactions ts))
+
+encodeTransactionsToFileAdditive
+    :: [Transaction]
+    -> FilePath
+    -> IO (Either String ())
+encodeTransactionsToFileAdditive ts filePath =
+    catchShowIO (ByteString.appendFile filePath (encodeTransactions ts))
 
 retrieveTransactions 
     :: Config
@@ -97,7 +147,11 @@ saveTransactions cfg ts = do
     let fp = maybeToEither ("error: TRANSACTION file path not found in " ++ home ++ "/.budget_conf") (lookup "TRANSACTIONS" cfg) 
     case fp of
       Left msg -> exitWithMsg msg
-      Right filePath -> undefined
+      Right filePath -> do
+          result <- encodeTransactionsToFileAdditive ts filePath
+          case result of
+            Left msg -> exitWithMsg msg
+            Right _ -> return ()
         
 
 maybeToEither :: a -> Maybe b -> Either a b

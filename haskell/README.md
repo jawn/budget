@@ -15,6 +15,7 @@
 - [ ] add a command `budget import <DOWNLOADED-CSVFILE-FOLDER>` that adds all the new transactions files from that folder to the transaction csv file, checking for format and duplicates
 - [ ] add a command `budget details [-p MM/DD/YYYY MM/DD/YYYY] [-m YYYY MM] [-c CATEGORY]` that shows all the transactions for a given months or a given category (or for all months or for all categories)
 - [ ] strip the spaces from the labels name and notes from import files
+- [ ] sorting options!
 
 ## how to run the tests
 

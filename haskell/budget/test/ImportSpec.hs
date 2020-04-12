@@ -54,7 +54,7 @@ spec = do
                 fmap (map (accountName . transactionAccount) . (drop 2)) result
                     `shouldBe` Right ["CreditFoo","CreditFoo"]
 
-            it "doesn't append transactions where status is pending" $ do
+            it "doesn't append transactions where status is differet from posting" $ do
                 let t5 = Transaction { transactionAccount = Account "pending"
                                      , transactionDate    = theDay 2020 9 1
                                      , transactionNotes   = Just "bad transaction"
@@ -62,8 +62,15 @@ spec = do
                                      , transactionCategory = Category "Devices"
                                      , transactionAmount   = mkAmount (-40050.00)
                                      }
+                let t6 = Transaction { transactionAccount = Account "forecasted"
+                                     , transactionDate    = theDay 2020 9 1
+                                     , transactionNotes   = Just "bad transaction"
+                                     , transactionName    = Just "General"
+                                     , transactionCategory = Category "Devices"
+                                     , transactionAmount   = mkAmount (-40050.00)
+                                     }
                 let existing = [t1,t2] 
-                let to_import = [t5,t3,t4]
+                let to_import = [t5,t3,t6,t4]
                 let result = importTransactions existing to_import "CreditFoo"
                 fmap (filter (\t -> transactionAmount t == mkAmount (-40050.00))) result 
                     `shouldBe` Right []

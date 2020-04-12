@@ -15,7 +15,7 @@ importTransactions :: [Transaction] -> [Transaction] -> String -> Either String 
 importTransactions ts imp name = 
    case alreadyIn (map attributes imp) (map attributes ts) of
      False -> Right $ ts ++ map (changeAccount (Account name)) 
-        (filter (\t -> transactionAccount t /= Account "pending") imp)
+        (filter (\t -> transactionAccount t == Account "posted") imp)
      True -> Left "transactions already imported"
 
     where
