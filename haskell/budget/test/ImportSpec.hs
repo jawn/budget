@@ -44,7 +44,7 @@ spec = do
             it "from a new list to an existing list" $ do
                 let existing = [t1,t2] 
                 let to_import = [t3,t4]
-                let result = importTransactions existing to_import "CreditFoo"
+                let result = importTransactions "CreditFoo" existing to_import 
                 fmap length result `shouldBe` Right 4
                 fmap (map (number . transactionAmount) . (drop 2)) result
                     `shouldBe` Right [-10000,-5000]
@@ -52,7 +52,7 @@ spec = do
             it "while setting the account name to the given name" $ do
                 let existing = [t1,t2] 
                 let to_import = [t3,t4]
-                let result = importTransactions existing to_import "CreditFoo"
+                let result = importTransactions "CreditFoo" existing to_import 
                 fmap (map (accountName . transactionAccount) . (drop 2)) result
                     `shouldBe` Right ["CreditFoo","CreditFoo"]
 
@@ -73,12 +73,12 @@ spec = do
                                      }
                 let existing = [t1,t2] 
                 let to_import = [t5,t3,t6,t4]
-                let result = importTransactions existing to_import "CreditFoo"
+                let result = importTransactions "CreditFoo" existing to_import 
                 fmap (filter (\t -> transactionAmount t == mkAmount (-40050.00))) result 
                     `shouldBe` Right []
 
             it "give a message is the import list has already been imported" $ do
                 let existing = [t1,t2] 
                 let to_import = [t1,t2]
-                let result = importTransactions existing to_import "CreditFoo"
+                let result = importTransactions "CreditFoo" existing to_import 
                 result  `shouldBe` Left "transactions already imported"

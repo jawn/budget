@@ -57,14 +57,8 @@ processCommand config (Summary tr_filePath ca_filePath) = do
 processCommand config (Import im_filePath account) = do
     transactions <- retrieveTransactions config Nothing
     importations <- retrieveTransactions config (Just im_filePath)
-    case transactions of
-        Left msg -> exitWithMsg msg
-        Right ts -> case importations of
-                      Right imp -> do
-                          result <- importTransactionFile config account ts imp 
-                          case result of 
-                            Right n -> do putStrLn $ show n ++ " transactions imported"
-                                          exitSuccess
-                            Left msg -> exitWithMsg msg
-                      Left msg -> exitWithMsg msg
+    let result_trans = join $ importTransactions account <$> transactions <*> importations 
+    either exitWithMsg (saveTransactions config) result_trans
+    let result_length = (-) <$> fmap length result_trans <*> fmap length transactions 
+    either exitWithMsg (\n -> putStrLn $ show n ++ " transactions imported") result_length
 

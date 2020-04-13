@@ -153,8 +153,7 @@ retrieveTransactions cfg Nothing = do
     either (return . Left) (retrieveTransactions cfg . Just) fp
 
 retrieveTransactions cfg (Just fp) = do
-    home <- getHomeDirectory
-    (decodeTransactionsFromFile . canonical home) fp
+    decodeTransactionsFromFile fp
 
 saveTransactions 
     :: Config

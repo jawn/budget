@@ -13,9 +13,9 @@ import TransactionsCsv
 type Attributes = (Day, Maybe Name, Amount)
 
 
-importTransactions :: [Transaction] -> [Transaction] -> String -> Either String [Transaction]
+importTransactions :: String -> [Transaction] -> [Transaction] -> Either String [Transaction]
 
-importTransactions transactions importations name 
+importTransactions name transactions importations 
     | importations `alreadyIn` transactions = Left "transactions already imported"
     | otherwise                             = Right (transactions ++ (changeAccount name . filterPosted) importations)
 
@@ -49,13 +49,4 @@ filterPosted
 filterPosted =
     filter ((Account "posted" ==) . transactionAccount) 
 
-
-importTransactionFile :: Config -> String -> [Transaction] -> [Transaction] -> IO (Either String Int)
-importTransactionFile config name ts imp  = do
-    case importTransactions ts imp name of
-      Right result -> do 
-         saveTransactions config result
-         return $ Right (length imp)
-         
-      Left msg -> return $ Left msg
 
