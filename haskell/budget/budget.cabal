@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 6c89a02a14a53fa4f7ab7c1e8b9a4123971adb1ab9736321715cb5df5c74f133
+-- hash: 583449ba1e0e673b110cf6324ec362d589c73a513701c09e3248b651917e46c7
 
 name:           budget
 version:        0.1.0.0
@@ -38,6 +38,7 @@ library
       ExitWithMsg
       Help
       Import
+      ImportFileName
       Name
       Note
       Period
@@ -56,6 +57,8 @@ library
     , cassava
     , dates
     , directory
+    , filepath
+    , process
     , split
     , text
     , time
@@ -76,6 +79,8 @@ executable budget
     , cassava
     , dates
     , directory
+    , filepath
+    , process
     , split
     , text
     , time
@@ -93,6 +98,7 @@ test-suite budget-test
       CommandSpec
       ConfigSpec
       DetailSpec
+      ImportFileNameSpec
       ImportSpec
       PeriodSpec
       SortingSpec
@@ -110,7 +116,9 @@ test-suite budget-test
     , cassava
     , dates
     , directory
+    , filepath
     , hspec
+    , process
     , split
     , text
     , time

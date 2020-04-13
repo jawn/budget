@@ -10,6 +10,7 @@ import CategoriesCsv
 import TransactionsCsv
 import Command
 import Import
+import ImportFileName
 import qualified Config as Config
 import ExitWithMsg
 import Help
@@ -54,11 +55,25 @@ processCommand config (Summary tr_filePath ca_filePath) = do
     printSummary tr_filePath ca_filePath selector transactions
     exitSuccess
 
-processCommand config (Import im_filePath account) = do
+processCommand config (Import im_filePath (Just account)) = do
     transactions <- retrieveTransactions config Nothing
     importations <- retrieveTransactions config (Just im_filePath)
     let result_trans = join $ importTransactions account <$> transactions <*> importations 
-    either exitWithMsg (saveTransactions config) result_trans
     let result_length = (-) <$> fmap length result_trans <*> fmap length transactions 
-    either exitWithMsg (\n -> putStrLn $ show n ++ " transactions imported") result_length
+    case result_trans of
+      Left msg -> putStrLn msg
+      Right tr -> do
+            saveTransactions config tr
+    either putStrLn (\n-> putStrLn $ (show n) ++ " transactions imported") result_length
 
+processCommand config (Import im_filePath Nothing) = do
+    isDirectory <- doesDirectoryExist im_filePath 
+    case isDirectory of
+      False -> either exitWithMsg (\name -> processCommand config (Import im_filePath (Just name))) (extractName im_filePath)
+      True -> do 
+
+       directory <- importDirectory im_filePath  
+       either exitWithMsg (processImportDirectory config) directory
+
+processImportDirectory :: Config.Config -> [FilePath] -> IO ()
+processImportDirectory config = mapM_ (\filePath -> processCommand config (Import filePath Nothing))

@@ -39,6 +39,20 @@ spec = do
                          , transactionCategory = Category "Devices"
                          , transactionAmount   = mkAmount (-50.00)
                          }
+    let t5 = Transaction { transactionAccount = Account "pending"
+                         , transactionDate    = theDay 2020 9 1
+                         , transactionNotes   = Just $ Note "bad transaction"
+                         , transactionName    = Just $ Name "General"
+                         , transactionCategory = Category "Devices"
+                         , transactionAmount   = mkAmount (-40050.00)
+                         }
+    let t6 = Transaction { transactionAccount = Account "forecasted"
+                         , transactionDate    = theDay 2020 9 1
+                         , transactionNotes   = Just $ Note "bad transaction"
+                         , transactionName    = Just $ Name "General"
+                         , transactionCategory = Category "Devices"
+                         , transactionAmount   = mkAmount (-40050.00)
+                         }
     describe "import" $ do
         describe "append transactions" $ do
             it "from a new list to an existing list" $ do
@@ -57,20 +71,6 @@ spec = do
                     `shouldBe` Right ["CreditFoo","CreditFoo"]
 
             it "doesn't append transactions where status is differet from posting" $ do
-                let t5 = Transaction { transactionAccount = Account "pending"
-                                     , transactionDate    = theDay 2020 9 1
-                                     , transactionNotes   = Just $ Note "bad transaction"
-                                     , transactionName    = Just $ Name "General"
-                                     , transactionCategory = Category "Devices"
-                                     , transactionAmount   = mkAmount (-40050.00)
-                                     }
-                let t6 = Transaction { transactionAccount = Account "forecasted"
-                                     , transactionDate    = theDay 2020 9 1
-                                     , transactionNotes   = Just $ Note "bad transaction"
-                                     , transactionName    = Just $ Name "General"
-                                     , transactionCategory = Category "Devices"
-                                     , transactionAmount   = mkAmount (-40050.00)
-                                     }
                 let existing = [t1,t2] 
                 let to_import = [t5,t3,t6,t4]
                 let result = importTransactions "CreditFoo" existing to_import 

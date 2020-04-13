@@ -49,4 +49,3 @@ filterPosted
 filterPosted =
     filter ((Account "posted" ==) . transactionAccount) 
 
-

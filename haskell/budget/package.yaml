@@ -29,6 +29,8 @@ dependencies:
 - time
 - text
 - directory
+- filepath
+- process
 
 library:
   source-dirs: src

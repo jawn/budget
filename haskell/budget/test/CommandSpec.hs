@@ -86,13 +86,17 @@ spec = do
                                     ])
 
         describe "Import" $ do
-            it "recognize the import command" $ do
+            it "recognize the import command with two arguments" $ do
                 let args = words "import myImport2020Feb.csv ChaseBank"
-                command args `shouldBe` Right (Import "myImport2020Feb.csv" "ChaseBank")
+                command args `shouldBe` Right (Import "myImport2020Feb.csv" (Just "ChaseBank"))
 
-            it "doesn't recognize the import command without two supplementary arguments" $ do
-                let args = words "import chasebank"
-                command args `shouldBe` Left "import: missing argument (import <filename> <accountname>)" 
+            it "recognize the import command with one argument" $ do
+                let args = words "import Downloads"
+                command args `shouldBe` Right (Import "Downloads" Nothing)
+
+            it "recognize the import command without at least one supplementary arguments" $ do
+                let args = words "import"
+                command args `shouldBe` Left "import: missing argument (import {<filename> <accountname> | <folder> }" 
 
         describe "Help" $ do
             it "recognize the help command" $ do
