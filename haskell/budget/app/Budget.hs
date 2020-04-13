@@ -36,29 +36,32 @@ runProgram cfg = do
     either exitWithMsg (processCommand cfg) cmd
 
 
-processCommand :: Config.Config -> Command -> IO ()
+processCommand 
+    :: Config.Config 
+    -> Command 
+    -> IO ()
 
 processCommand _ Help = help
 
-processCommand config (Detail transactionFilePath category period sortingCriteria) = do
-    transactions <- retrieveTransactions config transactionFilePath 
-    printDetail transactionFilePath category period transactions sortingCriteria
+processCommand config (Detail filePath category period criteria) = do 
+    transactions <- retrieveTransactions config filePath 
+    printDetail filePath category period criteria transactions 
     exitSuccess
 
-processCommand config (Summary transactionFilePath categoryFilePath) = do
-    transactions <- retrieveTransactions config transactionFilePath 
-    selector <- importCategorySelector categoryFilePath
-    printSummary transactionFilePath categoryFilePath selector transactions
+processCommand config (Summary tr_filePath ca_filePath) = do
+    transactions <- retrieveTransactions config tr_filePath 
+    selector     <- importCategorySelector ca_filePath
+    printSummary tr_filePath ca_filePath selector transactions
     exitSuccess
 
-processCommand config (Import importFilePath account) = do
+processCommand config (Import im_filePath account) = do
     transactions <- retrieveTransactions config Nothing
-    toImport <- retrieveTransactions config (Just importFilePath)
+    importations <- retrieveTransactions config (Just im_filePath)
     case transactions of
         Left msg -> exitWithMsg msg
-        Right ts -> case toImport of
+        Right ts -> case importations of
                       Right imp -> do
-                          result <- importTransactionFile config ts imp account
+                          result <- importTransactionFile config account ts imp 
                           case result of 
                             Right n -> do putStrLn $ show n ++ " transactions imported"
                                           exitSuccess

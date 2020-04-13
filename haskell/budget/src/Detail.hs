@@ -66,17 +66,17 @@ printDetail
     :: Maybe FilePath
     -> Maybe Category
     -> Maybe Period
-    -> Either String [Transaction]
     -> Maybe SortingCriteria
+    -> Either String [Transaction]
     -> IO ()
-printDetail transactionFilePath category period transactions sortingCriteria = do
-    either exitWithMsg (processDetail (maybe "" id sortingCriteria)) (transactions >>= checkNotEmpty)
+printDetail filePath category period criteria transactions = do
+    either exitWithMsg (processDetail (maybe "" id criteria)) (transactions >>= checkNotEmpty)
         where
             processDetail :: SortingCriteria -> [Transaction] -> IO ()
-            processDetail sortingCriteria transactions = do 
+            processDetail criteria transactions = do 
                 let selection = (maybe id (\c -> filter (\t -> same categoryName c (transactionCategory t))) category)
                               . (maybe id (\p -> filter (\t -> (transactionDate t) `within` p)) period)
-                putStrLn (detailTitle transactionFilePath category period)
-                either exitWithMsg (putStr . unlines . detail) (checkNotEmpty (sortWithCriteria sortingCriteria (selection transactions)))
-                -- ((sortWithCriteria sortingCriteria (selection transactions)) >>= checkNotEmpty)
+                putStrLn (detailTitle filePath category period)
+                either exitWithMsg (putStr . unlines . detail) (checkNotEmpty (sortWithCriteria criteria (selection transactions)))
+                -- ((sortWithCriteria criteria (selection transactions)) >>= checkNotEmpty)
                 putStrLn (total (selection transactions))

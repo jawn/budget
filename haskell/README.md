@@ -17,6 +17,7 @@
 - [X] strip the spaces from the labels name and notes from import files
 - [X] sorting options!
 - [X] update Help
+- [ ] show the file path of the transaction file that was just displayed by detail 
 
 ## how to run the tests
 
@@ -42,9 +43,9 @@ from the budget repository directory
 
 let's say the main transaction csv file, called `Transactions.csv` resides in a folder `Documents/MyData/Budget` on your personnal folder.
 
-edit the file `~/.budget_conf` (on your home directory) to contain:
+edit the file `~/.budget_conf` (on your home directory) to contain (here `you` is your user name; to know your user name, type `whoami`):
 
-    transactions:.~/Documents/MyData/Budget/Transactions.csv
+    transactions:/Users/you/Documents/MyData/Budget/Transactions.csv
 
 then the command `budget summary` will display a summary report of these transactions.
 
