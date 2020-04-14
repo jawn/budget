@@ -49,7 +49,7 @@ processCommand config (Detail filePath category period criteria) = do
     printDetail filePath category period criteria transactions 
     exitSuccess
 
-processCommand config (Summary tr_filePath ca_filePath) = do
+processCommand config (Summary tr_filePath ca_filePath criteria) = do
     transactions <- retrieveTransactions config tr_filePath 
     selector     <- importCategorySelector ca_filePath
     printSummary tr_filePath ca_filePath selector transactions

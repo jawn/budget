@@ -19,6 +19,7 @@
 - [X] update Help
 - [X] show the file path of the transaction file that was just displayed by detail 
 - [X] import all the csv files in a directory, to account names defined by the alphabetical part of the file name
+- [ ] add sorting criteria for summary
 
 ## how to run the tests
 

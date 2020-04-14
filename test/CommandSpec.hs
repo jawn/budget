@@ -11,32 +11,49 @@ spec = do
         describe "No command given" $ do
             it "means summary" $ do
                 let args = words ""
-                command args `shouldBe` Right (Summary Nothing Nothing) 
+                command args `shouldBe` Right (Summary Nothing Nothing Nothing) 
         describe "Summary" $ do
             it "recognize the summary command with a transaction file" $ do
                 let args = words "summary -t foo.csv"
                 command args `shouldBe` 
-                    Right (Summary (Just "foo.csv") Nothing)
+                    Right (Summary (Just "foo.csv") Nothing Nothing)
 
             it "recognize the summary command with any transaction file" $ do
                 let args = words "summary -t bar.csv"
                 command args `shouldBe` 
-                    Right (Summary (Just "bar.csv") Nothing)
+                    Right (Summary (Just "bar.csv") Nothing Nothing)
 
             it "recognize the summary command with a transaction file and a category file" $ do
                 let args = words "summary -t bar.csv -c foo.csv"
                 command args `shouldBe` 
-                    Right (Summary (Just "bar.csv") (Just "foo.csv"))
+                    Right (Summary (Just "bar.csv") (Just "foo.csv") Nothing)
 
             it "recognize the summary command with a only category file" $ do
                 let args = words "summary -c bar.csv"
                 command args `shouldBe` 
-                    Right (Summary Nothing (Just "bar.csv"))
+                    Right (Summary Nothing (Just "bar.csv") Nothing)
 
             it "recognize the summary command with no arguments" $ do
                 let args = words "summary" 
                 command args `shouldBe` 
-                    Right (Summary Nothing Nothing)
+                    Right (Summary Nothing Nothing Nothing)
+
+            it "recognize the summary command sorting options" $ do
+                let args = words "summary -s M" 
+                command args `shouldBe` 
+                    Right (Summary Nothing Nothing (Just "M"))
+
+                let args = words "summary -s c" 
+                command args `shouldBe` 
+                    Right (Summary Nothing Nothing (Just "c"))
+            it "doesn't recognize the summary command with a wrong sorting criteria argument" $ do
+                let args = words "summary -s ADX"
+                command args `shouldBe` 
+                    (Left $ unlines [ "wrong sorting criteria: ADX"
+                                    , "Available criteria are one or two of:"
+                                    , "C : Category ascending (c : descending)"
+                                    , "M : Amount ascending (m : descending)"
+                                    ])
 
         describe "Detail" $ do
             it "recognize the detail command with no arguments" $ do
@@ -106,15 +123,15 @@ spec = do
         it "recognize the command in uppercase or lowercase" $ do
             let args = words "SUmmary -t foo.csv" 
             command args `shouldBe` 
-                Right (Summary (Just "foo.csv") Nothing)
+                Right (Summary (Just "foo.csv") Nothing Nothing)
 
         it "recognize a prefix of the command" $ do
             let args = words "SU -t foo.csv" 
             command args `shouldBe` 
-                Right (Summary (Just "foo.csv") Nothing)
+                Right (Summary (Just "foo.csv") Nothing Nothing)
             let args = words "sum -t foo.csv" 
             command args `shouldBe` 
-                Right (Summary (Just "foo.csv") Nothing)
+                Right (Summary (Just "foo.csv") Nothing Nothing)
 
         it "doesn't recognize a unknown command" $ do
             let args = words "foo bar.csv" 

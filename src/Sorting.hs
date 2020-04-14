@@ -10,6 +10,9 @@ import Data.Ord
 import Data.List
 
 type SortingCriteria = String
+data CommandCriteria = DetailSortingCriteria | SummarySortingCriteria
+                     deriving (Eq, Show)
+
 ordering :: Char -> Transaction -> Transaction -> Ordering
 ordering 'A' = comparing transactionAccount
 ordering 'a' = flip $ comparing transactionAccount
@@ -36,15 +39,22 @@ foldOrdering (ord:_) = ord
 sortWithCriteria :: SortingCriteria -> [Transaction] -> [Transaction]
 sortWithCriteria s = sortBy (\t u -> orderings t u s)
 
-validateCriteria :: SortingCriteria -> Either String SortingCriteria
-validateCriteria s | any (not . (`elem` "AaCcDdMmNnOo")) s =
-                    (Left $ unlines [ "wrong sorting criteria: "++s
-                                    , "Available criteria are one or many of:"
-                                    , "A : Account ascending (a : descending)"
+validateCriteria :: CommandCriteria -> SortingCriteria -> Either String SortingCriteria
+validateCriteria DetailSortingCriteria s | any (not . (`elem` "AaCcDdMmNnOo")) s =
+    (Left $ unlines [ "wrong sorting criteria: "++s
+                    , "Available criteria are one or many of:"
+                    , "A : Account ascending (a : descending)"
+                    , "C : Category ascending (c : descending)"
+                    , "D : Date ascending (d : descending)"
+                    , "M : Amount ascending (m : descending)"
+                    , "N : Name ascending (n : descending)"
+                    , "O : Notes ascending (o : descending)"
+                    ])
+validateCriteria DetailSortingCriteria s = Right s
+validateCriteria SummarySortingCriteria s | any (not . (`elem` "CcMm")) s =
+                    (Left $ unlines [ "wrong sorting criteria: ADX"
+                                    , "Available criteria are one or two of:"
                                     , "C : Category ascending (c : descending)"
-                                    , "D : Date ascending (d : descending)"
                                     , "M : Amount ascending (m : descending)"
-                                    , "N : Name ascending (n : descending)"
-                                    , "O : Notes ascending (o : descending)"
                                     ])
-validateCriteria s = Right s
+validateCriteria SummarySortingCriteria s = Right s

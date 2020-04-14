@@ -82,9 +82,9 @@ spec = do
             sortWithCriteria "Am" ts `shouldBe` [t4,t2,t3,t1]
 
     describe "validateCriteria" $ do
-        it "yields a message if not given a valid criteria" $ do
-            validateCriteria "MaD" `shouldBe` Right "MaD" 
-            validateCriteria "ADX" `shouldBe` 
+        it "yields a message if not given a valid criteria for the detail command" $ do
+            validateCriteria DetailSortingCriteria "MaD" `shouldBe` Right "MaD" 
+            validateCriteria DetailSortingCriteria "ADX" `shouldBe` 
                     (Left $ unlines [ "wrong sorting criteria: ADX"
                                     , "Available criteria are one or many of:"
                                     , "A : Account ascending (a : descending)"
@@ -95,3 +95,11 @@ spec = do
                                     , "O : Notes ascending (o : descending)"
                                     ])
 
+        it "yields a message if not given a valid criteria for the summary command" $ do
+            validateCriteria SummarySortingCriteria "Mc" `shouldBe` Right "Mc" 
+            validateCriteria SummarySortingCriteria "ADX" `shouldBe` 
+                    (Left $ unlines [ "wrong sorting criteria: ADX"
+                                    , "Available criteria are one or two of:"
+                                    , "C : Category ascending (c : descending)"
+                                    , "M : Amount ascending (m : descending)"
+                                    ])

@@ -3,17 +3,17 @@
   size: 1464
   modtime: 1586874060
 /Users/christophe.thibaut/dev/budget/test/CommandSpec.hs:
-  hash: 55a3216df78be25a6fc9e49856a839510fa623cd19a151029b25b4b53de365df
-  size: 6318
-  modtime: 1586874060
+  hash: 741b3633dfbbde05caad41a2291ee9eea8aac22c1b4534ebdf35e95e93eae0be
+  size: 7299
+  modtime: 1586887659
 /Users/christophe.thibaut/dev/budget/budget.cabal:
   hash: 7e01edb4a2f3aa18beb42ad690e7e5e46a2e2f5750619b722910050973e4db5a
   size: 2500
   modtime: 1586874060
 /Users/christophe.thibaut/dev/budget/test/SortingSpec.hs:
-  hash: a6820fa699236030c0aea897d5b782a9e12956873264acff5ec9d5f188655b64
-  size: 4215
-  modtime: 1586874060
+  hash: 9151ef6e6af4de857bcc3a958896a861edef5af30f854fdd4c7c2b2d23aef2e2
+  size: 4864
+  modtime: 1586888122
 /Users/christophe.thibaut/dev/budget/test/TransactionsCsvSpec.hs:
   hash: b38c5aa2b9fef32299e7a58c9be4c7f8ba031be1674334953684a248e4272cf6
   size: 6068
@@ -27,9 +27,9 @@
   size: 215
   modtime: 1586874060
 /Users/christophe.thibaut/dev/budget/README.md:
-  hash: 92e2ae36f0f46900acb0d9c7117f7fac853a903c25fe450b46608727b95320c8
-  size: 5322
-  modtime: 1586874853
+  hash: 110d36a5689d7258b9d6f8d966f669ba08084db7f336b430e31a77e938a11c9f
+  size: 5361
+  modtime: 1586887036
 /Users/christophe.thibaut/dev/budget/test/AmountSpec.hs:
   hash: ff49f6648636ac361c62ce050761031f1dfaa817a88d2e4197d5cd0c5b713d57
   size: 1251

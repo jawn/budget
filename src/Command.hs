@@ -7,7 +7,7 @@ import Same
 import Sorting
 
 data Command 
-    = Summary (Maybe FilePath) (Maybe FilePath)
+    = Summary (Maybe FilePath) (Maybe FilePath) (Maybe SortingCriteria)
     | Detail  (Maybe FilePath) (Maybe Category) (Maybe Period) (Maybe SortingCriteria)
     | Import FilePath (Maybe String)
     | Help  [String]
@@ -17,9 +17,9 @@ data Command
 command 
     :: [String]
     -> Either String Command
-command [] = Right (Summary Nothing Nothing)
+command [] = Right (Summary Nothing Nothing Nothing)
 command (cmd:args) 
-  | cmd `equals` "summary" = Right $ addParameters (Summary Nothing Nothing) args
+  | cmd `equals` "summary" = (Right $ addParameters (Summary Nothing Nothing Nothing) args) >>= validateSummarySortCriteria
   | cmd `equals` "detail" = (Right $ addParameters (Detail Nothing Nothing Nothing Nothing) args) >>= validateDetailSortCriteria
   | cmd `equals` "import" && length args == 2 = Right (Import (args!!0) (Just (args!!1)))
   | cmd `equals` "import" && length args == 1 = Right (Import (args!!0) Nothing)
@@ -28,10 +28,14 @@ command (cmd:args)
 command (cmd:args) = Left $ "unknown command: "++ unwords (cmd:args)
 
 validateDetailSortCriteria :: Command -> Either String Command
-validateDetailSortCriteria (Detail tf ca pe sc) = case validateCriteria (maybe "D" id sc) of
+validateDetailSortCriteria (Detail tf ca pe sc) = case validateCriteria DetailSortingCriteria (maybe "D" id sc) of
                                                         Left msg -> Left msg
                                                         other -> Right (Detail tf ca pe sc)
 
+validateSummarySortCriteria :: Command -> Either String Command
+validateSummarySortCriteria (Summary tf sf sc) = case validateCriteria SummarySortingCriteria (maybe "C" id sc) of
+                                                        Left msg -> Left msg
+                                                        other -> Right (Summary tf sf sc)
 lowerCase :: String -> String
 lowerCase = map toLower 
 
@@ -45,8 +49,9 @@ addParameters
     ->  Command
 addParameters cmd [] = 
     cmd
-addParameters (Summary tf sf)   ("-t":arg:args) = addParameters (Summary (Just arg) sf) args 
-addParameters (Summary tf sf)   ("-c":arg:args) = addParameters (Summary tf (Just arg)) args
+addParameters (Summary tf sf sc)   ("-t":arg:args) = addParameters (Summary (Just arg) sf sc) args 
+addParameters (Summary tf sf sc)   ("-c":arg:args) = addParameters (Summary tf (Just arg) sc) args
+addParameters (Summary tf sf sc)   ("-s":arg:args) = addParameters (Summary tf sf (Just arg)) args
 addParameters (Detail tf ca pe sc) ("-t":arg:args) = addParameters (Detail (Just arg) ca pe sc) args 
 addParameters (Detail tf ca pe sc) ("-s":arg:args) = addParameters (Detail tf ca pe (Just arg)) args
 addParameters (Detail tf ca pe sc) ("-c":arg:args) = addParameters (Detail tf (Just (Category arg)) pe sc) args
