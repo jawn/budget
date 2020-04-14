@@ -42,7 +42,7 @@ processCommand
     -> Command 
     -> IO ()
 
-processCommand _ Help = help
+processCommand _ (Help arg) = help arg
 
 processCommand config (Detail filePath category period criteria) = do 
     transactions <- retrieveTransactions config filePath 

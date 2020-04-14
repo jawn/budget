@@ -1,0 +1,7 @@
+budget help [command]
+Commands are:
+    summary
+    detail
+    import
+
+budget summary [-t OtherTransactions.csv]

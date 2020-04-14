@@ -10,7 +10,7 @@ data Command
     = Summary (Maybe FilePath) (Maybe FilePath)
     | Detail  (Maybe FilePath) (Maybe Category) (Maybe Period) (Maybe SortingCriteria)
     | Import FilePath (Maybe String)
-    | Help
+    | Help  [String]
             
     deriving (Eq, Show)
 
@@ -24,7 +24,7 @@ command (cmd:args)
   | cmd `equals` "import" && length args == 2 = Right (Import (args!!0) (Just (args!!1)))
   | cmd `equals` "import" && length args == 1 = Right (Import (args!!0) Nothing)
   | cmd `equals` "import" && length args < 1 = Left "import: missing argument (import {<filename> <accountname> | <folder> }"
-  | cmd `equals` "help" = Right Help
+  | cmd `equals` "help" = Right (Help args)
 command (cmd:args) = Left $ "unknown command: "++ unwords (cmd:args)
 
 validateDetailSortCriteria :: Command -> Either String Command

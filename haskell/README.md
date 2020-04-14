@@ -17,7 +17,7 @@
 - [X] strip the spaces from the labels name and notes from import files
 - [X] sorting options!
 - [X] update Help
-- [ ] show the file path of the transaction file that was just displayed by detail 
+- [X] show the file path of the transaction file that was just displayed by detail 
 - [X] import all the csv files in a directory, to account names defined by the alphabetical part of the file name
 
 ## how to run the tests
@@ -104,7 +104,7 @@ will print the transactions sorted by Account, then Date
 
     budget d -s Cm
 
-will print the transactions sorteds by Category (ascending) then Amount (descending) 
+will print the transactions sorted by Category (ascending) then Amount (descending) 
 
 Sort criteria (they can all be mixed) :
 

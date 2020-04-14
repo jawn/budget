@@ -100,8 +100,8 @@ spec = do
 
         describe "Help" $ do
             it "recognize the help command" $ do
-                let args = words "help"
-                command args `shouldBe` Right Help
+                let args = words "help foo bar"
+                command args `shouldBe` Right (Help ["foo","bar"])
 
         it "recognize the command in uppercase or lowercase" $ do
             let args = words "SUmmary -t foo.csv" 
