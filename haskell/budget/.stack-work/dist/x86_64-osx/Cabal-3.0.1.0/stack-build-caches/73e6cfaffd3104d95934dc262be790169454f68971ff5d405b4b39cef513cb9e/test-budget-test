@@ -1,0 +1,80 @@
+/Users/christophe.thibaut/dev/budget/haskell/budget/budget.cabal:
+  hash: 7e01edb4a2f3aa18beb42ad690e7e5e46a2e2f5750619b722910050973e4db5a
+  size: 2500
+  modtime: 1586866558
+/Users/christophe.thibaut/dev/budget/haskell/budget/package.yaml:
+  hash: cb7921b57631ff48529042c50cbd3073c9725b2e10258eb486943fa452e8a861
+  size: 1314
+  modtime: 1586814001
+/Users/christophe.thibaut/dev/budget/haskell/budget/README.md:
+  hash: a485c5c7524f2f7d2fbc7f9682dce3e1c2e265a76d03529b12b080742ceab640
+  size: 136
+  modtime: 1586364684
+/Users/christophe.thibaut/dev/budget/haskell/budget/test/SummarySpec.hs:
+  hash: c47bb9cc44dbc92928b7d41d95174d0ecbcb8551b6bcd39be1cbb58d2558972f
+  size: 5463
+  modtime: 1586629837
+/Users/christophe.thibaut/dev/budget/haskell/budget/test/HelpSpec.hs:
+  hash: 9efbfdae68fd730d3a4a4c09477172e2ae2b628d13f0043119b301dd657cd0be
+  size: 457
+  modtime: 1586868705
+/Users/christophe.thibaut/dev/budget/haskell/budget/test/CategoriesCsvSpec.hs:
+  hash: 5a2def0f81a960ef9cac80872e14af487035de9a1f7d815076f7bf64a69062e7
+  size: 2216
+  modtime: 1586524953
+/Users/christophe.thibaut/dev/budget/haskell/budget/test/ImportSpec.hs:
+  hash: 6a48ada5c73fd75153a8257b0cffb995e29ed0c934d3f52bb687f58c74590326
+  size: 4386
+  modtime: 1586810720
+/Users/christophe.thibaut/dev/budget/haskell/budget/test/CommandSpec.hs:
+  hash: 55a3216df78be25a6fc9e49856a839510fa623cd19a151029b25b4b53de365df
+  size: 6318
+  modtime: 1586867788
+/Users/christophe.thibaut/dev/budget/haskell/budget/test/AmountSpec.hs:
+  hash: ff49f6648636ac361c62ce050761031f1dfaa817a88d2e4197d5cd0c5b713d57
+  size: 1251
+  modtime: 1586364104
+/Users/christophe.thibaut/dev/budget/haskell/budget/test/ImportFileNameSpec.hs:
+  hash: 37829fb770a2c985a436dd47b88bb03a465085f56c0c86d9ac1d60a6a9423b65
+  size: 1628
+  modtime: 1586815530
+/Users/christophe.thibaut/dev/budget/haskell/budget/test/TransactionSpec.hs:
+  hash: a78254341dbeb1e006332d9635f15574a14ad8dc4fbaf21f15dd281762206329
+  size: 3226
+  modtime: 1586721361
+/Users/christophe.thibaut/dev/budget/haskell/budget/ChangeLog.md:
+  hash: 8bb9035483ad6f2514c9d0b2e457242de168190e8a58a8e5d5d4c1e5168476a0
+  size: 46
+  modtime: 1586113900
+/Users/christophe.thibaut/dev/budget/haskell/budget/test/AccountSpec.hs:
+  hash: a119e6caf9794729b5e7607f84e8ba8339ed454465ebc3af7b40c7bdb70f3b85
+  size: 215
+  modtime: 1586528676
+/Users/christophe.thibaut/dev/budget/haskell/budget/test/DetailSpec.hs:
+  hash: 5fdb9d1cf8b93eb8ad65bd964eec483af9826a71f4f0e6626f39d4b472ec8c08
+  size: 2716
+  modtime: 1586721229
+/Users/christophe.thibaut/dev/budget/haskell/budget/test/TransactionsCsvSpec.hs:
+  hash: b38c5aa2b9fef32299e7a58c9be4c7f8ba031be1674334953684a248e4272cf6
+  size: 6068
+  modtime: 1586721192
+/Users/christophe.thibaut/dev/budget/haskell/budget/test/Spec.hs:
+  hash: 2fbd14b119a40eaca54f6255686c7cfbe8ff26a9c18d79ec474a61225232d324
+  size: 44
+  modtime: 1586113900
+/Users/christophe.thibaut/dev/budget/haskell/budget/test/CategorySpec.hs:
+  hash: ca8c09804f8113c39e6dae0ccf5ebb74e20ba215bccdf0f2fe5946c8c85fd84c
+  size: 702
+  modtime: 1586295282
+/Users/christophe.thibaut/dev/budget/haskell/budget/test/PeriodSpec.hs:
+  hash: 18488933344db458ee13a968d1be74722e9560ea37742d7ceef0eb2550c0611f
+  size: 1464
+  modtime: 1586636218
+/Users/christophe.thibaut/dev/budget/haskell/budget/test/SortingSpec.hs:
+  hash: a6820fa699236030c0aea897d5b782a9e12956873264acff5ec9d5f188655b64
+  size: 4215
+  modtime: 1586721270
+/Users/christophe.thibaut/dev/budget/haskell/budget/test/ConfigSpec.hs:
+  hash: c385f6c355936ad01ae5c5d756fc312c09ec7458664b41a5bb1501ae81104d50
+  size: 1786
+  modtime: 1586466510

@@ -1,10 +1,2 @@
-# budget
-USAA download based interfaces for spreadsheet 
 
-# to do
-
-## read expenses from the bank csv, sum by category
-
-- [x] add field to expense Class 
-- [x] import expenses from bank CSV
-- [x] create main report executable
+[ ] average expense is to be done for each category, on a given number of months, not on the period defined by the sublist of expenses
