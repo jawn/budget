@@ -96,10 +96,13 @@ spec = do
                                     ])
 
         it "yields a message if not given a valid criteria for the summary command" $ do
-            validateCriteria SummarySortingCriteria "Mc" `shouldBe` Right "Mc" 
-            validateCriteria SummarySortingCriteria "ADX" `shouldBe` 
-                    (Left $ unlines [ "wrong sorting criteria: ADX"
-                                    , "Available criteria are one or two of:"
+            validateCriteria SummarySortingCriteria "M" `shouldBe` Right "M" 
+            validateCriteria SummarySortingCriteria "M" `shouldBe` Right "M" 
+            validateCriteria SummarySortingCriteria "C" `shouldBe` Right "C" 
+            validateCriteria SummarySortingCriteria "c" `shouldBe` Right "c" 
+            validateCriteria SummarySortingCriteria "CM" `shouldBe` 
+                    (Left $ unlines [ "wrong sorting criteria: CM"
+                                    , "Available criteria are one of:"
                                     , "C : Category ascending (c : descending)"
                                     , "M : Amount ascending (m : descending)"
                                     ])

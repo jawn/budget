@@ -51,9 +51,9 @@ validateCriteria DetailSortingCriteria s | any (not . (`elem` "AaCcDdMmNnOo")) s
                     , "O : Notes ascending (o : descending)"
                     ])
 validateCriteria DetailSortingCriteria s = Right s
-validateCriteria SummarySortingCriteria s | any (not . (`elem` "CcMm")) s =
-                    (Left $ unlines [ "wrong sorting criteria: ADX"
-                                    , "Available criteria are one or two of:"
+validateCriteria SummarySortingCriteria s | any (not . (`elem` "CcMm")) s || length s > 1=
+                    (Left $ unlines [ "wrong sorting criteria: " ++ s
+                                    , "Available criteria are one of:"
                                     , "C : Category ascending (c : descending)"
                                     , "M : Amount ascending (m : descending)"
                                     ])

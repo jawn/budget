@@ -43,6 +43,13 @@ doHelp TopicSummary =
         , "    budget summary -c Categories.csv"
         , ""
         , "will print the total by category for categories given in the selection file `Categories.csv` only."
+        , ""
+        , "    budget summary -s M"
+        , ""
+        , "will sort the summary  by amount, ascending."
+        , "sort criteria are one of:"
+        , "    - C : category (c : descending)"
+        , "    - M : amount   (m : descending)"
         ]
 
 doHelp TopicDetail =

@@ -47,10 +47,10 @@ spec = do
                 command args `shouldBe` 
                     Right (Summary Nothing Nothing (Just "c"))
             it "doesn't recognize the summary command with a wrong sorting criteria argument" $ do
-                let args = words "summary -s ADX"
+                let args = words "summary -s CM"
                 command args `shouldBe` 
-                    (Left $ unlines [ "wrong sorting criteria: ADX"
-                                    , "Available criteria are one or two of:"
+                    (Left $ unlines [ "wrong sorting criteria: CM"
+                                    , "Available criteria are one of:"
                                     , "C : Category ascending (c : descending)"
                                     , "M : Amount ascending (m : descending)"
                                     ])
