@@ -64,7 +64,7 @@ processCommand config (Import im_filePath (Just account)) = do
       Left msg -> putStrLn msg
       Right tr -> do
             saveTransactions config tr
-    either putStrLn (\n-> putStrLn $ (show n) ++ " transactions imported") result_length
+            either putStrLn (\n-> putStrLn $ (show n) ++ " transactions imported") result_length
 
 processCommand config (Import im_filePath Nothing) = do
     isDirectory <- doesDirectoryExist im_filePath 
