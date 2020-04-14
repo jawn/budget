@@ -27,9 +27,9 @@
   size: 215
   modtime: 1586874060
 /Users/christophe.thibaut/dev/budget/README.md:
-  hash: a485c5c7524f2f7d2fbc7f9682dce3e1c2e265a76d03529b12b080742ceab640
-  size: 136
-  modtime: 1586874060
+  hash: 92e2ae36f0f46900acb0d9c7117f7fac853a903c25fe450b46608727b95320c8
+  size: 5322
+  modtime: 1586874853
 /Users/christophe.thibaut/dev/budget/test/AmountSpec.hs:
   hash: ff49f6648636ac361c62ce050761031f1dfaa817a88d2e4197d5cd0c5b713d57
   size: 1251
