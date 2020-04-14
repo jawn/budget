@@ -29,7 +29,7 @@ import qualified Data.Vector as Vector
 import Data.Text (Text, unpack, strip)
 import Data.Text.Encoding as Text
 import Data.Maybe
-
+import MaybeToEither
 
 import Data.Csv
     ( FromRecord(parseRecord)
@@ -49,7 +49,7 @@ import Data.Csv
     , toField
     )
 
-import Control.Monad
+import Control.Monad 
 import qualified Control.Monad as Monad (mzero)
 
 decodeString = unpack . strip . decodeLatin1 
@@ -59,6 +59,7 @@ data FieldNo = ACCOUNT | VOID1 | DAY | NOTES | NAME | CATEGORY | AMOUNT
 
 instance FromRecord Transaction where
     parseRecord v
+      | length v /= 7  = fail (show v)
       | length v == 7 = Transaction 
                         <$> v .! fromEnum ACCOUNT
                         <*>   v .! fromEnum DAY
@@ -66,7 +67,8 @@ instance FromRecord Transaction where
                         <*>   v .! fromEnum NAME
                         <*>   v .! fromEnum CATEGORY 
                         <*>   v .! fromEnum AMOUNT
-      | otherwise = fail (show v)
+                            where [account, day, notes, name, category, amount] = 
+                                    map fromEnum [ACCOUNT, DAY, NOTES, NAME, CATEGORY, AMOUNT]
 
 instance FromField Name where
     parseField = pure . Name . decodeString
@@ -170,9 +172,6 @@ saveTransactions cfg ts = do
             Left msg -> exitWithMsg msg
             Right _ -> return ()
         
-
-maybeToEither :: a -> Maybe b -> Either a b
-maybeToEither = flip maybe Right . Left
 
 canonical :: String -> FilePath -> FilePath
 canonical home ('.':'~':fp) = home ++ fp

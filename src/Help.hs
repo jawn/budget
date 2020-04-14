@@ -1,10 +1,15 @@
 module Help
     where
 import Command
+import Config
+import ExitWithMsg
+import System.Directory
+import Data.Maybe
+import Control.Monad
+import MaybeToEither
 
 data Topic = TopicHelp | TopicSummary | TopicDetail | TopicImport | TopicSort | TopicConfig
     deriving (Eq, Show)
-
 
 topic :: String -> Topic
 topic args | args `equals` "summary" = TopicSummary
@@ -131,7 +136,7 @@ doHelp TopicSort =
         ]
 
 
-doHelp TopicConfig = 
+doHelp TopicConfig = do
     (putStr . unlines)
         [ "the file `/User/you/.budget_conf` (on your home directory) should contain the file path of "
         , "your main transaction file. "
@@ -144,3 +149,12 @@ doHelp TopicConfig =
         , ""
         , "will indicate to every command that the default transaction file to look for is this file."
         ]
+
+    home <- getHomeDirectory
+    cfg <- Config.fromFile $ home ++ "/.budget_conf"
+    either putStrLn printConfig cfg
+
+printConfig :: Config -> IO ()
+printConfig cfg = do
+    mapM_ (\(k,v) -> putStrLn (k ++ ":" ++ v)) cfg
+

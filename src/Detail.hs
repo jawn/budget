@@ -78,5 +78,4 @@ printDetail filePath category period criteria transactions = do
                               . (maybe id (\p -> filter (\t -> (transactionDate t) `within` p)) period)
                 putStrLn (detailTitle filePath category period)
                 either exitWithMsg (putStr . unlines . detail) (checkNotEmpty (sortWithCriteria criteria (selection transactions)))
-                -- ((sortWithCriteria criteria (selection transactions)) >>= checkNotEmpty)
                 putStrLn $ (total (selection transactions)) ++ maybe "main transaction file" id filePath

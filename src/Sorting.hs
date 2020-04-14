@@ -10,6 +10,11 @@ import Data.Ord
 import Data.List
 
 type SortingCriteria = String
+data Direction = Asc | Desc
+    deriving (Eq, Show)
+
+data SortCriterion = SortCriterion 
+
 data CommandCriteria = DetailSortingCriteria | SummarySortingCriteria
                      deriving (Eq, Show)
 

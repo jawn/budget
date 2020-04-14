@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 2ee3840ee2685dc5914e0292f37190f14493be90ac6be290b62af7af5d0e605c
+-- hash: b866511bd8296760f8dcf25c2dddf08bca45748779c0bbd97f2a3196ea26734c
 
 name:           budget
 version:        0.1.0.0
@@ -39,6 +39,7 @@ library
       Help
       Import
       ImportFileName
+      MaybeToEither
       Name
       Note
       Period
