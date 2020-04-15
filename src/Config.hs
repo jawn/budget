@@ -1,6 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Config
     where
+
+import Message (Message)
 import qualified Data.Text as Text (Text, toUpper, splitOn, strip, pack, unpack)
 import CatchShowIO
 
@@ -9,10 +11,10 @@ type Config = [(String, String)]
 
 fromString 
     :: String 
-    -> Either String Config
+    -> Either Message Config
 fromString = sequence . map toKeyValuePair . lines
     where
-        toKeyValuePair :: String -> Either String (String,String)
+        toKeyValuePair :: String -> Either Message (String,String)
         toKeyValuePair s = 
             case Text.splitOn ":" (Text.pack s) of
               [key,pair] -> Right (strip (Text.toUpper key),strip pair)
@@ -22,7 +24,7 @@ fromString = sequence . map toKeyValuePair . lines
 
 fromFile 
     :: FilePath
-    -> IO (Either String Config)
+    -> IO (Either Message Config)
 fromFile filePath =
     catchShowIO (readFile filePath)
     >>= return . either Left fromString

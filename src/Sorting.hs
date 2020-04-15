@@ -1,11 +1,20 @@
-module Sorting 
+module Sorting ( SortingCriteria
+               , SortCriterion (..)
+               , CommandCriteria (..)
+               , readCriteria
+               , summaryOrdering
+               , validateCriteria
+               , sortWithCriteria
+               )
     where
 
+import Message
 import Amount
 import Category
 import Account
 import Transaction
 import SummaryLine
+
 import Period
 import Data.Ord
 import Data.List
@@ -34,13 +43,21 @@ data CommandCriteria = DetailSortingCriteria
                      | SummarySortingCriteria
      deriving (Eq, Show)
 
-readCriteria :: CommandCriteria -> String ->  Either String [SortCriterion]
-readCriteria SummarySortingCriteria s | length s > 1 = Left $ "too many criteria: " ++ s
-readCriteria cmd s = case (partitionEithers . map (readCriterion cmd)) s of
-                       ([],criteria) -> Right criteria
-                       (messages,_)   -> Left $ intercalate "\n" messages 
+readCriteria 
+    :: CommandCriteria 
+    -> String 
+    ->  Either Message [SortCriterion]
+readCriteria SummarySortingCriteria s 
+    | length s > 1 = Left $ "too many criteria: " ++ s
+readCriteria cmd s =
+    case (partitionEithers . map (readCriterion cmd)) s of
+        ([],criteria) -> Right criteria
+        (messages,_)   -> Left $ intercalate "\n" messages 
 
-readCriterion :: CommandCriteria -> Char -> Either String SortCriterion
+readCriterion 
+    :: CommandCriteria 
+    -> Char 
+    -> Either Message SortCriterion
 readCriterion _ 'C' = Right CategoryAsc 
 readCriterion _ 'c' = Right CategoryDesc
 readCriterion _ 'M' = Right AmountAsc   
@@ -96,10 +113,12 @@ foldOrdering (ord:_) = ord
 sortWithCriteria :: SortingCriteria -> [Transaction] -> [Transaction]
 sortWithCriteria s = sortBy (\t u -> detailOrderings t u s)
 
-validateCriteria :: CommandCriteria -> String -> Either String SortingCriteria
-validateCriteria DetailSortingCriteria s = case readCriteria DetailSortingCriteria s of
-                                             Left s -> Left (wrongCriteriaMessage DetailSortingCriteria s)
-                                             Right criteria -> Right criteria
+validateCriteria :: CommandCriteria -> String -> Either Message SortingCriteria
+validateCriteria DetailSortingCriteria s = 
+    either
+        (Left . (wrongCriteriaMessage DetailSortingCriteria))
+        Right
+    (readCriteria DetailSortingCriteria s)
 
 validateCriteria SummarySortingCriteria s = case readCriteria SummarySortingCriteria s of
                                               Left s -> Left (wrongCriteriaMessage SummarySortingCriteria s)

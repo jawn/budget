@@ -1,13 +1,17 @@
-module Amount 
+module Amount ( Amount (..)
+              , amount
+              , divideBy
+              , number
+              , total )
     where
 import Text.Printf
 
 data Amount = Amount Int
     deriving (Eq, Ord)
 
-mkAmount :: Double -> Amount
-mkAmount f | f < 0 = negate (mkAmount (abs f)) 
-           | otherwise = Amount $ dollars  * 100 + cents 
+amount :: Double -> Amount
+amount f | f < 0 = negate (amount (abs f)) 
+         | otherwise = Amount $ dollars  * 100 + cents 
         where 
             dollars = n `div` 100
             cents   = n `rem` 100
@@ -26,10 +30,10 @@ instance Read Amount
     where
         readsPrec _ ('-':s) = case reads s :: [(Double,String)] of
                                 [] -> []
-                                [(d,s)] -> [(negate (mkAmount d), s)]
+                                [(d,s)] -> [(negate (amount d), s)]
         readsPrec _ s = case reads s :: [(Double,String)] of
                             [] -> []
-                            [(d,s)] -> [(mkAmount d, s)]
+                            [(d,s)] -> [(amount d, s)]
 
 instance Num Amount
     where
@@ -40,8 +44,8 @@ instance Num Amount
 number :: Amount -> Int
 number (Amount n) = n
 
-totalAmount :: [Amount] -> Amount
-totalAmount = Amount . sum . map number
+total :: [Amount] -> Amount
+total = Amount . sum . map number
 
-divideAmount :: Amount -> Integer -> Amount
-divideAmount (Amount n) i = Amount (n `div` fromIntegral i)
+divideBy :: Amount -> Integer -> Amount
+divideBy (Amount n) i = Amount (n `div` fromIntegral i)

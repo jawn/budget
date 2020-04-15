@@ -1,6 +1,7 @@
 module Import
     where
 
+import Message ( Message )
 import Transaction
 import Account
 import Amount
@@ -13,7 +14,7 @@ import TransactionsCsv
 type Attributes = (Day, Maybe Name, Amount)
 
 
-importTransactions :: String -> [Transaction] -> [Transaction] -> Either String [Transaction]
+importTransactions :: String -> [Transaction] -> [Transaction] -> Either Message [Transaction]
 
 importTransactions name transactions importations 
     | importations `alreadyIn` transactions = Left "transactions already imported"

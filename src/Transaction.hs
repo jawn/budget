@@ -1,6 +1,7 @@
 module Transaction
     where
 
+import Message ( Message )
 import Data.Dates
 import Data.Time.Calendar (Day,diffGregorianDurationClip, fromGregorian, CalendarDiffDays(..))
 import Data.Time 
@@ -25,10 +26,10 @@ data Transaction = Transaction { transactionAccount  :: Account
     deriving (Eq, Ord, Show)
 
 totalTransactions :: [Transaction] -> Amount
-totalTransactions = totalAmount . map transactionAmount
+totalTransactions = total . map transactionAmount
 
 averageTransactionsPerMonth :: Integer -> [Transaction] -> Amount
-averageTransactionsPerMonth months ts = divideAmount (totalTransactions ts) months
+averageTransactionsPerMonth months ts = (totalTransactions ts) `divideBy` months
 
 summarizeTransactionsMonths :: Integer -> [Transaction] -> (Category, Amount, Amount)
 summarizeTransactionsMonths months ts = 
@@ -41,6 +42,6 @@ transactionsPeriod ts = Period date1 date2
         date2 = maximum dates
         dates = sort $ map transactionDate ts
 
-checkNotEmpty :: [Transaction] -> Either String [Transaction]
+checkNotEmpty :: [Transaction] -> Either Message [Transaction]
 checkNotEmpty [] = Left "no transaction"
 checkNotEmpty ts = Right ts 

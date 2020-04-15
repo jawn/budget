@@ -1,6 +1,7 @@
-
 module Period 
     where
+
+import Message ( Message )
 import Data.List (sort)
 import Data.Time
 import Data.Time.Calendar (Day,diffGregorianDurationClip, fromGregorian, gregorianMonthLength, CalendarDiffDays(..))
@@ -24,10 +25,10 @@ period day1 day2 = Period day1 day2
 months :: Period -> Integer
 months (Period begin end) = 1 + cdMonths (diffGregorianDurationClip end begin)
 
-periodFromStrings :: String -> String -> Either String Period
+periodFromStrings :: String -> String -> Either Message Period
 periodFromStrings s t = period <$> parse s <*> parse t
     where 
-        parse :: String -> Either String Day
+        parse :: String -> Either Message Day
         parse s = case parseTimeM True defaultTimeLocale "%m/%d/%Y" s :: Maybe Day of
                     Nothing -> Left $ "parse error: wrong date format: " ++ s 
                     Just d -> Right d
@@ -35,7 +36,7 @@ periodFromStrings s t = period <$> parse s <*> parse t
 periodFromMonth :: Integer -> Int -> Period
 periodFromMonth y m  = Period (fromGregorian y m 1) (fromGregorian y m (gregorianMonthLength y m))
 
-periodFromMonthString :: String -> String -> Either String Period
+periodFromMonthString :: String -> String -> Either Message Period
 periodFromMonthString s t  = case reads s of
                                []  -> Left $ "parser error: wrong year format: " ++ s 
                                [(y,_)] -> case reads t of

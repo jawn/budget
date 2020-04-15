@@ -1,9 +1,12 @@
 {-# LANGUAGE OverloadedStrings #-}
 module CategorySpec
     where
+
+import Category ( Category (..) )
+
+import Data.List ( sort )
+
 import Test.Hspec
-import Category
-import Data.List
 
 spec = do
     describe "Category" $ do

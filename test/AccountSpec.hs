@@ -1,8 +1,9 @@
 module AccountSpec
     where
 
+import Account ( Account (..) )
+
 import Test.Hspec
-import Account
 
 spec = do
     describe "Account" $ do

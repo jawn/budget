@@ -1,5 +1,7 @@
 module Summary
     where
+
+import Message ( Message )
 import Data.Char
 import Amount
 import Category
@@ -37,7 +39,7 @@ summaryForPeriod :: Period -> [Transaction] -> SortingCriteria -> [String]
 summaryForPeriod p ts criteria = summary (Period.months p) ts criteria ++ [totalLabel p (totalTransactions ts)]
 
 totalLabel :: Period -> Amount -> String
-totalLabel p a = printf "%-49s:%10s |%10s" ("TOTAL "++ (show p)) (show a) (show (divideAmount a (Period.months p))) 
+totalLabel p a = printf "%-49s:%10s |%10s" ("TOTAL "++ (show p)) (show a) (show (a `divideBy` (Period.months p))) 
 
 formatDate :: Day -> String
 formatDate day = formatTime defaultTimeLocale "%m/%d/%Y" day
@@ -61,8 +63,8 @@ printSummary
     :: Maybe FilePath
     -> Maybe FilePath
     -> SortingCriteria
-    -> Either String (Category -> Bool)
-    -> Either String [Transaction]
+    -> Either Message (Category -> Bool)
+    -> Either Message [Transaction]
     -> IO ()
 printSummary transactionFilePath categoryFilePath criteria selector transactions = do
     either exitWithMsg processSummary (transactions >>= checkNotEmpty)

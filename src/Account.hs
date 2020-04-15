@@ -1,4 +1,4 @@
-module Account
+module Account ( Account (..) )
     where
 
 data Account = Account { accountName :: String }

@@ -1,9 +1,14 @@
-module CategoriesCsv
+module CategoriesCsv ( importCategorySelector
+                     , decodeCategories
+                     , decodeCategoriesFromFile
+    )
     where
 
 import Category
+import Message
 
 import CatchShowIO
+
 
 import Data.ByteString.Lazy (ByteString)
 import qualified Data.ByteString.Lazy as ByteString
@@ -28,20 +33,20 @@ instance FromRecord Category where
 
 decodeCategories
     :: ByteString
-    -> Either String [Category]
+    -> Either Message [Category]
 decodeCategories = 
     fmap Vector.toList . decode NoHeader
 
 decodeCategoriesFromFile 
     :: FilePath
-    -> IO (Either String [Category])
+    -> IO (Either Message [Category])
 decodeCategoriesFromFile filePath = 
     catchShowIO (ByteString.readFile filePath)
     >>= return . either Left decodeCategories
 
 importCategorySelector 
     :: (Maybe FilePath) 
-    -> IO (Either String (Category -> Bool))
+    -> IO (Either Message (Category -> Bool))
 importCategorySelector Nothing = return $ pure (const True)
 importCategorySelector (Just filePath) = do
     let categories = decodeCategoriesFromFile filePath

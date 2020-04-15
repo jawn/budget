@@ -16,42 +16,42 @@ spec = do
                          , transactionNotes   = Just $ Note "some notes"
                          , transactionName    = Just $ Name "Joe's shop"
                          , transactionCategory = Category "Groceries"
-                         , transactionAmount   = mkAmount (-48.07)
+                         , transactionAmount   = amount (-48.07)
                          }
     let t2 = Transaction { transactionAccount = Account "Investment"
                          , transactionDate    = theDay 2020 5 1
                          , transactionNotes   = Just $ Note "a long category name indeed"
                          , transactionName    = Just $ Name "Another very long name,Apple"
                          , transactionCategory = Category "Devices"
-                         , transactionAmount   = mkAmount (-1000.00)
+                         , transactionAmount   = amount (-1000.00)
                          }
     let t3 = Transaction { transactionAccount = Account "posted"
                          , transactionDate    = theDay 2020 7 1
                          , transactionNotes   = Just $ Note "notes"
                          , transactionName    = Just $ Name "Jack shop"
                          , transactionCategory = Category "Groceries"
-                         , transactionAmount   = mkAmount (-100.00)
+                         , transactionAmount   = amount (-100.00)
                          }
     let t4 = Transaction { transactionAccount = Account "posted"
                          , transactionDate    = theDay 2020 8 1
                          , transactionNotes   = Just $ Note "NOTES"
                          , transactionName    = Just $ Name "General"
                          , transactionCategory = Category "Devices"
-                         , transactionAmount   = mkAmount (-50.00)
+                         , transactionAmount   = amount (-50.00)
                          }
     let t5 = Transaction { transactionAccount = Account "pending"
                          , transactionDate    = theDay 2020 9 1
                          , transactionNotes   = Just $ Note "bad transaction"
                          , transactionName    = Just $ Name "General"
                          , transactionCategory = Category "Devices"
-                         , transactionAmount   = mkAmount (-40050.00)
+                         , transactionAmount   = amount (-40050.00)
                          }
     let t6 = Transaction { transactionAccount = Account "forecasted"
                          , transactionDate    = theDay 2020 9 1
                          , transactionNotes   = Just $ Note "bad transaction"
                          , transactionName    = Just $ Name "General"
                          , transactionCategory = Category "Devices"
-                         , transactionAmount   = mkAmount (-40050.00)
+                         , transactionAmount   = amount (-40050.00)
                          }
     describe "import" $ do
         describe "append transactions" $ do
@@ -74,7 +74,7 @@ spec = do
                 let existing = [t1,t2] 
                 let to_import = [t5,t3,t6,t4]
                 let result = importTransactions "CreditFoo" existing to_import 
-                fmap (filter (\t -> transactionAmount t == mkAmount (-40050.00))) result 
+                fmap (filter (\t -> transactionAmount t == amount (-40050.00))) result 
                     `shouldBe` Right []
 
             it "give a message is the import list has already been imported" $ do

@@ -20,14 +20,14 @@ spec = do
                          , transactionNotes   = Just $ Note "some notes"
                          , transactionName    = Just (Name "Joe's shop")
                          , transactionCategory = Category "Groceries"
-                         , transactionAmount   = mkAmount (-48.07)
+                         , transactionAmount   = amount (-48.07)
                          }
     let t2 = Transaction { transactionAccount = Account "Investment"
                          , transactionDate    = theDay 2020 5 1
                          , transactionNotes   = Just $ Note "a long category name indeed"
                          , transactionName    = Just (Name "Another very long name,Apple")
                          , transactionCategory = Category "Devices"
-                         , transactionAmount   = mkAmount (-1000.00)
+                         , transactionAmount   = amount (-1000.00)
                          }
     describe "detail" $ do
         it "show transactions" $ do
@@ -37,7 +37,7 @@ spec = do
                  ,"MyBank               06/01/2020 some notes           Joe's shop           Groceries           |    -48.07"]
 
         it "show the total for the transactions, mentionning the min and max date " $ do
-            lines (total [t1,t2]) `shouldBe` 
+            lines (footer [t1,t2]) `shouldBe` 
                  [ "TOTAL from 05/01/2020 to 06/01/2020                                                           :  -1048.07"
                  , "2 transactions"
                  ]

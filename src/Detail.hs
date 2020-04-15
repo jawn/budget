@@ -1,6 +1,7 @@
 module Detail 
     where
 
+import Message ( Message )
 import Transaction
 import Category
 import Account
@@ -41,10 +42,10 @@ formatDate day = formatTime defaultTimeLocale "%m/%d/%Y" day
 lengthLabel :: Int -> String
 lengthLabel n = printf "%d transactions" n
 
-total 
+footer 
     :: [Transaction]
     -> String
-total ts = unlines [ totalLabel (transactionsPeriod ts) (totalTransactions ts) 
+footer ts = unlines [ totalLabel (transactionsPeriod ts) (totalTransactions ts) 
                    , lengthLabel (length ts)
                    ]
 
@@ -67,7 +68,7 @@ printDetail
     -> Maybe Category
     -> Maybe Period
     -> SortingCriteria
-    -> Either String [Transaction]
+    -> Either Message [Transaction]
     -> IO ()
 printDetail filePath category period criteria transactions = do
     either exitWithMsg (processDetail criteria) (transactions >>= checkNotEmpty)
@@ -78,4 +79,4 @@ printDetail filePath category period criteria transactions = do
                               . (maybe id (\p -> filter (\t -> (transactionDate t) `within` p)) period)
                 putStrLn (detailTitle filePath category period)
                 either exitWithMsg (putStr . unlines . detail) (checkNotEmpty (sortWithCriteria criteria (selection transactions)))
-                putStrLn $ (total (selection transactions)) ++ maybe "main transaction file" id filePath
+                putStrLn $ (footer (selection transactions)) ++ maybe "main transaction file" id filePath

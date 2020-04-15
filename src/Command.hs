@@ -1,5 +1,7 @@
 module Command
     where   
+
+import Message ( Message )
 import Data.Char
 import Category
 import Period
@@ -16,7 +18,7 @@ data Command
 
 command 
     :: [String]
-    -> Either String Command
+    -> Either Message Command
 command [] = Right (Summary Nothing Nothing [])
 command (cmd:args) 
   | cmd `equals` "summary" = Right (Summary Nothing Nothing []) >>= addParameters args 
@@ -38,7 +40,7 @@ s `equals` t = same (lowerCase . take l) s t
 addParameters 
     :: [String]
     -> Command
-    -> Either String Command
+    -> Either Message Command
 addParameters [] cmd = Right cmd
 addParameters ("-t":arg:args)       (Summary tf sf sc)   = Right (Summary (Just arg) sf sc) >>= addParameters args 
 addParameters ("-c":arg:args)       (Summary tf sf sc)   = Right (Summary tf (Just arg) sc) >>= addParameters args
