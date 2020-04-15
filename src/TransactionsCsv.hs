@@ -1,16 +1,24 @@
 {-# LANGUAGE OverloadedStrings #-}
-module TransactionsCsv
+module TransactionsCsv ( decodeTransactions
+                       , decodeTransactionsFromFile
+                       , encodeTransactions
+                       , encodeTransactionsToFile
+                       , retrieveTransactions
+                       , saveTransactions
+    )
     where
 
-import Message ( Message )
-import Transaction
-import Category
-import Amount
-import Account
-import Period
-import Config
-import Name
-import Note
+import Message     ( Message )
+import Transaction ( Transaction (..) )
+import Category    ( Category (..) )
+import Amount      ( Amount (..)
+                   , amount )
+import Account     ( Account (..) )
+import Period      ( Period (..)
+                   , showDate )
+import Config      ( Config (..) )
+import Name        ( Name (..) )
+import Note        ( Note (..) )
 import ExitWithMsg
 
 import Data.Time

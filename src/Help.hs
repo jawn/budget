@@ -1,4 +1,6 @@
-module Help
+module Help ( Topic (..)
+            , help
+            , topic )
     where
 import Command
 import Config

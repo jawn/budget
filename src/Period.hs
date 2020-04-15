@@ -1,9 +1,21 @@
-module Period 
+module Period ( Period (..)
+              , months
+              , period
+              , periodFromMonthString
+              , periodFromMonth
+              , periodFromStrings
+              , showDate
+              , theDay
+              , within
+              )
     where
 
 import Message ( Message )
 import Data.List (sort)
-import Data.Time
+import Data.Time ( defaultTimeLocale
+                 , formatTime 
+                 , parseTimeM
+                 )
 import Data.Time.Calendar (Day,diffGregorianDurationClip, fromGregorian, gregorianMonthLength, CalendarDiffDays(..))
 import Text.Printf
 

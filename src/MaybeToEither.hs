@@ -1,4 +1,4 @@
-module MaybeToEither
+module MaybeToEither ( maybeToEither )
     where
 
 maybeToEither :: a -> Maybe b -> Either a b

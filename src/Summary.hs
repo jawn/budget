@@ -1,4 +1,8 @@
-module Summary
+module Summary ( printSummary
+               , summaryAllCategories
+               , summaryForCategories
+               , summaryTitle
+               )
     where
 
 import Message ( Message )

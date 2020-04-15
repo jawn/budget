@@ -1,4 +1,4 @@
-module Name
+module Name ( Name (..) )
     where
 
 newtype Name = Name String

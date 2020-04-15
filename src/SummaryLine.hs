@@ -1,4 +1,8 @@
-module SummaryLine where
+module SummaryLine ( SummaryLine (..)
+                   , summaryAmount
+                   , summaryCategory
+                   )
+    where
 
 import Amount
 import Category

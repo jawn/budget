@@ -1,4 +1,5 @@
-module ImportFileName 
+module ImportFileName ( extractName 
+                      , importDirectory )
     where
 
 import Message ( Message )

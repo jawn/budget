@@ -1,4 +1,4 @@
-module Same
+module Same ( same )
     where
 
 same :: Eq (a) => (b -> a) -> b -> b -> Bool

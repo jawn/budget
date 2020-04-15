@@ -1,4 +1,4 @@
-module ExitWithMsg 
+module ExitWithMsg ( exitWithMsg )
     where
 import System.Exit
 

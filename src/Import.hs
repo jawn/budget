@@ -1,4 +1,4 @@
-module Import
+module Import ( importTransactions )
     where
 
 import Message ( Message )

@@ -1,4 +1,9 @@
-module Transaction
+module Transaction ( Transaction (..)
+                   , checkNotEmpty
+                   , summarizeTransactionsMonths
+                   , totalTransactions
+                   , transactionsPeriod
+    )
     where
 
 import Message ( Message )

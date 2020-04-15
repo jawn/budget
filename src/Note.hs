@@ -1,5 +1,5 @@
-module Note where
-
+module Note ( Note (..) )
+    where 
 newtype Note = Note String
     deriving (Eq,Ord)
 
