@@ -1,22 +1,23 @@
 module Detail 
     where
 
-import Message ( Message )
-import Transaction
-import Category
-import Account
-import Amount
+import Account     ( Account (..) )
+import Amount      ( Amount (..) )
+import Category    ( Category (..) )
+import ExitWithMsg ( exitWithMsg )
+import Message     ( Message )
 import Period
-import ExitWithMsg
 import Same
 import Sorting
+import Transaction
 
-import Data.List 
-import Data.Ord
-import Text.Printf
-import Data.Time
-import qualified Data.Time as Time
-import Data.Maybe
+import Data.List   ( intercalate )
+import Text.Printf ( printf )
+import Data.Time   ( Day 
+                   , defaultTimeLocale
+                   , formatTime
+                   )
+import Data.Maybe  ( catMaybes )
 
 
 detail 
