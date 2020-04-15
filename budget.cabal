@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b866511bd8296760f8dcf25c2dddf08bca45748779c0bbd97f2a3196ea26734c
+-- hash: ca59a1ac1b0c28f71b0fe9a6931d75da2e56aa4e3f42589a0c5cc094e24e2c94
 
 name:           budget
 version:        0.1.0.0
@@ -46,6 +46,7 @@ library
       Same
       Sorting
       Summary
+      SummaryLine
       Transaction
       TransactionsCsv
   other-modules:

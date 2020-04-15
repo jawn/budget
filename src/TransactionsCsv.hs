@@ -57,18 +57,18 @@ decodeString = unpack . strip . decodeLatin1
 data FieldNo = ACCOUNT | VOID1 | DAY | NOTES | NAME | CATEGORY | AMOUNT
     deriving (Eq, Enum)
 
+[account, day, notes, name, category, amount] = 
+        map fromEnum [ACCOUNT, DAY, NOTES, NAME, CATEGORY, AMOUNT]
 instance FromRecord Transaction where
     parseRecord v
       | length v /= 7  = fail (show v)
       | length v == 7 = Transaction 
-                        <$> v .! fromEnum ACCOUNT
-                        <*>   v .! fromEnum DAY
-                        <*>   v .! fromEnum NOTES
-                        <*>   v .! fromEnum NAME
-                        <*>   v .! fromEnum CATEGORY 
-                        <*>   v .! fromEnum AMOUNT
-                            where [account, day, notes, name, category, amount] = 
-                                    map fromEnum [ACCOUNT, DAY, NOTES, NAME, CATEGORY, AMOUNT]
+                        <$> v .!  account
+                        <*> v .!  day
+                        <*> v .!  notes
+                        <*> v .!  name
+                        <*> v .!  category 
+                        <*> v .!  amount
 
 instance FromField Name where
     parseField = pure . Name . decodeString

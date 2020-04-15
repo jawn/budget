@@ -5,6 +5,7 @@ import Amount
 import Category
 import Data.List
 import Transaction
+import SummaryLine
 import Sorting
 import Data.Dates
 import Period
@@ -15,15 +16,9 @@ import ExitWithMsg
 import qualified Data.Time as Time
 import Same
 
-type SummaryLine = (Category, Amount, Amount)
-
-summaryCategory (c, _, _) = c
-summaryAmount   (_, a, _) = a
-summaryAverage  (_, _, v) = v
-
 type NbMonths = Integer
 
-summary :: NbMonths -> [Transaction] -> Maybe SortingCriteria -> [String]
+summary :: NbMonths -> [Transaction] -> SortingCriteria -> [String]
 summary nbMonths ts criteria = 
         (map (\(c,a,m) -> prettyLine c a m) 
         . sortWith criteria
@@ -31,17 +26,14 @@ summary nbMonths ts criteria =
         . groupBy (same transactionCategory) 
         . sortBy (comparing transactionCategory)) ts
 
-sortWith :: Maybe SortingCriteria -> [SummaryLine] ->  [SummaryLine]
-sortWith Nothing = id
-sortWith (Just "C") = sortBy (comparing summaryCategory)
-sortWith (Just "c") = sortBy (flip (comparing summaryCategory))
-sortWith (Just "M") = sortBy (comparing summaryAmount)
-sortWith (Just "m") = sortBy (flip (comparing summaryAmount))
+sortWith :: SortingCriteria -> [SummaryLine] ->  [SummaryLine]
+sortWith [] = id
+sortWith [criterion] = sortBy $ summaryOrdering criterion
 
-summaryAllCategories :: [Transaction] -> Maybe SortingCriteria -> [String]
+summaryAllCategories :: [Transaction] -> SortingCriteria -> [String]
 summaryAllCategories ts criteria = summary (Period.months (transactionsPeriod ts)) ts criteria ++ [totalLabel (transactionsPeriod ts) (totalTransactions ts)]
 
-summaryForPeriod :: Period -> [Transaction] -> Maybe SortingCriteria -> [String]
+summaryForPeriod :: Period -> [Transaction] -> SortingCriteria -> [String]
 summaryForPeriod p ts criteria = summary (Period.months p) ts criteria ++ [totalLabel p (totalTransactions ts)]
 
 totalLabel :: Period -> Amount -> String
@@ -50,7 +42,7 @@ totalLabel p a = printf "%-49s:%10s |%10s" ("TOTAL "++ (show p)) (show a) (show 
 formatDate :: Day -> String
 formatDate day = formatTime defaultTimeLocale "%m/%d/%Y" day
 
-summaryForCategories :: (Category -> Bool) -> [Transaction] -> Maybe SortingCriteria -> [String]
+summaryForCategories :: (Category -> Bool) -> [Transaction] -> SortingCriteria -> [String]
 summaryForCategories isValid ts criteria = summaryForPeriod period selection criteria
     where
         period = transactionsPeriod ts 
@@ -68,7 +60,7 @@ summaryTitle (Just name1) (Just name2) p = printf "Report for file:%s (%s) %s" n
 printSummary
     :: Maybe FilePath
     -> Maybe FilePath
-    -> Maybe SortingCriteria
+    -> SortingCriteria
     -> Either String (Category -> Bool)
     -> Either String [Transaction]
     -> IO ()

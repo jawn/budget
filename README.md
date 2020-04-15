@@ -21,7 +21,7 @@
 - [X] import all the csv files in a directory, to account names defined by the alphabetical part of the file name
 - [X] add sorting criteria for summary
 - [X] add period selection for summary
-- [ ] bug if an imported file's contains a field in quotes followed by a space bad things happen
+- [X] bug if an imported file's contains a field in quotes followed by a space bad things happen
 
 ## how to run the tests
 

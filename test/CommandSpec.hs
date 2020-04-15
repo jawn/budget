@@ -2,6 +2,7 @@ module CommandSpec
     where
 import Test.Hspec
 import Command
+import Sorting
 import Category
 import Period
 import Data.Time.Calendar
@@ -11,45 +12,45 @@ spec = do
         describe "No command given" $ do
             it "means summary" $ do
                 let args = words ""
-                command args `shouldBe` Right (Summary Nothing Nothing Nothing) 
+                command args `shouldBe` Right (Summary Nothing Nothing []) 
         describe "Summary" $ do
             it "recognize the summary command with a transaction file" $ do
                 let args = words "summary -t foo.csv"
                 command args `shouldBe` 
-                    Right (Summary (Just "foo.csv") Nothing Nothing)
+                    Right (Summary (Just "foo.csv") Nothing [])
 
             it "recognize the summary command with any transaction file" $ do
                 let args = words "summary -t bar.csv"
                 command args `shouldBe` 
-                    Right (Summary (Just "bar.csv") Nothing Nothing)
+                    Right (Summary (Just "bar.csv") Nothing [])
 
             it "recognize the summary command with a transaction file and a category file" $ do
                 let args = words "summary -t bar.csv -c foo.csv"
                 command args `shouldBe` 
-                    Right (Summary (Just "bar.csv") (Just "foo.csv") Nothing)
+                    Right (Summary (Just "bar.csv") (Just "foo.csv") [])
 
             it "recognize the summary command with a only category file" $ do
                 let args = words "summary -c bar.csv"
                 command args `shouldBe` 
-                    Right (Summary Nothing (Just "bar.csv") Nothing)
+                    Right (Summary Nothing (Just "bar.csv") [])
 
             it "recognize the summary command with no arguments" $ do
                 let args = words "summary" 
                 command args `shouldBe` 
-                    Right (Summary Nothing Nothing Nothing)
+                    Right (Summary Nothing Nothing [])
 
             it "recognize the summary command sorting options" $ do
                 let args = words "summary -s M" 
                 command args `shouldBe` 
-                    Right (Summary Nothing Nothing (Just "M"))
+                    Right (Summary Nothing Nothing [AmountAsc])
 
                 let args = words "summary -s c" 
                 command args `shouldBe` 
-                    Right (Summary Nothing Nothing (Just "c"))
+                    Right (Summary Nothing Nothing [CategoryDesc])
             it "doesn't recognize the summary command with a wrong sorting criteria argument" $ do
-                let args = words "summary -s CM"
+                let args = words "summary -s f"
                 command args `shouldBe` 
-                    (Left $ unlines [ "wrong sorting criteria: CM"
+                    (Left $ unlines [ "not a sort criterion: f"
                                     , "Available criteria are one of:"
                                     , "C : Category ascending (c : descending)"
                                     , "M : Amount ascending (m : descending)"
@@ -59,48 +60,52 @@ spec = do
             it "recognize the detail command with no arguments" $ do
                 let args = words "detail"
                 command args `shouldBe` 
-                    Right (Detail Nothing Nothing Nothing Nothing)
+                    Right (Detail Nothing Nothing Nothing [])
             it "recognize the detail command with a transaction file name argument" $ do
                 let args = words "detail -t MyTransaction.csv"
                 command args `shouldBe` 
-                    Right (Detail (Just "MyTransaction.csv") Nothing Nothing Nothing)
+                    Right (Detail (Just "MyTransaction.csv") Nothing Nothing [])
             it "recognize the detail command with a category argument" $ do
                 let args = words "detail -c Groceries"
                 command args `shouldBe` 
-                    Right (Detail Nothing (Just (Category "Groceries")) Nothing Nothing)
+                    Right (Detail Nothing (Just (Category "Groceries")) Nothing [])
             it "recognize the detail command with a transaction file and a category arguments" $ do
                 let args = words "detail -t MyTransactions.csv -c Groceries"
                 command args `shouldBe` 
-                    Right (Detail (Just "MyTransactions.csv") (Just (Category "Groceries")) Nothing Nothing)
+                    Right (Detail (Just "MyTransactions.csv") (Just (Category "Groceries")) Nothing [])
             it "recognize the detail command with a category and a transaction arguments" $ do
                 let args = words "detail -c Groceries -t MyTransactions.csv"
                 command args `shouldBe` 
-                    Right (Detail (Just "MyTransactions.csv") (Just (Category "Groceries")) Nothing Nothing)
+                    Right (Detail (Just "MyTransactions.csv") (Just (Category "Groceries")) Nothing [])
             it "recognize the detail command with a period argument" $ do
                 let args = words "detail -p 04/30/2020 05/31/2020"
                 command args `shouldBe` 
-                    Right (Detail Nothing Nothing (Just (Period (theDay 2020 04 30) (theDay 2020 05 31))) Nothing)
+                    Right (Detail Nothing Nothing (Just (Period (theDay 2020 04 30) (theDay 2020 05 31))) [])
             it "recognize the detail command with a month argument" $ do
                 let args = words "detail -m 2020 4"
                 command args `shouldBe` 
-                    Right (Detail Nothing Nothing (Just (Period (theDay 2020 04 01) (theDay 2020 04 30))) Nothing)
+                    Right (Detail Nothing Nothing (Just (Period (theDay 2020 04 01) (theDay 2020 04 30))) [])
             it "recognize the detail command with a sorting criteria argument" $ do
                 let args = words "detail -s ADm"
                 command args `shouldBe` 
-                    Right (Detail Nothing Nothing Nothing (Just "ADm"))
+                    Right (Detail Nothing Nothing Nothing [AccountAsc,DateAsc,AmountDesc])
 
             it "doesn't recognize the detail command with a wrong sorting criteria argument" $ do
                 let args = words "detail -s ADX"
                 command args `shouldBe` 
-                    (Left $ unlines [ "wrong sorting criteria: ADX"
-                                    , "Available criteria are one or many of:"
-                                    , "A : Account ascending (a : descending)"
-                                    , "C : Category ascending (c : descending)"
-                                    , "D : Date ascending (d : descending)"
-                                    , "M : Amount ascending (m : descending)"
-                                    , "N : Name ascending (n : descending)"
-                                    , "O : Notes ascending (o : descending)"
-                                    ])
+                    (Left  $ unlines [ "not a sort criterion: X"
+                                     , "Available criteria are one or many of:"
+                                     , "A : Account ascending (a : descending)"
+                                     , "C : Category ascending (c : descending)"
+                                     , "D : Date ascending (d : descending)"
+                                     , "M : Amount ascending (m : descending)"
+                                     , "N : Name ascending (n : descending)"
+                                     , "O : Notes ascending (o : descending)"
+                                     ])
+            it "doesn't recognize a unknown option" $ do
+                let args = words "detail -z"
+                command args `shouldBe` 
+                    (Left $ "option unrecognized or incomplete: -z")
 
         describe "Import" $ do
             it "recognize the import command with two arguments" $ do
@@ -123,15 +128,15 @@ spec = do
         it "recognize the command in uppercase or lowercase" $ do
             let args = words "SUmmary -t foo.csv" 
             command args `shouldBe` 
-                Right (Summary (Just "foo.csv") Nothing Nothing)
+                Right (Summary (Just "foo.csv") Nothing [])
 
         it "recognize a prefix of the command" $ do
             let args = words "SU -t foo.csv" 
             command args `shouldBe` 
-                Right (Summary (Just "foo.csv") Nothing Nothing)
+                Right (Summary (Just "foo.csv") Nothing [])
             let args = words "sum -t foo.csv" 
             command args `shouldBe` 
-                Right (Summary (Just "foo.csv") Nothing Nothing)
+                Right (Summary (Just "foo.csv") Nothing [])
 
         it "doesn't recognize a unknown command" $ do
             let args = words "foo bar.csv" 

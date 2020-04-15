@@ -66,11 +66,11 @@ printDetail
     :: Maybe FilePath
     -> Maybe Category
     -> Maybe Period
-    -> Maybe SortingCriteria
+    -> SortingCriteria
     -> Either String [Transaction]
     -> IO ()
 printDetail filePath category period criteria transactions = do
-    either exitWithMsg (processDetail (maybe "" id criteria)) (transactions >>= checkNotEmpty)
+    either exitWithMsg (processDetail criteria) (transactions >>= checkNotEmpty)
         where
             processDetail :: SortingCriteria -> [Transaction] -> IO ()
             processDetail criteria transactions = do 
