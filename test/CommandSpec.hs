@@ -55,6 +55,10 @@ spec = do
                                     , "C : Category ascending (c : descending)"
                                     , "M : Amount ascending (m : descending)"
                                     ])
+            it "recognize the summary command with named options" $ do
+                let args = words "summary transactions bar.csv categories foo.csv sortby M"
+                command args `shouldBe` 
+                    Right (Summary (Just "bar.csv") (Just "foo.csv") [AmountAsc])
 
         describe "Detail" $ do
             it "recognize the detail command with no arguments" $ do
@@ -65,8 +69,16 @@ spec = do
                 let args = words "detail -t MyTransaction.csv"
                 command args `shouldBe` 
                     Right (Detail (Just "MyTransaction.csv") Nothing Nothing [])
+            it "recognize the detail command with a transaction file named option" $ do
+                let args = words "detail transactions MyTransaction.csv"
+                command args `shouldBe` 
+                    Right (Detail (Just "MyTransaction.csv") Nothing Nothing [])
             it "recognize the detail command with a category argument" $ do
                 let args = words "detail -c Groceries"
+                command args `shouldBe` 
+                    Right (Detail Nothing (Just (Category "Groceries")) Nothing [])
+            it "recognize the detail command with a category named argument" $ do
+                let args = words "detail category Groceries"
                 command args `shouldBe` 
                     Right (Detail Nothing (Just (Category "Groceries")) Nothing [])
             it "recognize the detail command with a transaction file and a category arguments" $ do
@@ -81,12 +93,24 @@ spec = do
                 let args = words "detail -p 04/30/2020 05/31/2020"
                 command args `shouldBe` 
                     Right (Detail Nothing Nothing (Just (Period (theDay 2020 04 30) (theDay 2020 05 31))) [])
+            it "recognize the detail command with a named period argument" $ do
+                let args = words "detail period 04/30/2020 05/31/2020"
+                command args `shouldBe` 
+                    Right (Detail Nothing Nothing (Just (Period (theDay 2020 04 30) (theDay 2020 05 31))) [])
             it "recognize the detail command with a month argument" $ do
                 let args = words "detail -m 2020 4"
                 command args `shouldBe` 
                     Right (Detail Nothing Nothing (Just (Period (theDay 2020 04 01) (theDay 2020 04 30))) [])
+            it "recognize the detail command with a named month argument" $ do
+                let args = words "detail month 2020 4"
+                command args `shouldBe` 
+                    Right (Detail Nothing Nothing (Just (Period (theDay 2020 04 01) (theDay 2020 04 30))) [])
             it "recognize the detail command with a sorting criteria argument" $ do
                 let args = words "detail -s ADm"
+                command args `shouldBe` 
+                    Right (Detail Nothing Nothing Nothing [AccountAsc,DateAsc,AmountDesc])
+            it "recognize the detail command with a named sorting criteria argument" $ do
+                let args = words "detail sortby ADm"
                 command args `shouldBe` 
                     Right (Detail Nothing Nothing Nothing [AccountAsc,DateAsc,AmountDesc])
 
