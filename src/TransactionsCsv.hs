@@ -15,7 +15,8 @@ import Amount      ( Amount (..)
                    , amount )
 import Account     ( Account (..) )
 import Period      ( Period (..)
-                   , showDate )
+                   , showDate
+                   , theDay )
 import Config      ( Config (..) )
 import Name        ( Name (..) )
 import Note        ( Note (..) )
@@ -39,6 +40,8 @@ import Data.Text (Text, unpack, strip)
 import Data.Text.Encoding as Text
 import Data.Maybe
 import MaybeToEither
+import Data.List.Split ( splitOn )
+import Text.Printf
 
 import Data.Csv
     ( FromRecord(parseRecord)
@@ -65,8 +68,8 @@ decodeString = unpack . strip . decodeLatin1
 
 instance FromRecord Transaction where
     parseRecord v
-      | length v /= 7  = fail (show v)
-      | length v == 7 = Transaction 
+      | length v <  7  = fail (show v)
+      | length v >= 7 = Transaction 
                         <$> v .!  account
                         <*> v .!  day
                         <*> v .!  notes
@@ -87,7 +90,19 @@ instance FromField Account where
     parseField s = (pure . Account . decodeString) s
 
 instance FromField Time.Day where
-    parseField = parseTimeM True defaultTimeLocale "%m/%d/%Y" . decodeString
+    parseField = parseTimeM True defaultTimeLocale "%m/%d/%Y" . spaceToZero . decodeString
+        where 
+            spaceToZero s = case splitOn "/" s of
+                              [m,d,y] -> printf "%02d/%02d/%04d" 
+                                (read m :: Int) 
+                                (read d :: Int ) 
+                                (normalYear (read y))
+                              _ -> s
+normalYear :: Int -> Int
+normalYear y 
+    | y > 100 = y
+    | y < 50  = 2000 + y
+    | otherwise = 1900 + y
 
 instance FromField Category where
     parseField = pure . Category . decodeString

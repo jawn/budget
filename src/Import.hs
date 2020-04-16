@@ -18,7 +18,7 @@ importTransactions :: String -> [Transaction] -> [Transaction] -> Either Message
 
 importTransactions name transactions importations 
     | importations `alreadyIn` transactions = Left "transactions already imported"
-    | otherwise                             = Right (transactions ++ (changeAccount name . filterPosted) importations)
+    | otherwise                             = Right (transactions ++ (changeAccount name . filterPostedOrAlreadyAccount) importations)
 
 
 alreadyIn :: [Transaction] -> [Transaction] -> Bool
@@ -40,13 +40,21 @@ attributesAlreadyIn :: [Attributes] -> [Attributes] -> Bool
 
 
 changeAccount :: String -> [Transaction] ->  [Transaction]
-changeAccount name = 
-    map ( \t -> t { transactionAccount = Account name } ) 
+changeAccount name =  map change
+    where
+        change t 
+          | ( not . alreadyAnAccountName . accountName . transactionAccount) t =
+              t { transactionAccount = Account name } 
+          | otherwise = t
+ 
 
 
-filterPosted
+filterPostedOrAlreadyAccount
     :: [Transaction]
     -> [Transaction]
-filterPosted =
-    filter ((Account "posted" ==) . transactionAccount) 
+filterPostedOrAlreadyAccount =
+    filter ((\s -> (s == "posted" || alreadyAnAccountName s)) . accountName . transactionAccount)
+
+alreadyAnAccountName :: String -> Bool
+alreadyAnAccountName s = (s /= "posted") && (s /= "pending") && (s /= "forecasted") 
 

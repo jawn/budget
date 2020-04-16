@@ -22,6 +22,9 @@
 - [X] add sorting criteria for summary
 - [X] add period selection for summary
 - [X] bug if an imported file's contains a field in quotes followed by a space bad things happen
+- [X] bug if a file contains a date with space and year on 2 digits, bad things happen
+- [X] bug if a file contains more than 7 fields bad things happen
+- [X] buf if an import file contains already an Account in first field (hence not equal to "posted") import this file nonetheless, but keep the existing account name 
 
 ## how to run the tests
 

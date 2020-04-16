@@ -53,6 +53,13 @@ spec = do
                          , transactionCategory = Category "Devices"
                          , transactionAmount   = amount (-40050.00)
                          }
+    let t7 = Transaction { transactionAccount = Account "Already An Account"
+                         , transactionDate    = theDay 2020 9 1
+                         , transactionNotes   = Nothing
+                         , transactionName    = Just $ Name "General"
+                         , transactionCategory = Category "Devices"
+                         , transactionAmount   = amount 48.07
+                         }
     describe "import" $ do
         describe "append transactions" $ do
             it "from a new list to an existing list" $ do
@@ -70,12 +77,19 @@ spec = do
                 fmap (map (accountName . transactionAccount) . (drop 2)) result
                     `shouldBe` Right ["CreditFoo","CreditFoo"]
 
-            it "doesn't append transactions where status is differet from posting" $ do
+            it "doesn't append transactions where status is different from posted and not already an account" $ do
                 let existing = [t1,t2] 
                 let to_import = [t5,t3,t6,t4]
                 let result = importTransactions "CreditFoo" existing to_import 
                 fmap (filter (\t -> transactionAmount t == amount (-40050.00))) result 
                     `shouldBe` Right []
+
+            it "append transactions where status is already changed to Account (starting with an uppercase letter)" $ do
+                let existing = [t1,t2] 
+                let to_import = [t3,t7]
+                let result = importTransactions "CreditFoo" existing to_import 
+                fmap (map (accountName . transactionAccount)) result
+                    `shouldBe` Right ["MyBank", "Investment", "CreditFoo", "Already An Account"]
 
             it "give a message is the import list has already been imported" $ do
                 let existing = [t1,t2] 

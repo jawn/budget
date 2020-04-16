@@ -40,6 +40,17 @@ spec = do
             let bs = "MyBank,,02/25/2020,,GOOGLE  DOMAINS,Online Services,--12\n"
                 ts = decodeTransactions bs
             fmap (fmap transactionAmount) ts `shouldBe` Right [amount 12]
+
+        it "can be decoded from a ByteString containing dates in an odd format" $ do
+            let bs = "MyBank,,  2/ 5/20,,GOOGLE  DOMAINS,Online Services,-12\n"
+                ts = decodeTransactions bs
+            fmap (fmap transactionDate) ts `shouldBe` Right [theDay 2020 2 5]
+
+        it "can be decoded from a ByteString containing more than the required number of fields" $ do
+            let bs = "MyBank,,02/05/2020,,GOOGLE  DOMAINS,Online Services,-12,\n"
+                ts = decodeTransactions bs
+            fmap length ts `shouldBe` Right 1
+
         it "can notify an error when decoded from ill-formed data" $ do
             let bs = "MyBank,,02/25/2020,,GOOGLE  DOMAINS,Online Services,-1foo2\n"
                 ts = decodeTransactions bs
