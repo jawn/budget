@@ -1,0 +1,203 @@
+(+)	./Amount.hs	40
+Account	./Account.hs	1
+AccountAsc	./Sorting.hs	28
+AccountDesc	./Sorting.hs	29
+Amount	./Amount.hs	9
+Amount	./Amount.hs	9
+AmountAsc	./Sorting.hs	34
+AmountDesc	./Sorting.hs	35
+Asc	./Sorting.hs	24
+Attributes	./Import.hs	14
+CatchShowIO	./CatchShowIO.hs	1
+CategoriesCsv	./CategoriesCsv.hs	1
+Category	./Category.hs	1
+CategoryAsc	./Sorting.hs	30
+CategoryDesc	./Sorting.hs	31
+Command	./Command.hs	11
+CommandCriteria	./Sorting.hs	42
+Config	./Config.hs	2
+DateAsc	./Sorting.hs	32
+DateDesc	./Sorting.hs	33
+Desc	./Sorting.hs	24
+Detail	./Command.hs	13
+Detail	./Detail.hs	1
+DetailSortingCriteria	./Sorting.hs	42
+Direction	./Sorting.hs	24
+ExitWithMsg	./ExitWithMsg.hs	1
+FromField Account	./TransactionsCsv.hs	88
+FromField Amount	./TransactionsCsv.hs	110
+FromField Category	./TransactionsCsv.hs	107
+FromField Name	./TransactionsCsv.hs	82
+FromField Note	./TransactionsCsv.hs	85
+FromField Time-Day	./TransactionsCsv.hs	92
+FromRecord Category	./CategoriesCsv.hs	29
+FromRecord Transaction	./TransactionsCsv.hs	69
+Help	./Command.hs	15
+Help	./Help.hs	1
+Import	./Command.hs	14
+Import	./Import.hs	1
+ImportFileName	./ImportFileName.hs	1
+MaybeToEither	./MaybeToEither.hs	1
+Message	./Message.hs	1
+Name	./Name.hs	1
+NameAsc	./Sorting.hs	36
+NameDesc	./Sorting.hs	37
+NbMonths	./Summary.hs	25
+Note	./Note.hs	1
+NotesAsc	./Sorting.hs	38
+NotesDesc	./Sorting.hs	39
+Num Amount	./Amount.hs	38
+Period	./Period.hs	22
+Period	./Period.hs	22
+Read Amount	./Amount.hs	29
+Same	./Same.hs	1
+Show Amount	./Amount.hs	20
+Show Name	./Name.hs	7
+Show Note	./Note.hs	6
+Show Period	./Period.hs	25
+SortCriterion	./Sorting.hs	27
+Sorting	./Sorting.hs	1
+SortingCriteria	./Sorting.hs	23
+Summary	./Command.hs	12
+Summary	./Summary.hs	1
+SummaryLine	./SummaryLine.hs	10
+SummarySortingCriteria	./Sorting.hs	43
+ToField Account	./TransactionsCsv.hs	132
+ToField Amount	./TransactionsCsv.hs	141
+ToField Category	./TransactionsCsv.hs	138
+ToField Day	./TransactionsCsv.hs	135
+ToField Name	./TransactionsCsv.hs	126
+ToField Note	./TransactionsCsv.hs	129
+ToRecord Transaction	./TransactionsCsv.hs	116
+Topic	./Help.hs	13
+TopicDetail	./Help.hs	13
+TopicHelp	./Help.hs	13
+TopicImport	./Help.hs	13
+TopicSort	./Help.hs	13
+TopicSummary	./Help.hs	13
+Transaction	./Transaction.hs	24
+Transaction	./Transaction.hs	24
+TransactionsCsv	./TransactionsCsv.hs	2
+accountName	./Account.hs	4
+addParameters	./Command.hs	44
+addParameters	./Command.hs	54
+addParameters	./Command.hs	72
+alreadyAnAccountName	./Import.hs	58
+alreadyIn	./Import.hs	20
+amount	./Amount.hs	12
+attributes	./Import.hs	30
+attributesAlreadyIn	./Import.hs	34
+averageTransactionsPerMonth	./Transaction.hs	36
+canonical	./TransactionsCsv.hs	197
+catchShowIO	./CatchShowIO.hs	12
+categoryName	./Category.hs	4
+changeAccount	./Import.hs	42
+checkNotEmpty	./ImportFileName.hs	27
+checkNotEmpty	./Transaction.hs	50
+command	./Command.hs	22
+command	./Command.hs	30
+decodeCategories	./CategoriesCsv.hs	37
+decodeCategoriesFromFile	./CategoriesCsv.hs	43
+decodeString	./TransactionsCsv.hs	67
+decodeTransactions	./TransactionsCsv.hs	148
+decodeTransactionsFromFile	./TransactionsCsv.hs	158
+detail	./Detail.hs	26
+detailOrdering	./Sorting.hs	81
+detailOrderings	./Sorting.hs	105
+detailTitle	./Detail.hs	59
+directoryContents	./ImportFileName.hs	31
+divideBy	./Amount.hs	50
+doHelp	./Help.hs	28
+encodeTransactions	./TransactionsCsv.hs	153
+encodeTransactionsToFile	./TransactionsCsv.hs	166
+equals	./Command.hs	24
+equals	./Command.hs	36
+equals	./Command.hs	50
+equals	./Command.hs	66
+equals	./Help.hs	17
+exitWithMsg	./ExitWithMsg.hs	5
+extractName	./ImportFileName.hs	14
+filterPostedOrAlreadyAccount	./Import.hs	55
+foldOrdering	./Sorting.hs	108
+footer	./Detail.hs	49
+formatDate	./Detail.hs	40
+formatDate	./Summary.hs	48
+fromFile	./Config.hs	28
+fromInteger	./Amount.hs	42
+fromString	./Config.hs	15
+help	./Help.hs	24
+importCategorySelector	./CategoriesCsv.hs	50
+importDirectory	./ImportFileName.hs	21
+importTransactions	./Import.hs	17
+lengthLabel	./Detail.hs	43
+lowerCase	./Command.hs	33
+maybeToEither	./MaybeToEither.hs	4
+months	./Period.hs	37
+name	./ImportFileName.hs	19
+negate	./Amount.hs	41
+normalYear	./TransactionsCsv.hs	101
+number	./Amount.hs	44
+parseField	./TransactionsCsv.hs	83
+parseField	./TransactionsCsv.hs	86
+parseField	./TransactionsCsv.hs	89
+parseField	./TransactionsCsv.hs	93
+parseField	./TransactionsCsv.hs	108
+parseField	./TransactionsCsv.hs	111
+parseRecord	./CategoriesCsv.hs	30
+parseRecord	./TransactionsCsv.hs	70
+period	./Period.hs	33
+periodFromMonth	./Period.hs	48
+periodFromMonthString	./Period.hs	51
+periodFromStrings	./Period.hs	40
+prettyLine	./Detail.hs	28
+prettyLine	./Summary.hs	57
+printConfig	./Help.hs	173
+printDetail	./Detail.hs	74
+printSummary	./Summary.hs	73
+readCriteria	./Sorting.hs	50
+readCriterion	./Sorting.hs	61
+readsPrec	./Amount.hs	31
+retrieveTransactions	./TransactionsCsv.hs	173
+same	./Same.hs	4
+saveTransactions	./TransactionsCsv.hs	185
+show	./Amount.hs	22
+show	./Name.hs	8
+show	./Note.hs	7
+show	./Period.hs	27
+showDate	./Period.hs	30
+sortWith	./Summary.hs	35
+sortWithCriteria	./Sorting.hs	113
+summarizeTransactionsMonths	./Transaction.hs	39
+summary	./Summary.hs	27
+summaryAllCategories	./Summary.hs	39
+summaryAmount	./SummaryLine.hs	13
+summaryAverage	./SummaryLine.hs	14
+summaryCategory	./SummaryLine.hs	12
+summaryForCategories	./Summary.hs	51
+summaryForPeriod	./Summary.hs	42
+summaryOrdering	./Sorting.hs	99
+summaryTitle	./Summary.hs	60
+theDay	./Period.hs	58
+toField	./TransactionsCsv.hs	127
+toField	./TransactionsCsv.hs	130
+toField	./TransactionsCsv.hs	133
+toField	./TransactionsCsv.hs	136
+toField	./TransactionsCsv.hs	139
+toField	./TransactionsCsv.hs	142
+toRecord	./TransactionsCsv.hs	117
+topic	./Help.hs	16
+topic	./Help.hs	22
+total	./Amount.hs	47
+totalLabel	./Detail.hs	37
+totalLabel	./Summary.hs	45
+totalTransactions	./Transaction.hs	33
+transactionAccount	./Transaction.hs	24
+transactionAmount	./Transaction.hs	29
+transactionCategory	./Transaction.hs	28
+transactionDate	./Transaction.hs	25
+transactionName	./Transaction.hs	27
+transactionNotes	./Transaction.hs	26
+transactionsPeriod	./Transaction.hs	43
+validateCriteria	./Sorting.hs	116
+within	./Period.hs	61
+wrongCriteriaMessage	./Sorting.hs	127
