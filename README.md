@@ -20,7 +20,7 @@
 - [X] show the file path of the transaction file that was just displayed by detail 
 - [X] import all the csv files in a directory, to account names defined by the alphabetical part of the file name
 - [X] add sorting criteria for summary
-- [ ] add period selection for summary
+- [X] add period selection for summary
 - [X] bug if an imported file's contains a field in quotes followed by a space bad things happen
 - [X] bug if a file contains a date with space and year on 2 digits, bad things happen
 - [X] bug if a file contains more than 7 fields bad things happen

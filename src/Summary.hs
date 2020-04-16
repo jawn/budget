@@ -36,8 +36,11 @@ sortWith :: SortingCriteria -> [SummaryLine] ->  [SummaryLine]
 sortWith [] = id
 sortWith [criterion] = sortBy $ summaryOrdering criterion
 
-summaryAllCategories :: [Transaction] -> SortingCriteria -> [String]
-summaryAllCategories ts criteria = summary (Period.months (transactionsPeriod ts)) ts criteria ++ [totalLabel (transactionsPeriod ts) (totalTransactions ts)]
+summaryAllCategories :: [Transaction] -> (Maybe Period) -> SortingCriteria -> [String]
+
+summaryAllCategories ts Nothing criteria = summary (Period.months (transactionsPeriod ts)) ts criteria ++ [totalLabel (transactionsPeriod ts) (totalTransactions ts)]
+summaryAllCategories ts (Just p) criteria = summary (Period.months p) selection criteria ++ [totalLabel p (totalTransactions selection)]
+    where selection = fromPeriod p ts
 
 summaryForPeriod :: Period -> [Transaction] -> SortingCriteria -> [String]
 summaryForPeriod p ts criteria = summary (Period.months p) ts criteria ++ [totalLabel p (totalTransactions ts)]
@@ -48,8 +51,12 @@ totalLabel p a = printf "%-49s:%10s |%10s" ("TOTAL "++ (show p)) (show a) (show 
 formatDate :: Day -> String
 formatDate day = formatTime defaultTimeLocale "%m/%d/%Y" day
 
-summaryForCategories :: (Category -> Bool) -> [Transaction] -> SortingCriteria -> [String]
-summaryForCategories isValid ts criteria = summaryForPeriod period selection criteria
+summaryForCategories :: (Category -> Bool) -> [Transaction] -> (Maybe Period) -> SortingCriteria -> [String]
+summaryForCategories isValid ts (Just p) criteria = summaryForPeriod p selection criteria
+    where
+        period = transactionsPeriod ts 
+        selection = filter (isValid . transactionCategory) (fromPeriod p ts)
+summaryForCategories isValid ts Nothing criteria = summaryForPeriod period selection criteria
     where
         period = transactionsPeriod ts 
         selection = filter (isValid . transactionCategory) ts
@@ -66,11 +73,12 @@ summaryTitle (Just name1) (Just name2) p = printf "Report for file:%s (%s) %s" n
 printSummary
     :: Maybe FilePath
     -> Maybe FilePath
+    -> Maybe Period
     -> SortingCriteria
     -> Either Message (Category -> Bool)
     -> Either Message [Transaction]
     -> IO ()
-printSummary transactionFilePath categoryFilePath criteria selector transactions = do
+printSummary transactionFilePath categoryFilePath period criteria selector transactions = do
     either exitWithMsg processSummary (transactions >>= checkNotEmpty)
         where
             processSummary :: [Transaction] -> IO ()
@@ -78,7 +86,7 @@ printSummary transactionFilePath categoryFilePath criteria selector transactions
                 let summary = case categoryFilePath of
                             Nothing -> summaryAllCategories
                             Just _ -> case selector of
-                                        Right f -> summaryForCategories f
+                                        Right f -> summaryForCategories f 
                                         Left msg -> error $ printf "while importing categories: %s" msg
-                putStrLn (summaryTitle transactionFilePath categoryFilePath (transactionsPeriod transactions))
-                putStrLn (unlines (summary transactions criteria))
+                putStrLn (summaryTitle transactionFilePath categoryFilePath (maybe (transactionsPeriod transactions) id period))
+                putStrLn (unlines (summary transactions period criteria))

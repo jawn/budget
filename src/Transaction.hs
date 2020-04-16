@@ -1,5 +1,6 @@
 module Transaction ( Transaction (..)
                    , checkNotEmpty
+                   , fromPeriod
                    , summarizeTransactionsMonths
                    , totalTransactions
                    , transactionsPeriod
@@ -50,3 +51,6 @@ transactionsPeriod ts = Period date1 date2
 checkNotEmpty :: [Transaction] -> Either Message [Transaction]
 checkNotEmpty [] = Left "no transaction"
 checkNotEmpty ts = Right ts 
+
+fromPeriod :: Period -> [Transaction] -> [Transaction]
+fromPeriod p = filter ((`within` p) . transactionDate)
