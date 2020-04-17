@@ -1,0 +1,60 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{listings}
+\usepackage{framed}
+\usepackage{color}
+\definecolor{navyblue}{rgb}{0.0, 0.0, 0.502}
+\definecolor{darkgreen}{rgb}{0.04, 0.196, 0.125}
+\definecolor{lightlightgray}{rgb}{0.9, 0.9, 0.9}
+\renewcommand{\familydefault}{\sfdefault}
+\lstnewenvironment{budget}[1][]
+{\lstset{language={},
+    backgroundcolor=\color{lightlightgray},
+    basicstyle=\color{darkgreen}\ttfamily\small,
+    keywordstyle=[0]\color{black}\bf,
+    keywordstyle=[1]\color{darkgreen},
+    keywordstyle=[2]\color{navyblue},
+    keywords=[0]{budget},
+    keywords=[1]{summary, detail, import, help},
+    keywords=[2]{transactions, categories, category, period, month, sortby},
+#1}}{}    
+
+
+\begin{document}
+\Large
+    \begin{framed}
+\begin{minipage}[t][3in][t]{5in}
+    \center
+            You can abbreviate every command and option! \\
+            \begin{budget}
+budget summary categories MyFavorite.csv sortby M
+        \end{budget}
+\end{minipage}
+    \end{framed}
+\end{document}
+
+        \begin{spacing}{2.5}
+            \center
+            \normalsize{
+                \texttt{} \\
+            }
+            \Large
+            is equivalent to:\\
+            \normalsize{
+                \texttt{budget sum cat MyFavorite.csv s M}\\
+            }
+        \end{spacing}
+    \end{minipage} }
+\fbox{ \begin{minipage}[t][3in][t]{5in}
+        \begin{spacing}{1.5}
+            \center
+            \fbox{You can have a summary of your favorite categories} \\
+            \normalsize{
+                write your categories into a csv file \\
+                    one category per line \\
+                    no quotes needed  \\
+                use the \texttt{categories} option: \\
+                \texttt{budget sum cat MyFavorite.csv}
+            }
+        \end{spacing}
+    \end{minipage} }
+\end{document}
