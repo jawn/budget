@@ -2,6 +2,7 @@
 module DetailSpec
     where
 import Test.Hspec
+import ShouldBeOutput (shouldBeLine, shouldBeOutput)
 import Transaction
 import Account
 import Name
@@ -26,19 +27,19 @@ spec = do
                          , transactionDate    = theDay 2020 5 1
                          , transactionNotes   = Just $ Note "a long category name indeed"
                          , transactionName    = Just (Name "Another very long name,Apple")
-                         , transactionCategory = Category "Devices"
+                         , transactionCategory = Category "Devices and other house utilities"
                          , transactionAmount   = amount (-1000.00)
                          }
     describe "detail" $ do
         it "show transactions" $ do
-            take 2 (detail (sortBy (comparing transactionDate) [t1,t2])) `shouldBe` 
-                 ["Investment           05/01/2020 a long category name Another very long na Devices             |  -1000.00"
+            take 2 (detail (sortBy (comparing transactionDate) [t1,t2])) `shouldBeOutput` 
+                 ["Investment 05/01/2020 a long category name Another very long na Devices and other house utilities | -1000.00"
 
-                 ,"MyBank               06/01/2020 some notes           Joe's shop           Groceries           |    -48.07"]
+                 ,"MyBank 06/01/2020 some notes Joe's shop Groceries | -48.07"]
 
         it "show the total for the transactions, mentionning the min and max date " $ do
-            lines (footer [t1,t2]) `shouldBe` 
-                 [ "TOTAL from 05/01/2020 to 06/01/2020                                                           :  -1048.07"
+            lines (footer [t1,t2]) `shouldBeOutput` 
+                 [ "TOTAL from 05/01/2020 to 06/01/2020 : -1048.07"
                  , "2 transactions"
                  ]
 

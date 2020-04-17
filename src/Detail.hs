@@ -26,16 +26,16 @@ detail
 detail = map prettyLine 
 
 prettyLine :: Transaction -> String
-prettyLine t = printf "%-20s %10s %-20s %-20s %-20s|%10s"
+prettyLine t = printf "%-20s %10s %-20s %-20s %-40s|%10s"
              (take 20 (accountName (transactionAccount t)))
              (formatTime defaultTimeLocale "%m/%d/%Y" (transactionDate t))
              (take 20 (maybe "" show (transactionNotes t)))
              (take 20 (maybe "" show (transactionName t)))
-             (take 20 (categoryName (transactionCategory t)))
+             (take 40 (categoryName (transactionCategory t)))
              (show (transactionAmount t))
 
 totalLabel :: Period -> Amount -> String
-totalLabel p a = printf "%-94s:%10s" ("TOTAL "++ (show p)) (show a) 
+totalLabel p a = printf "%-114s:%10s" ("TOTAL "++ (show p)) (show a) 
 
 formatDate :: Day -> String
 formatDate day = formatTime defaultTimeLocale "%m/%d/%Y" day
