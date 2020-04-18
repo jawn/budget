@@ -4,6 +4,8 @@ module Period ( Period (..)
               , periodFromMonthString
               , periodFromMonth
               , periodFromStrings
+              , periodFromYear
+              , periodFromYearString
               , showDate
               , theDay
               , within
@@ -48,12 +50,20 @@ periodFromStrings s t = period <$> parse s <*> parse t
 periodFromMonth :: Integer -> Int -> Period
 periodFromMonth y m  = Period (fromGregorian y m 1) (fromGregorian y m (gregorianMonthLength y m))
 
+periodFromYear :: Integer -> Period
+periodFromYear y = Period (fromGregorian y 1 1) (fromGregorian y 12 31)
+
 periodFromMonthString :: String -> String -> Either Message Period
 periodFromMonthString s t  = case reads s of
                                []  -> Left $ "parser error: wrong year format: " ++ s 
                                [(y,_)] -> case reads t of
                                             [] -> Left $ "parser error: wrong month format: " ++ t
                                             [(m,_)] -> Right $ periodFromMonth y m
+
+periodFromYearString :: String -> Either Message Period
+periodFromYearString s = case reads s of
+                           [] -> Left $ "parser error: wrong year format: " ++ s
+                           [(y,_)] -> Right $ periodFromYear y
 
 theDay :: Integer -> Int -> Int -> Day
 theDay = fromGregorian

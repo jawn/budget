@@ -19,6 +19,9 @@ spec = do
             periodFromMonth 2020 04 `shouldBe` (Period (theDay 2020 4 1) (theDay 2020 4 30)) 
             periodFromMonth 2020 02 `shouldBe` (Period (theDay 2020 2 1) (theDay 2020 2 29))
 
+        it "can be created with a year" $ do
+            periodFromYear 2020 `shouldBe` (Period (theDay 2020 1 1) (theDay 2020 12 31))
+
         it "can be created with two date strings" $ do
             periodFromStrings "04/01/2020" "05/31/2020" `shouldBe`
                 Right (Period (theDay 2020 04 01) (theDay 2020 05 31))

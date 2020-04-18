@@ -50,6 +50,9 @@ addParameters ("-p":arg1:arg2:args) (Summary tf sf pe sc)   = case periodFromStr
 addParameters ("-m":arg1:arg2:args) (Summary tf sf pe sc) = case periodFromMonthString arg1 arg2 of
                                                               Right p -> Right (Summary tf sf (Just p) sc) >>= addParameters args
                                                               Left msg -> Left msg
+addParameters ("-y":arg:args)       (Summary tf sf pe sc) = case periodFromYearString arg of
+                                                              Right p -> Right (Summary tf sf (Just p) sc) >>= addParameters args
+                                                              Left msg -> Left msg
 addParameters ("-s":arg:args)       (Summary tf sf pe sc)   = case validateCriteria SummarySortingCriteria arg of
                                                              Right criteria -> Right (Summary tf sf pe criteria) >>= addParameters args
                                                              Left msg -> Left msg
@@ -57,6 +60,7 @@ addParameters (opt:arg:args) (Summary tf sf pe sc)  | opt `equals` "categories" 
 addParameters (opt:arg:args) (Summary tf sf pe sc)  | opt `equals` "transactions" = addParameters ("-t":arg:args) (Summary tf sf pe sc)
 addParameters (opt:arg:args) (Summary tf sf pe sc)  | opt `equals` "period"       = addParameters ("-p":arg:args) (Summary tf sf pe sc)
 addParameters (opt:arg:args) (Summary tf sf pe sc)  | opt `equals` "month"        = addParameters ("-m":arg:args) (Summary tf sf pe sc)
+addParameters (opt:arg:args) (Summary tf sf pe sc)  | opt `equals` "year"         = addParameters ("-y":arg:args) (Summary tf sf pe sc)
 addParameters (opt:arg:args) (Summary tf sf pe sc)  | opt `equals` "sortby"       = addParameters ("-s":arg:args) (Summary tf sf pe sc)
                                     
 addParameters ("-t":arg:args)       (Detail tf ca pe sc) = Right (Detail (Just arg) ca pe sc) >>= addParameters args 
@@ -67,6 +71,9 @@ addParameters ("-p":arg1:arg2:args) (Detail tf ca pe sc) = case periodFromString
 addParameters ("-m":arg1:arg2:args) (Detail tf ca pe sc) = case periodFromMonthString arg1 arg2 of
                                                               Right p -> Right (Detail tf ca (Just p) sc) >>= addParameters args
                                                               Left msg -> Left msg
+addParameters ("-y":arg:args)       (Detail tf ca pe sc) = case periodFromYearString arg of
+                                                              Right p -> Right (Detail tf ca (Just p) sc) >>= addParameters args
+                                                              Left msg -> Left msg
 addParameters ("-s":arg:args)       (Detail tf ca pe sc) = case validateCriteria DetailSortingCriteria arg of 
                                                              Right criteria -> Right (Detail tf ca pe criteria) >>= addParameters args
                                                              Left msg -> Left msg
@@ -75,6 +82,7 @@ addParameters (opt:arg:args) (Detail tf ca pe sc) | opt `equals` "transactions" 
 addParameters (opt:arg:args) (Detail tf ca pe sc) | opt `equals` "category" = addParameters ("-c":arg:args) (Detail tf ca pe sc) 
 addParameters (opt:arg:args) (Detail tf ca pe sc) | opt `equals` "period" = addParameters ("-p":arg:args) (Detail tf ca pe sc) 
 addParameters (opt:arg:args) (Detail tf ca pe sc) | opt `equals` "month" = addParameters ("-m":arg:args) (Detail tf ca pe sc) 
+addParameters (opt:arg:args) (Detail tf ca pe sc) | opt `equals` "year"  = addParameters ("-y":arg:args) (Detail tf ca pe sc) 
 addParameters (opt:arg:args) (Detail tf ca pe sc) | opt `equals` "sortby" = addParameters ("-s":arg:args) (Detail tf ca pe sc) 
 
 addParameters (arg:_)               _                    = Left ("option unrecognized or incomplete: " ++ arg)

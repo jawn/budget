@@ -80,6 +80,18 @@ spec = do
                 command args `shouldBe` 
                     Right (Summary Nothing Nothing (Just (Period (theDay 2020 03 01) (theDay 2020 03 31))) [])
 
+            it "recogize the summary command with a year option" $ do
+                let args = words "summary -y 2020"
+                command args `shouldBe` 
+                    Right (Summary Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
+            it "doesn't recogize the summary command with a wrong year option" $ do
+                let args = words "summary -y foo"
+                command args `shouldBe` 
+                    Left "parser error: wrong year format: foo"
+            it "recogize the summary command with a named year option" $ do
+                let args = words "summary year 2020"
+                command args `shouldBe` 
+                    Right (Summary Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
         describe "Detail" $ do
             it "recognize the detail command with no arguments" $ do
                 let args = words "detail"
@@ -125,6 +137,14 @@ spec = do
                 let args = words "detail month 2020 4"
                 command args `shouldBe` 
                     Right (Detail Nothing Nothing (Just (Period (theDay 2020 04 01) (theDay 2020 04 30))) [])
+            it "recognize the detail command with a year argument" $ do
+                let args = words "detail -y 2020"
+                command args `shouldBe` 
+                    Right (Detail Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
+            it "recognize the detail command with a named year argument" $ do
+                let args = words "detail year 2020"
+                command args `shouldBe` 
+                    Right (Detail Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
             it "recognize the detail command with a sorting criteria argument" $ do
                 let args = words "detail -s ADm"
                 command args `shouldBe` 

@@ -127,6 +127,8 @@ Read Amount	./src/Amount.hs	29
 Read Amount	src/Amount.hs	29
 Same	./src/Same.hs	1
 Same	src/Same.hs	1
+ShouldBeOutput	./test/ShouldBeOutput.hs	1
+ShouldBeOutput	test/ShouldBeOutput.hs	1
 Show Amount	./src/Amount.hs	20
 Show Amount	src/Amount.hs	20
 Show Name	./src/Name.hs	7
@@ -192,11 +194,11 @@ TransactionsCsvSpec	test/TransactionsCsvSpec.hs	3
 accountName	./src/Account.hs	4
 accountName	src/Account.hs	4
 addParameters	./src/Command.hs	44
-addParameters	./src/Command.hs	62
-addParameters	./src/Command.hs	80
+addParameters	./src/Command.hs	65
+addParameters	./src/Command.hs	83
 addParameters	src/Command.hs	44
-addParameters	src/Command.hs	62
-addParameters	src/Command.hs	80
+addParameters	src/Command.hs	65
+addParameters	src/Command.hs	83
 alreadyAnAccountName	./src/Import.hs	58
 alreadyAnAccountName	src/Import.hs	58
 alreadyIn	./src/Import.hs	20
@@ -225,12 +227,12 @@ command	./src/Command.hs	22
 command	./src/Command.hs	30
 command	src/Command.hs	22
 command	src/Command.hs	30
-day1	./test/SummarySpec.hs	13
-day1	test/SummarySpec.hs	13
-day2	./test/SummarySpec.hs	14
-day2	test/SummarySpec.hs	14
-day3	./test/SummarySpec.hs	15
-day3	test/SummarySpec.hs	15
+day1	./test/SummarySpec.hs	14
+day1	test/SummarySpec.hs	14
+day2	./test/SummarySpec.hs	15
+day2	test/SummarySpec.hs	15
+day3	./test/SummarySpec.hs	16
+day3	test/SummarySpec.hs	16
 decodeCategories	./src/CategoriesCsv.hs	37
 decodeCategories	src/CategoriesCsv.hs	37
 decodeCategoriesFromFile	./src/CategoriesCsv.hs	43
@@ -261,13 +263,13 @@ encodeTransactionsToFile	./src/TransactionsCsv.hs	166
 encodeTransactionsToFile	src/TransactionsCsv.hs	166
 equals	./src/Command.hs	24
 equals	./src/Command.hs	36
-equals	./src/Command.hs	56
-equals	./src/Command.hs	74
+equals	./src/Command.hs	59
+equals	./src/Command.hs	77
 equals	./src/Help.hs	17
 equals	src/Command.hs	24
 equals	src/Command.hs	36
-equals	src/Command.hs	56
-equals	src/Command.hs	74
+equals	src/Command.hs	59
+equals	src/Command.hs	77
 equals	src/Help.hs	17
 exitWithMsg	./src/ExitWithMsg.hs	5
 exitWithMsg	src/ExitWithMsg.hs	5
@@ -343,12 +345,14 @@ periodFromMonthString	./src/Period.hs	51
 periodFromMonthString	src/Period.hs	51
 periodFromStrings	./src/Period.hs	40
 periodFromStrings	src/Period.hs	40
+periodFromYearString	./src/Period.hs	58
+periodFromYearString	src/Period.hs	58
 prettyLine	./src/Detail.hs	28
 prettyLine	./src/Summary.hs	64
 prettyLine	src/Detail.hs	28
 prettyLine	src/Summary.hs	64
-printConfig	./src/Help.hs	173
-printConfig	src/Help.hs	173
+printConfig	./src/Help.hs	185
+printConfig	src/Help.hs	185
 printDetail	./src/Detail.hs	74
 printDetail	src/Detail.hs	74
 printSummary	./src/Summary.hs	81
@@ -368,6 +372,10 @@ same	./src/Same.hs	4
 same	src/Same.hs	4
 saveTransactions	./src/TransactionsCsv.hs	185
 saveTransactions	src/TransactionsCsv.hs	185
+shouldBeLine	./test/ShouldBeOutput.hs	9
+shouldBeLine	test/ShouldBeOutput.hs	9
+shouldBeOutput	./test/ShouldBeOutput.hs	6
+shouldBeOutput	test/ShouldBeOutput.hs	6
 show	./src/Amount.hs	22
 show	./src/Name.hs	8
 show	./src/Note.hs	7
@@ -390,13 +398,13 @@ spec	./test/CategoriesCsvSpec.hs	17
 spec	./test/CategorySpec.hs	11
 spec	./test/CommandSpec.hs	10
 spec	./test/ConfigSpec.hs	6
-spec	./test/DetailSpec.hs	17
+spec	./test/DetailSpec.hs	18
 spec	./test/HelpSpec.hs	7
 spec	./test/ImportFileNameSpec.hs	9
 spec	./test/ImportSpec.hs	13
 spec	./test/PeriodSpec.hs	8
 spec	./test/SortingSpec.hs	55
-spec	./test/SummarySpec.hs	16
+spec	./test/SummarySpec.hs	19
 spec	./test/TransactionSpec.hs	23
 spec	./test/TransactionsCsvSpec.hs	25
 spec	test/AccountSpec.hs	8
@@ -405,13 +413,13 @@ spec	test/CategoriesCsvSpec.hs	17
 spec	test/CategorySpec.hs	11
 spec	test/CommandSpec.hs	10
 spec	test/ConfigSpec.hs	6
-spec	test/DetailSpec.hs	17
+spec	test/DetailSpec.hs	18
 spec	test/HelpSpec.hs	7
 spec	test/ImportFileNameSpec.hs	9
 spec	test/ImportSpec.hs	13
 spec	test/PeriodSpec.hs	8
 spec	test/SortingSpec.hs	55
-spec	test/SummarySpec.hs	16
+spec	test/SummarySpec.hs	19
 spec	test/TransactionSpec.hs	23
 spec	test/TransactionsCsvSpec.hs	25
 summarizeTransactionsMonths	./src/Transaction.hs	40
@@ -434,9 +442,9 @@ summaryOrdering	./src/Sorting.hs	99
 summaryOrdering	src/Sorting.hs	99
 summaryTitle	./src/Summary.hs	67
 summaryTitle	src/Summary.hs	67
-theDay	./src/Period.hs	58
+theDay	./src/Period.hs	61
 theDay	./test/TransactionsCsvSpec.hs	23
-theDay	src/Period.hs	58
+theDay	src/Period.hs	61
 theDay	test/TransactionsCsvSpec.hs	23
 toField	./src/TransactionsCsv.hs	127
 toField	./src/TransactionsCsv.hs	130
@@ -482,7 +490,7 @@ ts	./test/SortingSpec.hs	25
 ts	test/SortingSpec.hs	25
 validateCriteria	./src/Sorting.hs	116
 validateCriteria	src/Sorting.hs	116
-within	./src/Period.hs	61
-within	src/Period.hs	61
+within	./src/Period.hs	64
+within	src/Period.hs	64
 wrongCriteriaMessage	./src/Sorting.hs	127
 wrongCriteriaMessage	src/Sorting.hs	127
