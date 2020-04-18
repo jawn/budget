@@ -145,14 +145,85 @@ keywords=[2]{transactions, categories, category, period, month, sortby, trans, c
         \Large
         The rules for importing transactions:\\
         \normalsize
+        \begin{minipage}[t]{4in}
         \begin{itemize}
             \item files containing transactions that are already imported are rejected
             \item a transaction is already imported if there is already a transaction with the same date, name, and amount in the main transaction file 
-            \item transactions with a status different from "posted" are not imported 
-            \item transactions with a status "posted" are imported and this info is replaced with the account name
+            \item transactions with a status different from \emph{posted} are not imported 
+            \item transactions with a status \emph{posted} are imported and this info is replaced with the account name
             \item transactions where the account name is already set are imported, but their account name is unchanged.
         \end{itemize}
+    \end{minipage}
 
+    \end{minipage}
+\end{framed}
+\begin{framed}
+    \begin{minipage}[t][3in][t]{5in}
+        \Large
+        You can import a file and set the account name\\
+        \begin{budget}
+            budget import Download.csv "Checkings"
+        \end{budget}
+        Or you can import a file that \emph{contains} the account name\\
+        \begin{budget}
+            budget import "Checkings202003.csv"
+        \end{budget}
+    \end{minipage}
+\end{framed}
+\begin{framed}
+    \begin{minipage}[t][3in][t]{5in}
+        \Large
+        You can import a whole directory \\
+        \normalsize
+        \begin{budget}
+ls data/Downloads 
+BusinessChecking202003.csv
+BusinessSparkVisa202003.csv
+ChasePersonalCredit202003.csv
+JointChecking202003.csv
+JointSaving202003.csv
+PersonalChecking202003.csv
+PersonalSavings202003.csv
+        \end{budget}
+        all the files will be imported\\
+        the account name will depend on each file name. 
+        \begin{budget}
+            budget import data/Downloads
+        \end{budget}
+    \end{minipage}
+\end{framed}
+\begin{framed}
+    \begin{minipage}[t][3in][t]{5in}
+        \Large
+        Where is your main transactions files?\\ \\
+Look into the file \lstinline[language=budget,basicstyle=\Large]!.budget_conf! in your home directory 
+\normalsize
+        \begin{budget}
+            cat ~/.budget_conf
+            TRANSACTIONS:/Users/you/data/Transactions.csv
+        \end{budget}
+        \Large
+        Or better, use the \lstinline[language=budget,basicstyle=\Large]!help! command.
+        \begin{budget}
+            budget help configuration 
+            TRANSACTIONS:/Users/you/data/Transactions.csv
+        \end{budget}
+    \end{minipage}
+\end{framed}
+\begin{framed}
+    \begin{minipage}[t][3in][t]{5in}
+        \Large
+        What is the transaction file format?\\
+        \normalsize
+        \begin{enumerate}
+            \item status (replaced with account)
+            \item unused
+            \item date (DD/MM/YYYY)
+            \item notes
+            \item name
+            \item category
+            \item amount
+        \end{enumerate}
     \end{minipage}
 \end{framed}
 \end{document}
