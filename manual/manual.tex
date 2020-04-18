@@ -15,7 +15,7 @@ basicstyle=\color{forestgreen}\ttfamily\small,
 keywordstyle=[0]\color{black}\bf,
 keywordstyle=[1]\color{navyblue},
 keywordstyle=[2]\color{royalblue},
-keywords=[0]{budget},
+keywords=[0]{budget,.budget_conf},
 keywords=[1]{summary, detail, import, help, sum, det, imp, h, su},
 keywords=[2]{transactions, categories, category, period, month, sortby, trans, cat, per, mo, c, s, M},
 }
@@ -74,6 +74,16 @@ keywords=[2]{transactions, categories, category, period, month, sortby, trans, c
                     budget summary categories MyFavorite.csv 
                 \end{budget}
         \end{enumerate}
+    \end{minipage}
+\end{framed}
+\begin{framed}
+    \begin{minipage}[t][3in][t]{5in}
+        \large
+        You can show the detail of any transaction file\\ \\
+            use the \lstinline[language=budget,basicstyle=\large]!transactions! options: \\
+                \begin{budget}
+                    budget detail transactions Download202003.csv
+                \end{budget}
     \end{minipage}
 \end{framed}
 \begin{framed}
@@ -213,10 +223,10 @@ Look into the file \lstinline[language=budget,basicstyle=\Large]!.budget_conf! i
 \begin{framed}
     \begin{minipage}[t][3in][t]{5in}
         \Large
-        What is the transaction file format?\\
+        What is the transaction file CSV format?\\
         \normalsize
         \begin{enumerate}
-            \item status (replaced with account)
+            \item account (in download files: status)
             \item unused
             \item date (DD/MM/YYYY)
             \item notes
