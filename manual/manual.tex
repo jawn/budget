@@ -10,14 +10,14 @@
 \definecolor{forestgreen}{rgb}{0.133, 0.545, 0.133}
 \renewcommand{\familydefault}{\sfdefault}
 \lstdefinelanguage{budget}{
-autogobble=true,
-basicstyle=\color{forestgreen}\ttfamily\small,
-keywordstyle=[0]\color{black}\bf,
-keywordstyle=[1]\color{navyblue},
-keywordstyle=[2]\color{royalblue},
-keywords=[0]{budget,.budget_conf},
-keywords=[1]{summary, detail, import, help, sum, det, imp, h, su},
-keywords=[2]{transactions, categories, category, period, month, sortby, trans, cat, per, mo, c, s, M},
+    autogobble=true,
+    basicstyle=\color{forestgreen}\ttfamily\small,
+    keywordstyle=[0]\color{black}\bf,
+    keywordstyle=[1]\color{navyblue},
+    keywordstyle=[2]\color{royalblue},
+    keywords=[0]{budget,.budget_conf},
+    keywords=[1]{summary, detail, import, help, sum, det, imp, h, su},
+    keywords=[2]{transactions, categories, category, period, month, year, y, sortby, trans, cat, per, mo, c, s, M},
 }
 \lstnewenvironment{budget}[1][]
 {
@@ -31,7 +31,7 @@ keywords=[2]{transactions, categories, category, period, month, sortby, trans, c
     keywordstyle=[2]\color{royalblue},
     keywords=[0]{budget},
     keywords=[1]{summary, detail, import, help, sum, det, imp, h, su},
-    keywords=[2]{transactions, categories, category, period, month, sortby, trans, cat, per, mo, c, s, M},
+    keywords=[2]{transactions, categories, category, period, month, year, y, sortby, trans, cat, per, mo, c, s, M},
 #1}}{\vspace{0.2in}}    
 
 
@@ -80,10 +80,10 @@ keywords=[2]{transactions, categories, category, period, month, sortby, trans, c
     \begin{minipage}[t][3in][t]{5in}
         \large
         You can show the detail of any transaction file\\ \\
-            use the \lstinline[language=budget,basicstyle=\large]!transactions! options: \\
-                \begin{budget}
-                    budget detail transactions Download202003.csv
-                \end{budget}
+        use the \lstinline[language=budget,basicstyle=\large]!transactions! options: \\
+        \begin{budget}
+            budget detail transactions Download202003.csv
+        \end{budget}
     \end{minipage}
 \end{framed}
 \begin{framed}
@@ -92,28 +92,34 @@ keywords=[2]{transactions, categories, category, period, month, sortby, trans, c
         You can select data for a given period of time\\
 
         use the \lstinline[language=budget,basicstyle=\Large]!period! option followed by two dates
-                \begin{itemize}
-                    \item dates should be in the format \texttt{MM/DD/YYYY}
-                    \item in which order doesn't matter
-                \end{itemize}
-                \begin{budget}
-                    budget detail period 01/01/2020 01/31/2020
+        \begin{itemize}
+            \item dates should be in the format \texttt{MM/DD/YYYY}
+            \item in which order doesn't matter
+        \end{itemize}
+        \begin{budget}
+            budget detail period 01/01/2020 01/31/2020
 
-                    budget summary p 10/17/2020 01/23/2020 
-                \end{budget}
+            budget summary p 10/17/2020 01/23/2020 
+        \end{budget}
     \end{minipage}
 \end{framed}
 \begin{framed}
     \begin{minipage}[t][3in][t]{5in}
         \Large
-        You can select data for a given month\\
+        You can select data for a given month or year
 
-        use the \lstinline[language=budget,basicstyle=\Large]!month! then the year and month\\
+        use \lstinline[language=budget,basicstyle=\large]!month! then the year and month\\
         \begin{budget}
-                    budget summary month 2020 03
+            budget summary month 2020 03
 
-                    budget detail mo 2020 12
-                \end{budget}
+            budget detail mo 2020 12
+        \end{budget}
+        use  \lstinline[language=budget,basicstyle=\large]!year! then the year\\
+        \begin{budget}
+            budget summary year 2020
+
+            budget detail y 2020
+        \end{budget}
     \end{minipage}
 \end{framed}
 \begin{framed}
@@ -124,13 +130,13 @@ keywords=[2]{transactions, categories, category, period, month, sortby, trans, c
         use the \lstinline[language=budget,basicstyle=\Large]!sortby! option followed by letters
         \begin{itemize}
             \item \textbf{D} for date, \textbf{M} for amount, \textbf{C} for category
-                \item \textbf{N} for name, \textbf{A} for account, \textbf{O} for note
+            \item \textbf{N} for name, \textbf{A} for account, \textbf{O} for note
             \item uppercase letter means ascending order
             \item lowercase letter means descending order
         \end{itemize}
         \begin{budget}
             budget detail sortby CDm
-                \end{budget}
+        \end{budget}
     \end{minipage}
 \end{framed}
 \begin{framed}
@@ -141,13 +147,13 @@ keywords=[2]{transactions, categories, category, period, month, sortby, trans, c
         use the \lstinline[language=budget,basicstyle=\Large]!sortby! option followed by letters
         \begin{itemize}
             \item \textbf{C} for category
-                \item \textbf{M} for amount
+            \item \textbf{M} for amount
             \item uppercase letter means ascending order
             \item lowercase letter means descending order
         \end{itemize}
         \begin{budget}
             budget summary sortby m
-                \end{budget}
+        \end{budget}
     \end{minipage}
 \end{framed}
 \begin{framed}
@@ -156,14 +162,14 @@ keywords=[2]{transactions, categories, category, period, month, sortby, trans, c
         The rules for importing transactions:\\
         \normalsize
         \begin{minipage}[t]{4in}
-        \begin{itemize}
-            \item files containing transactions that are already imported are rejected
-            \item a transaction is already imported if there is already a transaction with the same date, name, and amount in the main transaction file 
-            \item transactions with a status different from \emph{posted} are not imported 
-            \item transactions with a status \emph{posted} are imported and this info is replaced with the account name
-            \item transactions where the account name is already set are imported, but their account name is unchanged.
-        \end{itemize}
-    \end{minipage}
+            \begin{itemize}
+                \item files containing transactions that are already imported are rejected
+                \item a transaction is already imported if there is already a transaction with the same date, name, and amount in the main transaction file 
+                \item transactions with a status different from \emph{posted} are not imported 
+                \item transactions with a status \emph{posted} are imported and this info is replaced with the account name
+                \item transactions where the account name is already set are imported, but their account name is unchanged.
+            \end{itemize}
+        \end{minipage}
 
     \end{minipage}
 \end{framed}
@@ -186,14 +192,14 @@ keywords=[2]{transactions, categories, category, period, month, sortby, trans, c
         You can import a whole directory \\
         \normalsize
         \begin{budget}
-ls data/Downloads 
-BusinessChecking202003.csv
-BusinessSparkVisa202003.csv
-ChasePersonalCredit202003.csv
-JointChecking202003.csv
-JointSaving202003.csv
-PersonalChecking202003.csv
-PersonalSavings202003.csv
+            ls data/Downloads 
+            BusinessChecking202003.csv
+            BusinessSparkVisa202003.csv
+            ChasePersonalCredit202003.csv
+            JointChecking202003.csv
+            JointSaving202003.csv
+            PersonalChecking202003.csv
+            PersonalSavings202003.csv
         \end{budget}
         all the files will be imported\\
         the account name will depend on each file name. 
@@ -206,8 +212,8 @@ PersonalSavings202003.csv
     \begin{minipage}[t][3in][t]{5in}
         \Large
         Where is your main transactions files?\\ \\
-Look into the file \lstinline[language=budget,basicstyle=\Large]!.budget_conf! in your home directory 
-\normalsize
+        Look into the file \lstinline[language=budget,basicstyle=\Large]!.budget_conf! in your home directory 
+        \normalsize
         \begin{budget}
             cat ~/.budget_conf
             TRANSACTIONS:/Users/you/data/Transactions.csv

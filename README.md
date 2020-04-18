@@ -105,6 +105,10 @@ will print the transactions having their date between the January 1st 2020 and t
 
 will print the transactions having their date in April 2020. 
 
+    budget d -y 2020 
+
+will print the transactions having their date in 2020. 
+
     budget d -s AD
 
 will print the transactions sorted by Account, then Date

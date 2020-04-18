@@ -117,10 +117,10 @@ NotesDesc	./src/Sorting.hs	39
 NotesDesc	src/Sorting.hs	39
 Num Amount	./src/Amount.hs	38
 Num Amount	src/Amount.hs	38
-Period	./src/Period.hs	22
-Period	./src/Period.hs	22
-Period	src/Period.hs	22
-Period	src/Period.hs	22
+Period	./src/Period.hs	24
+Period	./src/Period.hs	24
+Period	src/Period.hs	24
+Period	src/Period.hs	24
 PeriodSpec	./test/PeriodSpec.hs	1
 PeriodSpec	test/PeriodSpec.hs	1
 Read Amount	./src/Amount.hs	29
@@ -135,8 +135,8 @@ Show Name	./src/Name.hs	7
 Show Name	src/Name.hs	7
 Show Note	./src/Note.hs	6
 Show Note	src/Note.hs	6
-Show Period	./src/Period.hs	25
-Show Period	src/Period.hs	25
+Show Period	./src/Period.hs	27
+Show Period	src/Period.hs	27
 SortCriterion	./src/Sorting.hs	27
 SortCriterion	src/Sorting.hs	27
 Sorting	./src/Sorting.hs	1
@@ -194,11 +194,11 @@ TransactionsCsvSpec	test/TransactionsCsvSpec.hs	3
 accountName	./src/Account.hs	4
 accountName	src/Account.hs	4
 addParameters	./src/Command.hs	44
-addParameters	./src/Command.hs	65
-addParameters	./src/Command.hs	83
+addParameters	./src/Command.hs	66
+addParameters	./src/Command.hs	88
 addParameters	src/Command.hs	44
-addParameters	src/Command.hs	65
-addParameters	src/Command.hs	83
+addParameters	src/Command.hs	66
+addParameters	src/Command.hs	88
 alreadyAnAccountName	./src/Import.hs	58
 alreadyAnAccountName	src/Import.hs	58
 alreadyIn	./src/Import.hs	20
@@ -264,12 +264,12 @@ encodeTransactionsToFile	src/TransactionsCsv.hs	166
 equals	./src/Command.hs	24
 equals	./src/Command.hs	36
 equals	./src/Command.hs	59
-equals	./src/Command.hs	77
+equals	./src/Command.hs	81
 equals	./src/Help.hs	17
 equals	src/Command.hs	24
 equals	src/Command.hs	36
 equals	src/Command.hs	59
-equals	src/Command.hs	77
+equals	src/Command.hs	81
 equals	src/Help.hs	17
 exitWithMsg	./src/ExitWithMsg.hs	5
 exitWithMsg	src/ExitWithMsg.hs	5
@@ -311,8 +311,8 @@ maybeToEither	./src/MaybeToEither.hs	4
 maybeToEither	src/MaybeToEither.hs	4
 mkDate	./test/TransactionSpec.hs	21
 mkDate	test/TransactionSpec.hs	21
-months	./src/Period.hs	37
-months	src/Period.hs	37
+months	./src/Period.hs	39
+months	src/Period.hs	39
 name	./src/ImportFileName.hs	19
 name	src/ImportFileName.hs	19
 negate	./src/Amount.hs	41
@@ -337,16 +337,18 @@ parseRecord	./src/CategoriesCsv.hs	30
 parseRecord	./src/TransactionsCsv.hs	70
 parseRecord	src/CategoriesCsv.hs	30
 parseRecord	src/TransactionsCsv.hs	70
-period	./src/Period.hs	33
-period	src/Period.hs	33
-periodFromMonth	./src/Period.hs	48
-periodFromMonth	src/Period.hs	48
-periodFromMonthString	./src/Period.hs	51
-periodFromMonthString	src/Period.hs	51
-periodFromStrings	./src/Period.hs	40
-periodFromStrings	src/Period.hs	40
-periodFromYearString	./src/Period.hs	58
-periodFromYearString	src/Period.hs	58
+period	./src/Period.hs	35
+period	src/Period.hs	35
+periodFromMonth	./src/Period.hs	50
+periodFromMonth	src/Period.hs	50
+periodFromMonthString	./src/Period.hs	56
+periodFromMonthString	src/Period.hs	56
+periodFromStrings	./src/Period.hs	42
+periodFromStrings	src/Period.hs	42
+periodFromYear	./src/Period.hs	53
+periodFromYear	src/Period.hs	53
+periodFromYearString	./src/Period.hs	63
+periodFromYearString	src/Period.hs	63
 prettyLine	./src/Detail.hs	28
 prettyLine	./src/Summary.hs	64
 prettyLine	src/Detail.hs	28
@@ -379,13 +381,13 @@ shouldBeOutput	test/ShouldBeOutput.hs	6
 show	./src/Amount.hs	22
 show	./src/Name.hs	8
 show	./src/Note.hs	7
-show	./src/Period.hs	27
+show	./src/Period.hs	29
 show	src/Amount.hs	22
 show	src/Name.hs	8
 show	src/Note.hs	7
-show	src/Period.hs	27
-showDate	./src/Period.hs	30
-showDate	src/Period.hs	30
+show	src/Period.hs	29
+showDate	./src/Period.hs	32
+showDate	src/Period.hs	32
 simplified	./test/TransactionSpec.hs	14
 simplified	test/TransactionSpec.hs	14
 sortWith	./src/Summary.hs	35
@@ -442,9 +444,9 @@ summaryOrdering	./src/Sorting.hs	99
 summaryOrdering	src/Sorting.hs	99
 summaryTitle	./src/Summary.hs	67
 summaryTitle	src/Summary.hs	67
-theDay	./src/Period.hs	61
+theDay	./src/Period.hs	68
 theDay	./test/TransactionsCsvSpec.hs	23
-theDay	src/Period.hs	61
+theDay	src/Period.hs	68
 theDay	test/TransactionsCsvSpec.hs	23
 toField	./src/TransactionsCsv.hs	127
 toField	./src/TransactionsCsv.hs	130
@@ -490,7 +492,7 @@ ts	./test/SortingSpec.hs	25
 ts	test/SortingSpec.hs	25
 validateCriteria	./src/Sorting.hs	116
 validateCriteria	src/Sorting.hs	116
-within	./src/Period.hs	64
-within	src/Period.hs	64
+within	./src/Period.hs	71
+within	src/Period.hs	71
 wrongCriteriaMessage	./src/Sorting.hs	127
 wrongCriteriaMessage	src/Sorting.hs	127
