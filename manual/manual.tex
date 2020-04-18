@@ -1,60 +1,158 @@
 \documentclass[12pt,letterpaper]{article}
-\usepackage{listings}
+\usepackage{listings,lstautogobble}
 \usepackage{framed}
-\usepackage{color}
+\usepackage{xcolor}
 \definecolor{navyblue}{rgb}{0.0, 0.0, 0.502}
 \definecolor{darkgreen}{rgb}{0.04, 0.196, 0.125}
 \definecolor{lightlightgray}{rgb}{0.9, 0.9, 0.9}
+\definecolor{darkgray}{rgb}{0.2, 0.2, 0.2}
+\definecolor{royalblue}{cmyk}{1, 0.50, 0, 0}
+\definecolor{forestgreen}{rgb}{0.133, 0.545, 0.133}
 \renewcommand{\familydefault}{\sfdefault}
+\lstdefinelanguage{budget}{
+autogobble=true,
+basicstyle=\color{forestgreen}\ttfamily\small,
+keywordstyle=[0]\color{black}\bf,
+keywordstyle=[1]\color{navyblue},
+keywordstyle=[2]\color{royalblue},
+keywords=[0]{budget},
+keywords=[1]{summary, detail, import, help, sum, det, imp, h, su},
+keywords=[2]{transactions, categories, category, period, month, sortby, trans, cat, per, mo, c, s, M},
+}
 \lstnewenvironment{budget}[1][]
-{\lstset{language={},
+{
+    \lstset{language={},
+    autogobble=true,
+    linewidth=4.5in,
     backgroundcolor=\color{lightlightgray},
-    basicstyle=\color{darkgreen}\ttfamily\small,
+    basicstyle=\color{forestgreen}\ttfamily\small,
     keywordstyle=[0]\color{black}\bf,
-    keywordstyle=[1]\color{darkgreen},
-    keywordstyle=[2]\color{navyblue},
+    keywordstyle=[1]\color{navyblue},
+    keywordstyle=[2]\color{royalblue},
     keywords=[0]{budget},
-    keywords=[1]{summary, detail, import, help},
-    keywords=[2]{transactions, categories, category, period, month, sortby},
-#1}}{}    
+    keywords=[1]{summary, detail, import, help, sum, det, imp, h, su},
+    keywords=[2]{transactions, categories, category, period, month, sortby, trans, cat, per, mo, c, s, M},
+#1}}{\vspace{0.2in}}    
 
 
 \begin{document}
 \Large
-    \begin{framed}
-\begin{minipage}[t][3in][t]{5in}
-    \center
-            You can abbreviate every command and option! \\
-            \begin{budget}
-budget summary categories MyFavorite.csv sortby M
+\begin{framed}
+    \begin{minipage}[t][3in][t]{5in}
+        You can abbreviate every command and option! \\ \\
+        the command:
+        \begin{budget}
+            budget detail category Groceries sortby M
         \end{budget}
-\end{minipage}
-    \end{framed}
-\end{document}
+        is equivalent to: 
+        \begin{budget}
+            budget det cat Groceries sor M
+        \end{budget}
+        is equivalent to: 
+        \begin{budget}
+            budget d c Groceries s M
+        \end{budget}
+    \end{minipage}
+\end{framed}
+\begin{framed}
+    \begin{minipage}[t][3in][t]{5in}
+        You can have a summary of your favorite categories 
+        \large
+        \begin{enumerate}
+            \item write your categories in a CSV file
+                \begin{itemize}
+                    \item one category per line
+                    \item no quotes
+                \end{itemize}
+                \begin{budget}
+                    Groceries
+                    Business Expenses
+                    Credit Card Payments
+                \end{budget}
+            \item use the \lstinline[language=budget,basicstyle=\large]!categories! options:
+                \begin{budget}
+                    budget summary categories MyFavorite.csv 
+                \end{budget}
+        \end{enumerate}
+    \end{minipage}
+\end{framed}
+\begin{framed}
+    \begin{minipage}[t][3in][t]{5in}
+        \Large
+        You can select data for a given period of time\\
 
-        \begin{spacing}{2.5}
-            \center
-            \normalsize{
-                \texttt{} \\
-            }
-            \Large
-            is equivalent to:\\
-            \normalsize{
-                \texttt{budget sum cat MyFavorite.csv s M}\\
-            }
-        \end{spacing}
-    \end{minipage} }
-\fbox{ \begin{minipage}[t][3in][t]{5in}
-        \begin{spacing}{1.5}
-            \center
-            \fbox{You can have a summary of your favorite categories} \\
-            \normalsize{
-                write your categories into a csv file \\
-                    one category per line \\
-                    no quotes needed  \\
-                use the \texttt{categories} option: \\
-                \texttt{budget sum cat MyFavorite.csv}
-            }
-        \end{spacing}
-    \end{minipage} }
+        use the \lstinline[language=budget,basicstyle=\Large]!period! option followed by two dates
+                \begin{itemize}
+                    \item dates should be in the format \texttt{MM/DD/YYYY}
+                    \item in which order doesn't matter
+                \end{itemize}
+                \begin{budget}
+                    budget detail period 01/01/2020 01/31/2020
+
+                    budget summary p 10/17/2020 01/23/2020 
+                \end{budget}
+    \end{minipage}
+\end{framed}
+\begin{framed}
+    \begin{minipage}[t][3in][t]{5in}
+        \Large
+        You can select data for a given month\\
+
+        use the \lstinline[language=budget,basicstyle=\Large]!month! then the year and month\\
+        \begin{budget}
+                    budget summary month 2020 03
+
+                    budget detail mo 2020 12
+                \end{budget}
+    \end{minipage}
+\end{framed}
+\begin{framed}
+    \begin{minipage}[t][3in][t]{5in}
+        \Large
+        You can sort transactions with several criteria\\
+
+        use the \lstinline[language=budget,basicstyle=\Large]!sortby! option followed by letters
+        \begin{itemize}
+            \item \textbf{D} for date, \textbf{M} for amount, \textbf{C} for category
+                \item \textbf{N} for name, \textbf{A} for account, \textbf{O} for note
+            \item uppercase letter means ascending order
+            \item lowercase letter means descending order
+        \end{itemize}
+        \begin{budget}
+            budget detail sortby CDm
+                \end{budget}
+    \end{minipage}
+\end{framed}
+\begin{framed}
+    \begin{minipage}[t][3in][t]{5in}
+        \Large
+        You can sort the summary by category or amount\\
+
+        use the \lstinline[language=budget,basicstyle=\Large]!sortby! option followed by letters
+        \begin{itemize}
+            \item \textbf{C} for category
+                \item \textbf{M} for amount
+            \item uppercase letter means ascending order
+            \item lowercase letter means descending order
+        \end{itemize}
+        \begin{budget}
+            budget summary sortby m
+                \end{budget}
+    \end{minipage}
+\end{framed}
+\begin{framed}
+    \begin{minipage}[t][3in][t]{5in}
+        \Large
+        The rules for importing transactions:\\
+        \normalsize
+        \begin{itemize}
+            \item files containing transactions that are already imported are rejected
+            \item a transaction is already imported if there is already a transaction with the same date, name, and amount in the main transaction file 
+            \item transactions with a status different from "posted" are not imported 
+            \item transactions with a status "posted" are imported and this info is replaced with the account name
+            \item transactions where the account name is already set are imported, but their account name is unchanged.
+        \end{itemize}
+
+    \end{minipage}
+\end{framed}
 \end{document}
