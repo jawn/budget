@@ -1,20 +1,17 @@
 \documentclass[12pt,letterpaper]{article}
 \usepackage{listings,lstautogobble}
+\usepackage[usenames,dvipsnames]{xcolor}
 \usepackage{framed}
 \usepackage{xcolor}
-\definecolor{navyblue}{rgb}{0.0, 0.0, 0.502}
-\definecolor{darkgreen}{rgb}{0.04, 0.196, 0.125}
-\definecolor{lightlightgray}{rgb}{0.9, 0.9, 0.9}
-\definecolor{darkgray}{rgb}{0.2, 0.2, 0.2}
-\definecolor{royalblue}{cmyk}{1, 0.50, 0, 0}
-\definecolor{forestgreen}{rgb}{0.133, 0.545, 0.133}
+\usepackage{pgfornament}
 \renewcommand{\familydefault}{\sfdefault}
+\definecolor{light-gray}{gray}{0.95}
 \lstdefinelanguage{budget}{
     autogobble=true,
-    basicstyle=\color{forestgreen}\ttfamily\small,
+    basicstyle=\color{ForestGreen}\ttfamily\small,
     keywordstyle=[0]\color{black}\bf,
-    keywordstyle=[1]\color{navyblue},
-    keywordstyle=[2]\color{royalblue},
+    keywordstyle=[1]\color{NavyBlue},
+    keywordstyle=[2]\color{RoyalBlue},
     keywords=[0]{budget,.budget_conf},
     keywords=[1]{summary, detail, import, help, sum, det, imp, h, su},
     keywords=[2]{transactions, categories, category, period, month, year, y, sortby, trans, cat, per, mo, c, s, M},
@@ -24,17 +21,28 @@
     \lstset{language={},
     autogobble=true,
     linewidth=4.5in,
-    backgroundcolor=\color{lightlightgray},
-    basicstyle=\color{forestgreen}\ttfamily\small,
+    backgroundcolor=\color{light-gray},
+    basicstyle=\color{ForestGreen}\ttfamily\small,
     keywordstyle=[0]\color{black}\bf,
-    keywordstyle=[1]\color{navyblue},
-    keywordstyle=[2]\color{royalblue},
+    keywordstyle=[1]\color{NavyBlue},
+    keywordstyle=[2]\color{RoyalBlue},
     keywords=[0]{budget},
     keywords=[1]{summary, detail, import, help, sum, det, imp, h, su},
     keywords=[2]{transactions, categories, category, period, month, year, y, sortby, trans, cat, per, mo, c, s, M},
 #1}}{\vspace{0.2in}}    
+\newcommand{\eachpageornament}{%
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[anchor=north west] at (current page.north west){%
+            \pgfornament[width=2cm]{63}};
+            \node[anchor=north east] at (current page.north east){%
+                \pgfornament[width=2cm,symmetry=v]{63}};
+                \node[anchor=south west] at (current page.south west){%
+                    \pgfornament[width=2cm,symmetry=h]{63}};
+                    \node[anchor=south east] at (current page.south east){%
 
-
+\pgfornament[width=2cm,symmetry=c]{63}};
+                    \end{tikzpicture}
+                }
 \begin{document}
 \Large
 \begin{framed}
@@ -180,7 +188,11 @@
         \begin{budget}
             budget import Download.csv "Checkings"
         \end{budget}
-        Or you can import a file that \emph{contains} the account name\\
+        Or you can omit the account name
+        \begin{itemize}
+            \item the account name is \emph{in } the file name
+            \item exclusive of the digits
+        \end{itemize}
         \begin{budget}
             budget import "Checkings202003.csv"
         \end{budget}
