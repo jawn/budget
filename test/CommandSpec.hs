@@ -60,35 +60,35 @@ spec = do
                 command args `shouldBe` 
                     Right (Summary (Just "bar.csv") (Just "foo.csv") Nothing [AmountAsc])
 
-            it "recogize the summary command with a period option" $ do
+            it "recognize the summary command with a period option" $ do
                 let args = words "summary -p 01/01/2020 12/31/2020"
                 command args `shouldBe` 
                     Right (Summary Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
                 
-            it "recogize the summary command with a period named option" $ do
+            it "recognize the summary command with a period named option" $ do
                 let args = words "summary period 01/01/2020 12/31/2020"
                 command args `shouldBe` 
                     Right (Summary Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
 
-            it "recogize the summary command with a month option" $ do
+            it "recognize the summary command with a month option" $ do
                 let args = words "summary -m 2020 03"
                 command args `shouldBe` 
                     Right (Summary Nothing Nothing (Just (Period (theDay 2020 03 01) (theDay 2020 03 31))) [])
                 
-            it "recogize the summary command with a month named option" $ do
+            it "recognize the summary command with a month named option" $ do
                 let args = words "summary month 2020 03"
                 command args `shouldBe` 
                     Right (Summary Nothing Nothing (Just (Period (theDay 2020 03 01) (theDay 2020 03 31))) [])
 
-            it "recogize the summary command with a year option" $ do
+            it "recognize the summary command with a year option" $ do
                 let args = words "summary -y 2020"
                 command args `shouldBe` 
                     Right (Summary Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
-            it "doesn't recogize the summary command with a wrong year option" $ do
+            it "doesn't recognize the summary command with a wrong year option" $ do
                 let args = words "summary -y foo"
                 command args `shouldBe` 
                     Left "parser error: wrong year format: foo"
-            it "recogize the summary command with a named year option" $ do
+            it "recognize the summary command with a named year option" $ do
                 let args = words "summary year 2020"
                 command args `shouldBe` 
                     Right (Summary Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
