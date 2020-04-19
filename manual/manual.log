@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.3.12)  19 APR 2020 11:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.3.12)  19 APR 2020 17:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -391,18 +391,18 @@ Package: pgfornament 2016/03/05 v0.21 vector ornaments
 ode.tex)) (./manual.aux)
 \openout1 = `manual.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
 \c@lstlisting=\count116
 
 (/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -475,68 +475,72 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 ABD: EveryShipout initializing macros
-Underfull \hbox (badness 10000) in paragraph at lines 50--52
+<LegoTDD.png, id=4, 1240.635pt x 2149.02875pt>
+File: LegoTDD.png Graphic file (type png)
+<use LegoTDD.png>
+Package pdftex.def Info: LegoTDD.png  used on input line 55.
+(pdftex.def)             Requested size: 90.3375pt x 156.48102pt.
 
- []
-
-
-Overfull \hbox (7.7748pt too wide) in paragraph at lines 49--64
+Overfull \hbox (7.7748pt too wide) in paragraph at lines 49--57
 [][] 
  []
 
-LaTeX Font Info:    Try loading font information for OMS+cmss on input line 72.
 
-LaTeX Font Info:    No file OMScmss.fd. on input line 72.
+Underfull \hbox (badness 10000) in paragraph at lines 61--63
 
-LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
-(Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbullet' on input line 72.
+ []
 
 
-Overfull \hbox (7.7748pt too wide) in paragraph at lines 66--86
+Overfull \hbox (7.7748pt too wide) in paragraph at lines 60--75
 [][] 
  []
 
 [1
 
-{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 90--92
+{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./LegoT
+DD.png>]
+LaTeX Font Info:    Try loading font information for OMS+cmss on input line 83.
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 90--92
-
- []
+LaTeX Font Info:    No file OMScmss.fd. on input line 83.
 
 
-Overfull \hbox (7.7748pt too wide) in paragraph at lines 88--96
+LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textbullet' on input line 83.
+
+
+Overfull \hbox (7.7748pt too wide) in paragraph at lines 77--97
 [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 100--101
+Underfull \hbox (badness 10000) in paragraph at lines 101--103
 
  []
 
 
-Overfull \hbox (7.7748pt too wide) in paragraph at lines 98--113
+Underfull \hbox (badness 10000) in paragraph at lines 101--103
+
+ []
+
+
+Overfull \hbox (7.7748pt too wide) in paragraph at lines 99--107
 [][] 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 119--120
+Underfull \hbox (badness 10000) in paragraph at lines 111--112
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 125--126
-
- []
-
-
-Overfull \hbox (7.7748pt too wide) in paragraph at lines 115--132
+Overfull \hbox (7.7748pt too wide) in paragraph at lines 109--124
 [][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 130--131
+
  []
 
 
@@ -545,93 +549,104 @@ Underfull \hbox (badness 10000) in paragraph at lines 136--137
  []
 
 
-Overfull \hbox (7.7748pt too wide) in paragraph at lines 134--149
+Overfull \hbox (7.7748pt too wide) in paragraph at lines 126--143
 [][] 
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 153--154
+Underfull \hbox (badness 10000) in paragraph at lines 147--148
 
  []
 
 
-Overfull \hbox (7.7748pt too wide) in paragraph at lines 151--166
+Overfull \hbox (7.7748pt too wide) in paragraph at lines 145--160
 [][] 
  []
 
 
-LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <12> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 176.
+Underfull \hbox (badness 10000) in paragraph at lines 164--165
+
+ []
 
 
-
-Overfull \hbox (7.7748pt too wide) in paragraph at lines 168--183
+Overfull \hbox (7.7748pt too wide) in paragraph at lines 162--177
 [][] 
  []
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 187--188
+
+LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <12> not available
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 187.
+
+
+
+Overfull \hbox (7.7748pt too wide) in paragraph at lines 179--194
+[][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--199
 
  []
 
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <17.28> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 193.
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 204.
 
 
 
-Overfull \hbox (7.7748pt too wide) in paragraph at lines 185--200
-[][] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 204--206
-
- []
-
-
-Overfull \hbox (7.7748pt too wide) in paragraph at lines 202--222
+Overfull \hbox (7.7748pt too wide) in paragraph at lines 196--211
 [][] 
  []
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 226--229
+Underfull \hbox (badness 10000) in paragraph at lines 215--217
 
  []
 
 
-Underfull \hbox (badness 2662) in paragraph at lines 226--229
+Overfull \hbox (7.7748pt too wide) in paragraph at lines 213--233
+[][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 237--240
+
+ []
+
+
+Underfull \hbox (badness 2662) in paragraph at lines 237--240
 \OT1/cmss/m/n/17.28 Look into the file [][][][] in your home
  []
 
 
-Overfull \hbox (7.7748pt too wide) in paragraph at lines 224--240
+Overfull \hbox (7.7748pt too wide) in paragraph at lines 235--251
 [][] 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 244--246
+[6]
+Underfull \hbox (badness 10000) in paragraph at lines 255--257
 
  []
 
 
-Overfull \hbox (7.7748pt too wide) in paragraph at lines 242--256
+Overfull \hbox (7.7748pt too wide) in paragraph at lines 253--267
 [][] 
  []
 
-[6] (./manual.aux)
+[7] (./manual.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 13226 strings out of 492649
- 259368 string characters out of 6129622
- 305993 words of memory out of 5000000
- 16877 multiletter control sequences out of 15000+600000
+ 13262 strings out of 492649
+ 260284 string characters out of 6129622
+ 306993 words of memory out of 5000000
+ 16911 multiletter control sequences out of 15000+600000
  7914 words of font info for 30 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,7n,56p,494b,1271s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,11n,59p,474b,1271s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb
 ></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb>
 </usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb
@@ -640,10 +655,10 @@ Here is how much of TeX's memory you used:
 ></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
 </usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><
 /usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on manual.pdf (6 pages, 82622 bytes).
+Output written on manual.pdf (7 pages, 4091269 bytes).
 PDF statistics:
- 58 PDF objects out of 1000 (max. 8388607)
- 41 compressed objects within 1 object stream
+ 66 PDF objects out of 1000 (max. 8388607)
+ 46 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 18 words of extra memory for PDF output out of 10000 (max. 10000000)
 

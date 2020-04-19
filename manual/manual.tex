@@ -4,6 +4,7 @@
 \usepackage{framed}
 \usepackage{xcolor}
 \usepackage{pgfornament}
+\usepackage{graphicx}
 \renewcommand{\familydefault}{\sfdefault}
 \definecolor{light-gray}{gray}{0.95}
 \lstdefinelanguage{budget}{
@@ -44,6 +45,16 @@
                     \end{tikzpicture}
                 }
 \begin{document}
+\begin{framed}
+    \begin{minipage}[t][3in][t]{5in}
+        \resizebox{5in}{3in}{%
+            \begin{tikzpicture}[rotate=90, transform shape]
+                \node[inner sep=0pt] 
+                {\includegraphics[width=.25\textwidth]{LegoTDD.png}};
+            \end{tikzpicture}
+        }
+\end{minipage}
+\end{framed}
 \Large
 \begin{framed}
     \begin{minipage}[t][3in][t]{5in}
