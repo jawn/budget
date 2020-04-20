@@ -47,7 +47,7 @@ processCommand _ (Help arg) = help arg
 
 processCommand config (Detail filePath categoriesFilePath category period criteria) = do 
     transactions <- retrieveTransactions config filePath 
-    printDetail filePath category period criteria transactions 
+    printDetail filePath categoriesFilePath category period criteria transactions 
     exitSuccess
 
 processCommand config (Summary tr_filePath ca_filePath period criteria) = do

@@ -45,17 +45,21 @@ spec = do
 
     describe "title" $ do
         it "show a header for the detail report for all transactions" $ do
-            detailTitle Nothing Nothing Nothing `shouldBe` 
+            detailTitle Nothing Nothing Nothing Nothing `shouldBe` 
                 "Transactions (all)"
 
         it "show a header for the detail report for a certain file" $ do
-            detailTitle (Just "Foo.csv") Nothing Nothing `shouldBe` 
+            detailTitle (Just "Foo.csv") Nothing Nothing Nothing `shouldBe` 
                 "Transactions from file: Foo.csv"
 
         it "show a header for the detail report for a certain category" $ do
-            detailTitle Nothing (Just (Category "Groceries")) Nothing `shouldBe` 
+            detailTitle Nothing Nothing (Just (Category "Groceries")) Nothing `shouldBe` 
                 "Transactions with category: Groceries"
 
+        it "show a header for the detail report for a certain category file" $ do
+            detailTitle Nothing (Just "IncomeCategories.csv") Nothing Nothing `shouldBe` 
+                "Transactions with categories from the file: IncomeCategories.csv"
+
         it "show a header for the detail report for given period" $ do
-            detailTitle Nothing Nothing (Just (Period (theDay 2020 1 1) (theDay 2020 3 31))) `shouldBe` 
+            detailTitle Nothing Nothing Nothing (Just (Period (theDay 2020 1 1) (theDay 2020 3 31))) `shouldBe` 
                 "Transactions from 01/01/2020 to 03/31/2020"
