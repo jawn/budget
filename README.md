@@ -28,6 +28,7 @@
 - [X] select summary and detail expense for a year
 - [X] with detail, if the category has a CSV suffix, then filter on the categories in the file given as arg 
 - [ ] after importing a file, tell how many transactions were imported, and list the transactions that were rejected because they are duplicates (on the Date, Amount, Name criteria)
+- [ ] clarify the examples in the tests (e.g import)
 
 ## how to run the tests
 
