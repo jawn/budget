@@ -48,7 +48,8 @@ processCommand _ (Help arg) = help arg
 processCommand config (Detail filePath ca_filePath category period criteria) = do 
     transactions <- retrieveTransactions config filePath 
     selector     <- importCategorySelector ca_filePath
-    printDetail filePath ca_filePath category period criteria selector transactions 
+    let report = (detail filePath ca_filePath category period criteria) <$> selector <*> transactions
+    either exitWithMsg (putStr . unlines) report
     exitSuccess
 
 processCommand config (Summary tr_filePath ca_filePath period criteria) = do

@@ -3,7 +3,7 @@ module Detail
 
 import Account     ( Account (..) )
 import Amount      ( Amount (..) )
-import Category    ( Category (..) )
+import Category    ( Category (..), CategorySelector )
 import CategoriesCsv 
 import ExitWithMsg ( exitWithMsg )
 import Message     ( Message )
@@ -20,11 +20,22 @@ import Data.Time   ( Day
                    )
 import Data.Maybe  ( catMaybes )
 
-
-detail 
-    :: [Transaction] 
-    -> [String]
-detail = map prettyLine 
+maybeFilter :: Maybe (Transaction -> Bool) -> [Transaction] -> [Transaction]
+maybeFilter Nothing tr = tr
+maybeFilter (Just p) tr  = filter p tr
+detailLines 
+    :: Maybe Category
+    -> Maybe Period
+    -> SortingCriteria
+    -> CategorySelector
+    -> [Transaction]
+    -> [Transaction]
+detailLines cat per sct sel = 
+    (sortWithCriteria sct)
+        . maybeFilter (fmap (\c -> \t -> ((transactionCategory t)== c)) cat)
+        . maybeFilter (fmap (\p -> \t -> ((transactionDate t) `within` p)) per)
+        . maybeFilter (fmap (\s -> \t -> (s (transactionCategory t))) (pure sel))
+        
 
 prettyLine :: Transaction -> String
 prettyLine t = printf "%-20s %10s %-20s %-20s %-40s|%10s"
@@ -45,11 +56,15 @@ lengthLabel :: Int -> String
 lengthLabel n = printf "%d transactions" n
 
 footer 
-    :: [Transaction]
-    -> String
-footer ts = unlines [ totalLabel (transactionsPeriod ts) (totalTransactions ts) 
-                   , lengthLabel (length ts)
-                   ]
+    :: Maybe FilePath
+    -> [Transaction]
+    -> [String]
+footer fp [] = ["no transactions", maybe "main transaction file" id fp]
+footer fp ts =  [ totalLabel (transactionsPeriod ts) (totalTransactions ts) 
+             , lengthLabel (length ts)
+
+             , maybe "main transaction file" id fp
+             ]
 
 
 detailTitle 
@@ -67,26 +82,17 @@ detailTitle fp cf c p = "Transactions " ++ intercalate " " (catMaybes options)
                   , fmap show p
                   ]
 
-printDetail
+detail 
     :: Maybe FilePath
     -> Maybe FilePath
     -> Maybe Category
     -> Maybe Period
     -> SortingCriteria
-    -> Either Message (Category -> Bool)
-    -> Either Message [Transaction]
-    -> IO ()
-printDetail filePath catFilePath category period criteria selector transactions = do
-    either exitWithMsg (processDetail criteria) (transactions >>= checkNotEmpty)
-        where
-            processDetail :: SortingCriteria -> [Transaction] -> IO ()
-            processDetail criteria transactions = do 
-                let cat_selector = case selector of
-                                     Left msg -> error msg
-                                     Right sel -> sel
-                let selection = filter (\t -> cat_selector (transactionCategory t))
-                              . (maybe id (\c -> filter (\t -> same categoryName c (transactionCategory t))) category)
-                              . (maybe id (\p -> filter (\t -> (transactionDate t) `within` p)) period)
-                putStrLn (detailTitle filePath catFilePath category period)
-                either exitWithMsg (putStr . unlines . detail) (checkNotEmpty (sortWithCriteria criteria (selection transactions)))
-                putStrLn $ (footer (selection transactions)) ++ maybe "main transaction file" id filePath
+    -> CategorySelector
+    -> [Transaction]
+    -> [String]
+detail tfp cfp cat per sct sel trs = 
+        let selection = detailLines cat per sct sel trs
+        in [ detailTitle tfp cfp cat per ]
+        ++ (map prettyLine selection)
+        ++ (footer tfp selection)
