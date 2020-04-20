@@ -4,21 +4,23 @@ module Detail
 import Account     ( Account (..) )
 import Amount      ( Amount (..) )
 import Category    ( Category (..), CategorySelector )
-import CategoriesCsv 
 import ExitWithMsg ( exitWithMsg )
 import Message     ( Message )
-import Period
-import Same
-import Sorting
-import Transaction
+import Period      ( Period
+                   , within )
+import Sorting     ( SortingCriteria
+                   , sortWithCriteria )
+import Transaction ( Transaction (..) 
+                   , totalTransactions
+                   , transactionsPeriod )
 
 import Data.List   ( intercalate )
+import Data.Maybe  ( catMaybes )
 import Text.Printf ( printf )
 import Data.Time   ( Day 
                    , defaultTimeLocale
                    , formatTime
                    )
-import Data.Maybe  ( catMaybes )
 
 maybeFilter :: Maybe (Transaction -> Bool) -> [Transaction] -> [Transaction]
 maybeFilter Nothing tr = tr

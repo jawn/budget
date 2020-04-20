@@ -5,14 +5,14 @@ module Summary ( printSummary
                )
     where
 
-import Message ( Message )
-import Data.Char
 import Amount
 import Category
-import Data.List
 import Transaction
 import SummaryLine
 import Sorting
+import Message ( Message )
+import Data.Char
+import Data.List
 import Data.Dates
 import Period
 import Text.Printf

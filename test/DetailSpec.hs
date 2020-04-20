@@ -3,18 +3,23 @@ module DetailSpec
     where
 import Test.Hspec
 import ShouldBeOutput (shouldBeLine, shouldBeOutput)
-import Transaction
-import Account
-import Name
-import Note
-import Category
-import Amount
-import Sorting
-import Period
-import Detail
-import Data.Time.Calendar
-import Data.Ord
-import Data.List
+
+import Account  ( Account (..) )
+import Amount   ( amount )
+import Category ( Category (..) )
+import Detail   ( detail 
+              , detailLines
+              , detailTitle
+              , footer
+              )
+import Name    ( Name (..) )
+import Note    ( Note (..) )
+import Period  ( Period (..)
+               , theDay
+               )
+import Sorting ( SortCriterion (..) )
+import Transaction ( Transaction (..) )
+
 
 spec = do
     let t1 = Transaction { transactionAccount = Account "MyBank"
