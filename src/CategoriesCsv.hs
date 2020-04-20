@@ -51,3 +51,4 @@ importCategorySelector Nothing = return $ pure (const True)
 importCategorySelector (Just filePath) = do
     let categories = decodeCategoriesFromFile filePath
     fmap (fmap (flip elem)) categories
+

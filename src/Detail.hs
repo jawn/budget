@@ -73,23 +73,20 @@ printDetail
     -> Maybe Category
     -> Maybe Period
     -> SortingCriteria
+    -> Either Message (Category -> Bool)
     -> Either Message [Transaction]
     -> IO ()
-printDetail filePath catFilePath category period criteria transactions = do
+printDetail filePath catFilePath category period criteria selector transactions = do
     either exitWithMsg (processDetail criteria) (transactions >>= checkNotEmpty)
         where
             processDetail :: SortingCriteria -> [Transaction] -> IO ()
             processDetail criteria transactions = do 
-                categories <- case catFilePath of
-                                Nothing -> return Nothing
-                                Just fp -> do
-                                    cats <- decodeCategoriesFromFile fp 
-                                    case cats of
-                                        Left msg -> error msg
-                                        Right cats -> return $ Just cats 
-                let selection = (maybe id (\cats -> filter (\t -> ((transactionCategory t) `elem` cats))) categories)
+                let cat_selector = case selector of
+                                     Left msg -> error msg
+                                     Right sel -> sel
+                let selection = filter (\t -> cat_selector (transactionCategory t))
                               . (maybe id (\c -> filter (\t -> same categoryName c (transactionCategory t))) category)
                               . (maybe id (\p -> filter (\t -> (transactionDate t) `within` p)) period)
-                putStrLn (detailTitle filePath Nothing category period)
+                putStrLn (detailTitle filePath catFilePath category period)
                 either exitWithMsg (putStr . unlines . detail) (checkNotEmpty (sortWithCriteria criteria (selection transactions)))
                 putStrLn $ (footer (selection transactions)) ++ maybe "main transaction file" id filePath
