@@ -2,7 +2,7 @@
 module DetailSpec
     where
 import Test.Hspec
-import ShouldBeOutput (shouldBeLine, shouldBeOutput)
+import ShouldBeOutput 
 
 import Account  ( Account (..) )
 import Amount   ( amount )
@@ -21,6 +21,7 @@ import Sorting ( SortCriterion (..) )
 import Transaction ( Transaction (..) )
 
 
+spec :: SpecWith ()
 spec = do
     let t1 = Transaction { transactionAccount = Account "MyBank"
                          , transactionDate    = theDay 2020 6 1

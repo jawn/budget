@@ -1,6 +1,8 @@
 module Transaction ( Transaction (..)
                    , checkNotEmpty
                    , fromPeriod
+                   , transactionIntersect
+                   , sameTransaction
                    , summarizeTransactionsMonths
                    , totalTransactions
                    , transactionsPeriod
@@ -54,3 +56,11 @@ checkNotEmpty ts = Right ts
 
 fromPeriod :: Period -> [Transaction] -> [Transaction]
 fromPeriod p = filter ((`within` p) . transactionDate)
+
+sameTransaction :: Transaction -> Transaction -> Bool
+sameTransaction t1 t2 = transactionDate t1 == transactionDate t2
+                    && transactionName t1 == transactionName t2
+                    && transactionAmount t1 == transactionAmount t2
+
+transactionIntersect :: [Transaction] -> [Transaction] -> [Transaction]
+transactionIntersect  = intersectBy sameTransaction

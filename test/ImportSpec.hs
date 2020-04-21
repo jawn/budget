@@ -10,6 +10,7 @@ import Period
 import Amount
 import Import
 
+spec :: SpecWith ()
 spec = do
     let t1 = Transaction { transactionAccount = Account "MyBank"
                          , transactionDate    = theDay 2020 6 1

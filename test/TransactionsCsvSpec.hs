@@ -4,8 +4,6 @@ module TransactionsCsvSpec
     where
 
 import Test.Hspec
-import TransactionSpec (simplified)
-
 import Transaction
 import Amount
 import Account
@@ -14,14 +12,14 @@ import Note
 import Category
 import TransactionsCsv
 
-import qualified Data.Vector as Vector (toList)
 
-import Data.ByteString.Lazy (ByteString)
 import qualified Data.ByteString.Lazy as ByteString
 import Data.Time.Calendar
 
+theDay :: Integer -> Int -> Int -> Day
 theDay = fromGregorian
 
+spec :: SpecWith ()
 spec = do
     describe "transactions" $ do
         it "can be decoded from a ByteString containing simple values" $ do
@@ -52,18 +50,18 @@ spec = do
             fmap length ts `shouldBe` Right 1
 
         it "can notify an error when decoded from ill-formed data" $ do
-            let bs = "MyBank,,02/25/2020,,GOOGLE  DOMAINS,Online Services,-1foo2\n"
-                ts = decodeTransactions bs
-            ts `shouldBe` Left 
+            let bs1 = "MyBank,,02/25/2020,,GOOGLE  DOMAINS,Online Services,-1foo2\n"
+                ts1 = decodeTransactions bs1
+            ts1 `shouldBe` Left 
                 "parse error (Failed reading: conversion error: expected Double, got \"1foo2\" (incomplete field parse, leftover: [102,111,111,50])) at \"\\n\""
 
-            let bs = ",,02/25/2020,,GOOGLE  DOMAINS,Online Services,-12\n"
-                ts = decodeTransactions bs
-            ts `shouldBe` Left
+            let bs2 = ",,02/25/2020,,GOOGLE  DOMAINS,Online Services,-12\n"
+                ts2 = decodeTransactions bs2
+            ts2 `shouldBe` Left
                 "parse error (Failed reading: conversion error: account name required) at \"\\n\""
-            let bs = "hello world\nthis is not a csv file\n"
-                ts = decodeTransactions bs
-            ts `shouldBe` Left 
+            let bs3 = "hello world\nthis is not a csv file\n"
+                ts3 = decodeTransactions bs3
+            ts3 `shouldBe` Left 
                 "parse error (Failed reading: conversion error: [\"hello world\"]) at \"\\nthis is not a csv file\\n\""
 
         it "can be encoded to a ByteString containing values" $ do
@@ -98,7 +96,7 @@ spec = do
                                    , transactionAmount = amount (-48.07) }
                      ]
                 fp = "test/test-encoded-transactions.csv"
-            encodeTransactionsToFile ts fp
+            _ <- encodeTransactionsToFile ts fp
             us <- decodeTransactionsFromFile fp
             us `shouldBe` Right ts
         

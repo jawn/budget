@@ -45,7 +45,7 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     - -Wall 
-      -Werror
+    - -Werror
     dependencies:
     - budget
 
@@ -59,7 +59,7 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     - -Wall 
-      -Werror
+    - -Werror
     dependencies:
     - budget
     - hspec

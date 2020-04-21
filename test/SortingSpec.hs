@@ -8,51 +8,42 @@ import Category    ( Category (..) )
 import Name        ( Name (..) )
 import Note        ( Note (..) )
 import Transaction ( Transaction (..) )
-import Sorting     ( SortingCriteria
-                   , SortCriterion (..)
-                   , CommandCriteria (..)
-                   , readCriteria
-                   , sortWithCriteria
-                   , validateCriteria
-                   ) 
+import Sorting
 import Period ( theDay )
 
-import Test.Hspec ( describe
-                  , it 
-                  , shouldBe
-                  )
+import Test.Hspec
 
-ts = [ Transaction { transactionAccount  = Account "Savings"
-                   , transactionDate     = theDay 2020 1 23
-                   , transactionNotes    = Just $ Note "some notes"
-                   , transactionName     = Just $ Name "Chez François"
-                   , transactionCategory = Category "Business Expenses"
-                   , transactionAmount   = amount 48.07
-                   }
-     , Transaction { transactionAccount  = Account "Expenses"
-                   , transactionDate     = theDay 2020 4 23
-                   , transactionNotes    = Nothing
-                   , transactionName     = Just $ Name "Lego"
-                   , transactionCategory = Category "Playing"
-                   , transactionAmount   = amount 23.17
-                   }
-     , Transaction { transactionAccount  = Account "Savings"
-                   , transactionDate     = theDay 2020 3 23
-                   , transactionNotes    = Nothing
-                   , transactionName     = Just $ Name "Apple"
-                   , transactionCategory = Category "Business Expenses"
-                   , transactionAmount   = amount 1024.00
-                   }
-     , Transaction { transactionAccount  = Account "Expenses"
-                   , transactionDate     = theDay 2020 1 22
-                   , transactionNotes    = Nothing
-                   , transactionName     = Just $ Name "Disney"
-                   , transactionCategory = Category "Entertainment"
-                   , transactionAmount   = amount 500.00
-                   }
-     ]
-
+spec :: SpecWith ()
 spec = do 
+    let ts = [ Transaction { transactionAccount  = Account "Savings"
+                           , transactionDate     = theDay 2020 1 23
+                           , transactionNotes    = Just $ Note "some notes"
+                           , transactionName     = Just $ Name "Chez François"
+                           , transactionCategory = Category "Business Expenses"
+                           , transactionAmount   = amount 48.07
+                           }
+             , Transaction { transactionAccount  = Account "Expenses"
+                           , transactionDate     = theDay 2020 4 23
+                           , transactionNotes    = Nothing
+                           , transactionName     = Just $ Name "Lego"
+                           , transactionCategory = Category "Playing"
+                           , transactionAmount   = amount 23.17
+                           }
+             , Transaction { transactionAccount  = Account "Savings"
+                           , transactionDate     = theDay 2020 3 23
+                           , transactionNotes    = Nothing
+                           , transactionName     = Just $ Name "Apple"
+                           , transactionCategory = Category "Business Expenses"
+                           , transactionAmount   = amount 1024.00
+                           }
+             , Transaction { transactionAccount  = Account "Expenses"
+                           , transactionDate     = theDay 2020 1 22
+                           , transactionNotes    = Nothing
+                           , transactionName     = Just $ Name "Disney"
+                           , transactionCategory = Category "Entertainment"
+                           , transactionAmount   = amount 500.00
+                           }
+             ]
     let [t1,t2,t3,t4] = ts
     describe "ordering" $ do
         it "yields an ordering between two transactions, given a char" $ do
@@ -99,11 +90,6 @@ spec = do
             let input = "ZAx"
             readCriteria DetailSortingCriteria input `shouldBe` Left "not a sort criterion: Z\nnot a sort criterion: x"
         it "reads a sort criteria for the summary command, given a string" $ do
-            let result = [ CategoryAsc
-                         , CategoryDesc
-                         , AmountAsc
-                         , AmountDesc
-                         ]
             let input = "CcMm"
             map (readCriteria SummarySortingCriteria . pure) input `shouldBe` 
                 [ Right [CategoryAsc]

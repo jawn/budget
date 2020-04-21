@@ -4,12 +4,12 @@ module Main where
 
 import Summary
 import Detail
-import Transaction
-import Category
+import Transaction ()
+import Category ()
 import CategoriesCsv
 import TransactionsCsv
 import Command
-import Sorting
+import Sorting ()
 import Import
 import ImportFileName
 import qualified Config as Config
@@ -19,10 +19,6 @@ import System.Environment
 import System.Directory
 import System.Exit
 import Control.Monad
-import Data.Vector (toList)
-import qualified Data.Vector as Vector 
-import qualified Data.ByteString.Lazy as B (ByteString, readFile)
-import Text.Printf
 
 
 main :: IO ()
