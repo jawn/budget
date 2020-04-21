@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: bd6ecf53bcea944e979cf3052520ce6c811b6ee78bb8d698cca7982172b207eb
+-- hash: a33b2154499f54be84e8dee2969fd8968fb3284d56e67ff36cecfd05678fe837
 
 name:           budget
 version:        0.1.0.0
@@ -74,7 +74,7 @@ executable budget
       Paths_budget
   hs-source-dirs:
       app
-  ghc-options: -freverse-errors -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -freverse-errors -threaded -rtsopts -with-rtsopts=-N -Wall -Werror
   build-depends:
       base >=4.7 && <5
     , budget
@@ -113,7 +113,7 @@ test-suite budget-test
       Paths_budget
   hs-source-dirs:
       test
-  ghc-options: -freverse-errors -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -freverse-errors -threaded -rtsopts -with-rtsopts=-N -Wall -Werror
   build-depends:
       base >=4.7 && <5
     , budget
