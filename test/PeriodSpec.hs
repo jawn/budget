@@ -3,8 +3,8 @@ module PeriodSpec
 
 import Test.Hspec
 import Period
-import Data.Time.Calendar
 
+spec :: SpecWith ()
 spec = do
     describe "Period" $ do
         it "can be created with two days" $ do

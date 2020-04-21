@@ -8,12 +8,9 @@ import Test.Hspec
 import Category
 import CategoriesCsv
 
-import Data.Vector
-import qualified Data.Vector as Vector (toList)
-
-import Data.ByteString.Lazy (ByteString)
 import qualified Data.ByteString.Lazy as ByteString
 
+spec :: SpecWith ()
 spec = do
     describe "categories" $ do
         it "can be decoded from a ByteString containing simple values" $ do

@@ -2,7 +2,6 @@
 
 module Main where
 
-import Summary
 import Detail
 import Transaction ()
 import Category ()
@@ -51,7 +50,8 @@ processCommand config (Detail filePath ca_filePath category period criteria) = d
 processCommand config (Summary tr_filePath ca_filePath period criteria) = do
     transactions <- retrieveTransactions config tr_filePath 
     selector     <- importCategorySelector ca_filePath
-    printSummary tr_filePath ca_filePath period criteria selector transactions 
+    let report = (summary ts_filepath period criteria) <$> selector <*> transactions
+    either exitWithMsg (putStr . unlines) report
     exitSuccess
 
 processCommand config (Import im_filePath (Just account)) = do

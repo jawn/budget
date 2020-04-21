@@ -6,6 +6,7 @@ import ImportFileName
 import System.Process
 import System.Exit
 
+spec :: SpecWith ()
 spec = do
     describe "extract name" $ do
         it "can determine the account name from the file path" $ do

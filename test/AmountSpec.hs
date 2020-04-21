@@ -9,6 +9,7 @@ import Amount ( Amount
 
 import Test.Hspec
 
+spec :: SpecWith ()
 spec = do
     describe "Amount" $ do
         it "can be created from a positive float" $ do

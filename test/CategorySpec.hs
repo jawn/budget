@@ -8,6 +8,7 @@ import Data.List ( sort )
 
 import Test.Hspec
 
+spec :: SpecWith ()
 spec = do
     describe "Category" $ do
         it "has a name" $ do

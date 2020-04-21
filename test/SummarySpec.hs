@@ -23,7 +23,7 @@ spec = do
             let t1 = simplified 2020 04 01 "Online Services" 48.07 
             let t2 = simplified 2020 04 02 "Online Services" 50.00
             let transactions = [t1, t2]
-            [take 60 (head (summaryAllCategories transactions Nothing []))] `shouldBeOutput` 
+            [take 60 (head (summaryLines Nothing [] (const True) transactions))] `shouldBeOutput` 
                 [ "Online Services : 98.07" ]
 
         it "show the total for two categories" $ do
@@ -31,7 +31,7 @@ spec = do
             let t2 = simplified 2020 04 02 "Online Services" 50.00 
             let t3 = simplified 2020 04 13 "Online Services" 42.00
             let transactions = [t1, t2, t3]
-            map (take 60) (take 2 (summaryAllCategories transactions Nothing []))
+            map (take 60) (take 2 (summaryLines Nothing [] (const True) transactions))
             `shouldBeOutput` [ "Online Services : 92.00"
                              , "Special : 48.07" ]
 
@@ -40,7 +40,7 @@ spec = do
             let t2 = simplified 2020 04 02 "Online Services" 50.00 
             let t3 = simplified 2020 04 13 "Online Services" 42.00
             let transactions = [t1, t2, t3]
-            map (take 60) (summaryAllCategories transactions Nothing []) 
+            map (take 60) (summaryLines Nothing [] (const True) transactions)
             `shouldBeOutput` ["Online Services : 92.00"
                              ,"Special : 48.07"
                              ,"TOTAL from 04/01/2020 to 04/13/2020 : 140.07"]
@@ -51,7 +51,7 @@ spec = do
             let t3 = simplified 2020 04 13 "Online Services" 42.00
             let transactions = [t1, t2, t3]
             let cats = [(Category "Online Services")]
-            map (take 60) (summaryForCategories (`elem` cats) transactions Nothing [])
+            map (take 60) (summaryLines Nothing [] (`elem` cats) transactions)
             `shouldBeOutput` ["Online Services : 92.00"
                              ,"TOTAL from 04/01/2020 to 04/13/2020 : 92.00"]
 
@@ -61,7 +61,7 @@ spec = do
             let t3 = simplified 2020 01 13 "Holidays" 42.00
             let p = period (theDay 2020 01 01) (theDay 2020 03 31)
             let transactions = [t1, t2, t3]
-            map (take 60) (summaryAllCategories transactions (Just p) [])
+            map (take 60) (summaryLines (Just p) [] (const True) transactions)
             `shouldBeOutput` ["Holidays : 42.00"
                              ,"TOTAL from 01/01/2020 to 03/31/2020 : 42.00"]
 
@@ -72,31 +72,31 @@ spec = do
             let t3 = simplified 2020 04 13 "Groceries" 42.00
             let transactions = [t1, t2, t3]
             it "by category name ascending (by default)" $ do
-                map (take 60) (take 3 (summaryAllCategories transactions Nothing []))
+                map (take 60) (take 3 (summaryLines Nothing [] (const True) transactions))
                 `shouldBeOutput` [ "Groceries : 42.00"
                                  , "Online Services : 50.00"
                                  , "Special : 48.07"
                                  ]
             it "by category name ascending (by specification)" $ do
-                map (take 60) (take 3 (summaryAllCategories transactions Nothing [CategoryAsc]))
+                map (take 60) (take 3 (summaryLines Nothing [CategoryAsc] (const True) transactions))
                 `shouldBeOutput` [ "Groceries : 42.00"
                                  , "Online Services : 50.00"
                                  , "Special : 48.07"
                                  ]
             it "by category name descending" $ do
-                map (take 60) (take 3 (summaryAllCategories transactions Nothing [CategoryDesc]))
+                map (take 60) (take 3 (summaryLines Nothing [CategoryDesc] (const True) transactions))
                 `shouldBeOutput` [ "Special : 48.07"
                                  , "Online Services : 50.00"
                                  , "Groceries : 42.00"
                                  ]
             it "by amount ascending" $ do
-                map (take 60) (take 3 (summaryAllCategories transactions Nothing [AmountAsc]))
+                map (take 60) (take 3 (summaryLines Nothing [AmountAsc] (const True) transactions))
                 `shouldBeOutput` [ "Groceries : 42.00"
                                  , "Special : 48.07"
                                  , "Online Services : 50.00"
                                  ]                            
             it "by amount desscending" $ do
-                map (take 60) (take 3 (summaryAllCategories transactions Nothing [AmountDesc]))
+                map (take 60) (take 3 (summaryLines Nothing [AmountDesc] (const True) transactions))
                 `shouldBeOutput` [ "Online Services : 50.00"
                                  , "Special : 48.07"
                                  , "Groceries : 42.00"
@@ -106,32 +106,32 @@ spec = do
             let t1 = simplified 2020 4 1  "Online Services" 48.07 
             let t2 = simplified 2020 4 5  "Online Services" 50.00 
             let transactions = [t1, t2]
-            head (summaryAllCategories transactions Nothing []) `shouldBeLine`
+            head (summaryLines Nothing [] (const True) transactions) `shouldBeLine`
                 "Online Services : 98.07 | 98.07"
         it "for a two months period" $ do
             let t1 = simplified 2020 4 1  "Online Services" 48.07 
             let t2 = simplified 2020 5 5  "Online Services" 50.00 
             let transactions = [t1, t2]
-            head (summaryAllCategories transactions Nothing []) `shouldBeLine` 
+            head (summaryLines Nothing [] (const True) transactions) `shouldBeLine` 
                 "Online Services : 98.07 | 49.03"
         it "for a two months period in one category" $ do
             let t1 = simplified 2020 4 1  "Online Services" 48.07 
             let t2 = simplified 2020 5 31  "Training" 50.00 
             let transactions = [t1, t2]
-            head (summaryForCategories (== Category "Training") transactions Nothing []) `shouldBeLine` 
+            head (summaryLines Nothing [] (== Category "Training") transactions) `shouldBeLine` 
                 "Training : 50.00 | 25.00"
         it "for one category in a selected period" $ do
             let t1 = simplified 2020 4 1  "Online Services" 48.07 
             let t2 = simplified 2020 5 31  "Training" 50.00 
             let transactions = [t1, t2]
-            (summaryForCategories (== Category "Training") transactions (Just (period (theDay 2020 1 1) (theDay 2020 5 31))) []) `shouldBeOutput` 
+            (summaryLines (Just (period (theDay 2020 1 1) (theDay 2020 5 31))) [] (== Category "Training") transactions) `shouldBeOutput` 
                 ["Training : 50.00 | 10.00"
                 ,"TOTAL from 01/01/2020 to 05/31/2020 : 50.00 | 10.00"]
     it "show the average amount for all transactions according to the number of month in the period" $ do
         let t1 = simplified 2020 4 1  "Online Services" 48.07 
         let t2 = simplified 2020 5 31  "Training" 50.00 
         let transactions = [t1,t2]
-        last (summaryAllCategories transactions Nothing []) `shouldBeLine` 
+        last (summaryLines Nothing [] (const True) transactions) `shouldBeLine` 
                 "TOTAL from 04/01/2020 to 05/31/2020 : 98.07 | 49.03"
 
     describe "summary title" $ do

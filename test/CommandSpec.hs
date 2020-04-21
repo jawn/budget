@@ -5,8 +5,8 @@ import Command
 import Sorting
 import Category
 import Period
-import Data.Time.Calendar
 
+spec :: SpecWith ()
 spec = do
     describe "Command" $ do
         describe "No command given" $ do
@@ -40,12 +40,12 @@ spec = do
                     Right (Summary Nothing Nothing Nothing [])
 
             it "recognize the summary command sorting options" $ do
-                let args = words "summary -s M" 
-                command args `shouldBe` 
+                let args1 = words "summary -s M" 
+                command args1 `shouldBe` 
                     Right (Summary Nothing Nothing Nothing [AmountAsc])
 
-                let args = words "summary -s c" 
-                command args `shouldBe` 
+                let args2 = words "summary -s c" 
+                command args2 `shouldBe` 
                     Right (Summary Nothing Nothing Nothing [CategoryDesc])
             it "doesn't recognize the summary command with a wrong sorting criteria argument" $ do
                 let args = words "summary -s f"
@@ -167,11 +167,11 @@ spec = do
                                      , "O : Notes ascending (o : descending)"
                                      ])
             it "recognize the detail command with a categories file argument" $ do
-                let args = words "detail -c IncomeCategories.csv"
-                command args `shouldBe` 
+                let args1 = words "detail -c IncomeCategories.csv"
+                command args1 `shouldBe` 
                     Right (Detail Nothing (Just "IncomeCategories.csv") Nothing Nothing [])
-                let args = words "detail -c BusinessExpenses.CSV"
-                command args `shouldBe` 
+                let args2 = words "detail -c BusinessExpenses.CSV"
+                command args2 `shouldBe` 
                     Right (Detail Nothing (Just "BusinessExpenses.CSV") Nothing Nothing [])
             it "doesn't recognize a unknown option" $ do
                 let args = words "detail -z"
@@ -202,11 +202,11 @@ spec = do
                 Right (Summary (Just "foo.csv") Nothing Nothing [])
 
         it "recognize a prefix of the command" $ do
-            let args = words "SU -t foo.csv" 
-            command args `shouldBe` 
+            let args1 = words "SU -t foo.csv" 
+            command args1 `shouldBe` 
                 Right (Summary (Just "foo.csv") Nothing Nothing [])
-            let args = words "sum -t foo.csv" 
-            command args `shouldBe` 
+            let args2 = words "sum -t foo.csv" 
+            command args2 `shouldBe` 
                 Right (Summary (Just "foo.csv") Nothing Nothing [])
 
         it "doesn't recognize a unknown command" $ do

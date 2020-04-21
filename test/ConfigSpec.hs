@@ -3,6 +3,7 @@ module ConfigSpec
 import Test.Hspec
 import Config
 
+spec :: SpecWith ()
 spec = do
     describe "Config" $ do
         it "can fromString a list of keys and values from a content" $ do

@@ -4,6 +4,7 @@ module HelpSpec
 import Test.Hspec
 import Help
 
+spec :: SpecWith ()
 spec = do
     describe "help topic" $ do
         it "determine the topic of help" $ do
