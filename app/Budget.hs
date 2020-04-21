@@ -42,7 +42,7 @@ processCommand
     :: Config.Config 
     -> Command 
     -> IO ()
-
+    
 processCommand _ (Help arg) = help arg
 
 processCommand config (Detail filePath ca_filePath category period criteria) = do 

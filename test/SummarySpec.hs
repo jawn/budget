@@ -18,6 +18,7 @@ day3 = theDay 2020 04 13
 
 spec = do
     describe "summary" $ do
+
         it "show the total for a category" $ do
             let t1 = simplified 2020 04 01 "Online Services" 48.07 
             let t2 = simplified 2020 04 02 "Online Services" 50.00
@@ -138,22 +139,22 @@ spec = do
             let begin = theDay 2020 01 01
                 end = theDay 2020 03 31
             summaryTitle (Just "Bank.csv") Nothing (Period begin end) `shouldBeLine` 
-                "Report for file:Bank.csv (all categories) from 01/01/2020 to 03/31/2020"
+                "Summary for file: Bank.csv (all categories) from 01/01/2020 to 03/31/2020"
 
         it "show a header for the given filename and category list and period" $ do
             let begin = theDay 2020 01 01
                 end = theDay 2020 03 31
             summaryTitle (Just "Bank.csv") (Just "categs.csv") (Period begin end) `shouldBeLine` 
-                "Report for file:Bank.csv (categs.csv) from 01/01/2020 to 03/31/2020"
+                "Summary for file: Bank.csv for categories in the file: categs.csv from 01/01/2020 to 03/31/2020"
 
         it "show a header for the period" $ do
             let begin = theDay 2020 01 01
                 end = theDay 2020 03 31
             summaryTitle Nothing Nothing (Period begin end) `shouldBeLine` 
-                "Report (all categories) from 01/01/2020 to 03/31/2020"
+                "Summary (main file) (all categories) from 01/01/2020 to 03/31/2020"
 
         it "show a header for a selection of categories and the period" $ do
             let begin = theDay 2020 01 01
                 end = theDay 2020 03 31
             summaryTitle Nothing (Just "categs.csv") (Period begin end) `shouldBeLine` 
-                "Report (categs.csv) from 01/01/2020 to 03/31/2020"
+                "Summary (main file) for categories in the file: categs.csv from 01/01/2020 to 03/31/2020"

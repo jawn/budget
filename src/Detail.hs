@@ -25,6 +25,7 @@ import Data.Time   ( Day
 maybeFilter :: Maybe (Transaction -> Bool) -> [Transaction] -> [Transaction]
 maybeFilter Nothing tr = tr
 maybeFilter (Just p) tr  = filter p tr
+
 detailLines 
     :: Maybe Category
     -> Maybe Period

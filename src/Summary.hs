@@ -26,7 +26,7 @@ type NbMonths = Integer
 
 summary :: NbMonths -> [Transaction] -> SortingCriteria -> [String]
 summary nbMonths ts criteria = 
-        (map (\(c,a,m) -> prettyLine c a m) 
+        (map (\(c,a,m) -> summaryLine c a m) 
         . sortWith criteria
         . map (summarizeTransactionsMonths nbMonths)
         . groupBy (same transactionCategory) 
@@ -61,14 +61,18 @@ summaryForCategories isValid ts Nothing criteria = summaryForPeriod period selec
         period = transactionsPeriod ts 
         selection = filter (isValid . transactionCategory) ts
 
-prettyLine :: Category -> Amount -> Amount -> String
-prettyLine c a m = printf "%-49s:%10s |%10s" (categoryName c) (show a) (show m)
+summaryLine :: Category -> Amount -> Amount -> String
+summaryLine c a m = printf "%-49s:%10s |%10s" (categoryName c) (show a) (show m)
 
 summaryTitle :: Maybe FilePath -> Maybe FilePath -> Period -> String
-summaryTitle Nothing Nothing           p = printf "Report (all categories) %s" (show p)
-summaryTitle Nothing (Just name)       p = printf "Report (%s) %s" name (show p)
-summaryTitle (Just name) Nothing       p = printf "Report for file:%s (all categories) %s" name (show p)
-summaryTitle (Just name1) (Just name2) p = printf "Report for file:%s (%s) %s" name1 name2 (show p)
+summaryTitle tra_fp cat_fp per = "Summary " ++ title tra_fp cat_fp per
+    where
+    title :: Maybe FilePath -> Maybe FilePath -> Period -> String
+    title t c p = intercalate " " 
+        [ maybe "(main file)" ("for file: " ++) t
+        , maybe "(all categories)" ("for categories in the file: "++) c
+        , show p
+        ]
 
 printSummary
     :: Maybe FilePath
