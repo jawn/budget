@@ -5,6 +5,8 @@ module Amount ( Amount (..)
               , total )
     where
 import Text.Printf
+import Data.Csv
+import FieldToString
 
 data Amount = Amount Int
     deriving (Eq, Ord)
@@ -30,14 +32,17 @@ instance Read Amount
     where
         readsPrec _ ('-':s) = case reads s :: [(Double,String)] of
                                 [] -> []
-                                [(d,s)] -> [(negate (amount d), s)]
+                                ((d,r):_) -> [(negate (amount d), r)]
         readsPrec _ s = case reads s :: [(Double,String)] of
                             [] -> []
-                            [(d,s)] -> [(amount d, s)]
+                            ((d,r):_) -> [(amount d, r)]
 
 instance Num Amount
     where
         (+) (Amount n) (Amount m) = Amount (n+m)
+        (*) (Amount n) (Amount m) = Amount (n*m)
+        abs (Amount n) = Amount (abs n)
+        signum (Amount n) = Amount (signum n)
         negate (Amount n) = Amount (negate n)
         fromInteger n = Amount (fromIntegral n)
 
@@ -49,3 +54,13 @@ total = Amount . sum . map number
 
 divideBy :: Amount -> Integer -> Amount
 divideBy (Amount n) i = Amount (n `div` fromIntegral i)
+
+instance FromField Amount where
+    parseField s | head (fieldToString s) == '-' = fmap negate $ parseField (stringToField (tail (fieldToString s)))
+    parseField s = case runParser (parseField s :: Parser Double) of
+                     Right n -> pure $ amount n
+                     Left msg -> fail msg
+
+instance ToField Amount where
+    toField = stringToField . show
+

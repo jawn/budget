@@ -4,11 +4,7 @@ module Help ( Topic (..)
     where
 import Command
 import Config
-import ExitWithMsg
 import System.Directory
-import Data.Maybe
-import Control.Monad
-import MaybeToEither
 
 data Topic = TopicHelp | TopicSummary | TopicDetail | TopicImport | TopicSort | TopicConfig
     deriving (Eq, Show)
@@ -25,6 +21,7 @@ help :: [String] -> IO ()
 help [] = doHelp TopicHelp
 help args = doHelp (topic (args!!0))
 
+doHelp :: Topic -> IO () 
 doHelp TopicHelp =
     (putStr . unlines)
                   [ "budget help [command]"

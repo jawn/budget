@@ -1,15 +1,20 @@
-module SummaryLine ( SummaryLine (..)
-                   , summaryAmount
-                   , summaryCategory
-                   )
+module SummaryLine ( SummaryLine (..) )
     where
 
 import Amount
 import Category
+import Text.Printf
 
-type SummaryLine = (Category, Amount, Amount)
+data SummaryLine = SummaryLine { summaryLineCategory :: Category
+                               , summaryLineAmount   :: Amount
+                               , summaryLineAverage  :: Amount
+                               }
+    deriving (Eq, Ord)
 
-summaryCategory (c, _, _) = c
-summaryAmount   (_, a, _) = a
-summaryAverage  (_, _, v) = v
+instance Show SummaryLine 
+    where
+        show (SummaryLine cat amt avg) =
+            printf "%-49s:%10s |%10s" 
+                (categoryName cat) (show amt) (show avg)
+
 

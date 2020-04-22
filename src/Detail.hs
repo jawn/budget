@@ -4,10 +4,7 @@ module Detail
 import Account     ( Account (..) )
 import Amount      ( Amount (..) )
 import Category    ( Category (..) )
-import ExitWithMsg ( exitWithMsg )
-import Message     ( Message )
-import Period      ( Period
-                   , within )
+import Period      ( Period )
 import Sorting     ( SortingCriteria
                    , sortWithCriteria )
 import Transaction ( Transaction (..) 
@@ -40,7 +37,7 @@ detailLines per sct sel =
 prettyLine :: Transaction -> String
 prettyLine t = printf "%-20s %10s %-20s %-20s %-40s|%10s"
              (take 20 (accountName (transactionAccount t)))
-             (formatTime defaultTimeLocale "%m/%d/%Y" (transactionDate t))
+             (show (transactionDate t))
              (take 20 (maybe "" show (transactionNotes t)))
              (take 20 (maybe "" show (transactionName t)))
              (take 40 (categoryName (transactionCategory t)))

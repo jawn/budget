@@ -10,14 +10,10 @@ import Account
 import Name
 import Note
 import Category
-import TransactionsCsv
+import Date
 
 
 import qualified Data.ByteString.Lazy as ByteString
-import Data.Time.Calendar
-
-theDay :: Integer -> Int -> Int -> Day
-theDay = fromGregorian
 
 spec :: SpecWith ()
 spec = do

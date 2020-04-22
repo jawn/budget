@@ -34,6 +34,11 @@ dependencies:
 
 library:
   source-dirs: src
+  ghc-options:
+  - -freverse-errors
+  - -Wall 
+  - -Werror
+  - -Wincomplete-patterns
 
 executables:
   budget:
@@ -46,6 +51,7 @@ executables:
     - -with-rtsopts=-N
     - -Wall 
     - -Werror
+    - -Wincomplete-patterns
     dependencies:
     - budget
 
@@ -60,6 +66,7 @@ tests:
     - -with-rtsopts=-N
     - -Wall 
     - -Werror
+    - -Wincomplete-patterns
     dependencies:
     - budget
     - hspec

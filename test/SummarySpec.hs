@@ -7,9 +7,9 @@ import Sorting
 import Category
 import Period
 import Summary
-import Data.Time
+import Date
 
-day1, day2, day3 :: Day
+day1, day2, day3 :: Date
 day1 = theDay 2020 04 01
 day2 = theDay 2020 04 02
 day3 = theDay 2020 04 13

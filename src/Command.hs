@@ -8,7 +8,6 @@ import Period
 import Same
 import Sorting
 import System.FilePath.Posix (takeExtension)
-import Data.Char (toLower) 
 
 data Command 
     = Summary { summaryTransactionFilePath :: Maybe FilePath
@@ -58,11 +57,10 @@ cmd@( Summary _ _ _ _ _) `with` ("-t":arg:args)  =
 
 cmd@(Summary _ _ _ _ _) `with` ("-c":arg:args) = 
     addDetailCategory cmd arg
-    -- cmd { detailCategory = Just (Category arg) } `with` args
     where 
         addDetailCategory :: Command -> String -> Either Message Command
-        addDetailCategory cmd arg | isCSVFile arg    = cmd { summaryCategoriesFilePath = Just arg } `with` args
-        addDetailCategory cmd name = cmd { summaryCategory = Just (Category name) } `with` args
+        addDetailCategory c arg1 | isCSVFile arg1    = c { summaryCategoriesFilePath = Just arg1 } `with` args
+        addDetailCategory c name = c { summaryCategory = Just (Category name) } `with` args
 
         isCSVFile :: String -> Bool
         isCSVFile s = (map toLower (takeExtension s)) == ".csv" 
@@ -98,8 +96,8 @@ cmd@(Detail _ _ _ _ _) `with` ("-c":arg:args) =
     -- cmd { detailCategory = Just (Category arg) } `with` args
     where 
         addDetailCategory :: Command -> String -> Either Message Command
-        addDetailCategory cmd arg | isCSVFile arg    = cmd { detailCategoriesFilePath = Just arg } `with` args
-        addDetailCategory cmd name = cmd { detailCategory = Just (Category name) } `with` args
+        addDetailCategory c arg1 | isCSVFile arg1    = c { detailCategoriesFilePath = Just arg1 } `with` args
+        addDetailCategory c name = c { detailCategory = Just (Category name) } `with` args
 
         isCSVFile :: String -> Bool
         isCSVFile s = (map toLower (takeExtension s)) == ".csv" 

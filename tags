@@ -1,84 +1,106 @@
+(*)	./src/Amount.hs	41
+(*)	src/Amount.hs	41
 (+)	./src/Amount.hs	40
 (+)	src/Amount.hs	40
-Account	./src/Account.hs	1
-Account	src/Account.hs	1
-AccountAsc	./src/Sorting.hs	28
-AccountAsc	src/Sorting.hs	28
-AccountDesc	./src/Sorting.hs	29
-AccountDesc	src/Sorting.hs	29
+Account	./src/Account.hs	12
+Account	./src/Account.hs	12
+Account	src/Account.hs	12
+Account	src/Account.hs	12
+AccountAsc	./src/Sorting.hs	25
+AccountAsc	src/Sorting.hs	25
+AccountDesc	./src/Sorting.hs	26
+AccountDesc	src/Sorting.hs	26
 AccountSpec	./test/AccountSpec.hs	1
 AccountSpec	test/AccountSpec.hs	1
 Amount	./src/Amount.hs	9
 Amount	./src/Amount.hs	9
 Amount	src/Amount.hs	9
 Amount	src/Amount.hs	9
-AmountAsc	./src/Sorting.hs	34
-AmountAsc	src/Sorting.hs	34
-AmountDesc	./src/Sorting.hs	35
-AmountDesc	src/Sorting.hs	35
+AmountAsc	./src/Sorting.hs	31
+AmountAsc	src/Sorting.hs	31
+AmountDesc	./src/Sorting.hs	32
+AmountDesc	src/Sorting.hs	32
 AmountSpec	./test/AmountSpec.hs	1
 AmountSpec	test/AmountSpec.hs	1
-Asc	./src/Sorting.hs	24
-Asc	src/Sorting.hs	24
+Asc	./src/Sorting.hs	21
+Asc	src/Sorting.hs	21
 Attributes	./src/Import.hs	14
 Attributes	src/Import.hs	14
 CatchShowIO	./src/CatchShowIO.hs	1
 CatchShowIO	src/CatchShowIO.hs	1
-CategoriesCsv	./src/CategoriesCsv.hs	1
-CategoriesCsv	src/CategoriesCsv.hs	1
 CategoriesCsvSpec	./test/CategoriesCsvSpec.hs	3
 CategoriesCsvSpec	test/CategoriesCsvSpec.hs	3
-Category	./src/Category.hs	1
-Category	src/Category.hs	1
-CategoryAsc	./src/Sorting.hs	30
-CategoryAsc	src/Sorting.hs	30
-CategoryDesc	./src/Sorting.hs	31
-CategoryDesc	src/Sorting.hs	31
+Category	./src/Category.hs	18
+Category	./src/Category.hs	18
+Category	src/Category.hs	18
+Category	src/Category.hs	18
+CategoryAsc	./src/Sorting.hs	27
+CategoryAsc	src/Sorting.hs	27
+CategoryDesc	./src/Sorting.hs	28
+CategoryDesc	src/Sorting.hs	28
 CategorySpec	./test/CategorySpec.hs	2
 CategorySpec	test/CategorySpec.hs	2
 Command	./src/Command.hs	13
 Command	src/Command.hs	13
-CommandCriteria	./src/Sorting.hs	42
-CommandCriteria	src/Sorting.hs	42
+CommandCriteria	./src/Sorting.hs	39
+CommandCriteria	src/Sorting.hs	39
 CommandSpec	./test/CommandSpec.hs	1
 CommandSpec	test/CommandSpec.hs	1
 Config	./src/Config.hs	2
 Config	src/Config.hs	2
 ConfigSpec	./test/ConfigSpec.hs	1
 ConfigSpec	test/ConfigSpec.hs	1
-DateAsc	./src/Sorting.hs	32
-DateAsc	src/Sorting.hs	32
-DateDesc	./src/Sorting.hs	33
-DateDesc	src/Sorting.hs	33
-Desc	./src/Sorting.hs	24
-Desc	src/Sorting.hs	24
+DateAsc	./src/Sorting.hs	29
+DateAsc	src/Sorting.hs	29
+DateDesc	./src/Sorting.hs	30
+DateDesc	src/Sorting.hs	30
+DecodeString	./src/DecodeString.hs	1
+DecodeString	src/DecodeString.hs	1
+Desc	./src/Sorting.hs	21
+Desc	src/Sorting.hs	21
 Detail	./src/Command.hs	20
 Detail	./src/Detail.hs	1
 Detail	src/Command.hs	20
 Detail	src/Detail.hs	1
-DetailSortingCriteria	./src/Sorting.hs	42
-DetailSortingCriteria	src/Sorting.hs	42
+DetailSortingCriteria	./src/Sorting.hs	39
+DetailSortingCriteria	src/Sorting.hs	39
 DetailSpec	./test/DetailSpec.hs	2
 DetailSpec	test/DetailSpec.hs	2
-Direction	./src/Sorting.hs	24
-Direction	src/Sorting.hs	24
+Direction	./src/Sorting.hs	21
+Direction	src/Sorting.hs	21
 ExitWithMsg	./src/ExitWithMsg.hs	1
 ExitWithMsg	src/ExitWithMsg.hs	1
+FieldToString	./src/FieldToString.hs	1
+FieldToString	src/FieldToString.hs	1
+FromField Account	./src/Account.hs	15
 FromField Account	./src/TransactionsCsv.hs	88
+FromField Account	src/Account.hs	15
 FromField Account	src/TransactionsCsv.hs	88
+FromField Amount	./src/Transaction.hs	141
 FromField Amount	./src/TransactionsCsv.hs	110
+FromField Amount	src/Transaction.hs	141
 FromField Amount	src/TransactionsCsv.hs	110
+FromField Category	./src/Transaction.hs	138
 FromField Category	./src/TransactionsCsv.hs	107
+FromField Category	src/Transaction.hs	138
 FromField Category	src/TransactionsCsv.hs	107
+FromField Name	./src/Name.hs	17
 FromField Name	./src/TransactionsCsv.hs	82
+FromField Name	src/Name.hs	17
 FromField Name	src/TransactionsCsv.hs	82
+FromField Note	./src/Note.hs	17
 FromField Note	./src/TransactionsCsv.hs	85
+FromField Note	src/Note.hs	17
 FromField Note	src/TransactionsCsv.hs	85
+FromField Time-Day	./src/Transaction.hs	123
 FromField Time-Day	./src/TransactionsCsv.hs	92
+FromField Time-Day	src/Transaction.hs	123
 FromField Time-Day	src/TransactionsCsv.hs	92
-FromRecord Category	./src/CategoriesCsv.hs	29
-FromRecord Category	src/CategoriesCsv.hs	29
+FromRecord Category	./src/Category.hs	21
+FromRecord Category	src/Category.hs	21
+FromRecord Transaction	./src/Transaction.hs	112
 FromRecord Transaction	./src/TransactionsCsv.hs	69
+FromRecord Transaction	src/Transaction.hs	112
 FromRecord Transaction	src/TransactionsCsv.hs	69
 Help	./src/Command.hs	27
 Help	./src/Help.hs	1
@@ -101,26 +123,26 @@ MaybeToEither	./src/MaybeToEither.hs	1
 MaybeToEither	src/MaybeToEither.hs	1
 Message	./src/Message.hs	1
 Message	src/Message.hs	1
-Name	./src/Name.hs	1
-Name	src/Name.hs	1
-NameAsc	./src/Sorting.hs	36
-NameAsc	src/Sorting.hs	36
-NameDesc	./src/Sorting.hs	37
-NameDesc	src/Sorting.hs	37
+Name	./src/Name.hs	11
+Name	src/Name.hs	11
+NameAsc	./src/Sorting.hs	33
+NameAsc	src/Sorting.hs	33
+NameDesc	./src/Sorting.hs	34
+NameDesc	src/Sorting.hs	34
 NbMonths	./src/Summary.hs	24
 NbMonths	src/Summary.hs	24
-Note	./src/Note.hs	1
-Note	src/Note.hs	1
-NotesAsc	./src/Sorting.hs	38
-NotesAsc	src/Sorting.hs	38
-NotesDesc	./src/Sorting.hs	39
-NotesDesc	src/Sorting.hs	39
+Note	./src/Note.hs	11
+Note	src/Note.hs	11
+NotesAsc	./src/Sorting.hs	35
+NotesAsc	src/Sorting.hs	35
+NotesDesc	./src/Sorting.hs	36
+NotesDesc	src/Sorting.hs	36
 Num Amount	./src/Amount.hs	38
 Num Amount	src/Amount.hs	38
-Period	./src/Period.hs	24
-Period	./src/Period.hs	24
-Period	src/Period.hs	24
-Period	src/Period.hs	24
+Period	./src/Period.hs	23
+Period	./src/Period.hs	23
+Period	src/Period.hs	23
+Period	src/Period.hs	23
 PeriodSpec	./test/PeriodSpec.hs	1
 PeriodSpec	test/PeriodSpec.hs	1
 Read Amount	./src/Amount.hs	29
@@ -131,43 +153,59 @@ ShouldBeOutput	./test/ShouldBeOutput.hs	1
 ShouldBeOutput	test/ShouldBeOutput.hs	1
 Show Amount	./src/Amount.hs	20
 Show Amount	src/Amount.hs	20
-Show Name	./src/Name.hs	7
-Show Name	src/Name.hs	7
-Show Note	./src/Note.hs	6
-Show Note	src/Note.hs	6
-Show Period	./src/Period.hs	27
-Show Period	src/Period.hs	27
-SortCriterion	./src/Sorting.hs	27
-SortCriterion	src/Sorting.hs	27
+Show Name	./src/Name.hs	14
+Show Name	src/Name.hs	14
+Show Note	./src/Note.hs	14
+Show Note	src/Note.hs	14
+Show Period	./src/Period.hs	26
+Show Period	src/Period.hs	26
+Show SummaryLine	./src/SummaryLine.hs	14
+Show SummaryLine	src/SummaryLine.hs	14
+SortCriterion	./src/Sorting.hs	24
+SortCriterion	src/Sorting.hs	24
 Sorting	./src/Sorting.hs	1
 Sorting	src/Sorting.hs	1
-SortingCriteria	./src/Sorting.hs	23
-SortingCriteria	src/Sorting.hs	23
+SortingCriteria	./src/Sorting.hs	20
+SortingCriteria	src/Sorting.hs	20
 SortingSpec	./test/SortingSpec.hs	1
 SortingSpec	test/SortingSpec.hs	1
 Summary	./src/Command.hs	14
 Summary	./src/Summary.hs	1
 Summary	src/Command.hs	14
 Summary	src/Summary.hs	1
-SummaryLine	./src/SummaryLine.hs	10
-SummaryLine	src/SummaryLine.hs	10
-SummarySortingCriteria	./src/Sorting.hs	43
-SummarySortingCriteria	src/Sorting.hs	43
+SummaryLine	./src/SummaryLine.hs	1
+SummaryLine	src/SummaryLine.hs	1
+SummarySortingCriteria	./src/Sorting.hs	40
+SummarySortingCriteria	src/Sorting.hs	40
 SummarySpec	./test/SummarySpec.hs	1
 SummarySpec	test/SummarySpec.hs	1
+ToField Account	./src/Transaction.hs	157
 ToField Account	./src/TransactionsCsv.hs	132
+ToField Account	src/Transaction.hs	157
 ToField Account	src/TransactionsCsv.hs	132
+ToField Amount	./src/Transaction.hs	166
 ToField Amount	./src/TransactionsCsv.hs	141
+ToField Amount	src/Transaction.hs	166
 ToField Amount	src/TransactionsCsv.hs	141
+ToField Category	./src/Transaction.hs	163
 ToField Category	./src/TransactionsCsv.hs	138
+ToField Category	src/Transaction.hs	163
 ToField Category	src/TransactionsCsv.hs	138
+ToField Day	./src/Transaction.hs	160
 ToField Day	./src/TransactionsCsv.hs	135
+ToField Day	src/Transaction.hs	160
 ToField Day	src/TransactionsCsv.hs	135
+ToField Name	./src/Name.hs	20
 ToField Name	./src/TransactionsCsv.hs	126
+ToField Name	src/Name.hs	20
 ToField Name	src/TransactionsCsv.hs	126
+ToField Note	./src/Note.hs	20
 ToField Note	./src/TransactionsCsv.hs	129
+ToField Note	src/Note.hs	20
 ToField Note	src/TransactionsCsv.hs	129
+ToRecord Transaction	./src/Transaction.hs	147
 ToRecord Transaction	./src/TransactionsCsv.hs	116
+ToRecord Transaction	src/Transaction.hs	147
 ToRecord Transaction	src/TransactionsCsv.hs	116
 Topic	./src/Help.hs	13
 Topic	src/Help.hs	13
@@ -181,18 +219,20 @@ TopicSort	./src/Help.hs	13
 TopicSort	src/Help.hs	13
 TopicSummary	./src/Help.hs	13
 TopicSummary	src/Help.hs	13
-Transaction	./src/Transaction.hs	29
-Transaction	./src/Transaction.hs	29
-Transaction	src/Transaction.hs	29
-Transaction	src/Transaction.hs	29
+Transaction	./src/Transaction.hs	59
+Transaction	./src/Transaction.hs	59
+Transaction	src/Transaction.hs	59
+Transaction	src/Transaction.hs	59
 TransactionSpec	./test/TransactionSpec.hs	1
 TransactionSpec	test/TransactionSpec.hs	1
 TransactionsCsv	./src/TransactionsCsv.hs	2
 TransactionsCsv	src/TransactionsCsv.hs	2
 TransactionsCsvSpec	./test/TransactionsCsvSpec.hs	3
 TransactionsCsvSpec	test/TransactionsCsvSpec.hs	3
-accountName	./src/Account.hs	4
-accountName	src/Account.hs	4
+abs	./src/Amount.hs	42
+abs	src/Amount.hs	42
+accountName	./src/Account.hs	12
+accountName	src/Account.hs	12
 alreadyAnAccountName	./src/Import.hs	58
 alreadyAnAccountName	src/Import.hs	58
 alreadyIn	./src/Import.hs	20
@@ -203,22 +243,24 @@ attributes	./src/Import.hs	30
 attributes	src/Import.hs	30
 attributesAlreadyIn	./src/Import.hs	34
 attributesAlreadyIn	src/Import.hs	34
-averageTransactionsPerMonth	./src/Transaction.hs	41
-averageTransactionsPerMonth	src/Transaction.hs	41
+averageTransactionsPerMonth	./src/Transaction.hs	71
+averageTransactionsPerMonth	src/Transaction.hs	71
+canonical	./src/Transaction.hs	224
 canonical	./src/TransactionsCsv.hs	199
+canonical	src/Transaction.hs	224
 canonical	src/TransactionsCsv.hs	199
 catchShowIO	./src/CatchShowIO.hs	12
 catchShowIO	src/CatchShowIO.hs	12
-categoryName	./src/Category.hs	4
-categoryName	src/Category.hs	4
+categoryName	./src/Category.hs	18
+categoryName	src/Category.hs	18
 categoryTotals	./src/Summary.hs	25
 categoryTotals	src/Summary.hs	25
 changeAccount	./src/Import.hs	42
 changeAccount	src/Import.hs	42
 checkNotEmpty	./src/ImportFileName.hs	27
-checkNotEmpty	./src/Transaction.hs	55
+checkNotEmpty	./src/Transaction.hs	88
 checkNotEmpty	src/ImportFileName.hs	27
-checkNotEmpty	src/Transaction.hs	55
+checkNotEmpty	src/Transaction.hs	88
 command	./src/Command.hs	34
 command	./src/Command.hs	42
 command	src/Command.hs	34
@@ -233,15 +275,19 @@ day3	./test/SummarySpec.hs	12
 day3	./test/SummarySpec.hs	15
 day3	test/SummarySpec.hs	12
 day3	test/SummarySpec.hs	15
-decodeCategories	./src/CategoriesCsv.hs	37
-decodeCategories	src/CategoriesCsv.hs	37
-decodeCategoriesFromFile	./src/CategoriesCsv.hs	43
-decodeCategoriesFromFile	src/CategoriesCsv.hs	43
+decodeCategories	./src/Category.hs	29
+decodeCategories	src/Category.hs	29
+decodeCategoriesFromFile	./src/Category.hs	35
+decodeCategoriesFromFile	src/Category.hs	35
 decodeString	./src/TransactionsCsv.hs	67
 decodeString	src/TransactionsCsv.hs	67
+decodeTransactions	./src/Transaction.hs	173
 decodeTransactions	./src/TransactionsCsv.hs	148
+decodeTransactions	src/Transaction.hs	173
 decodeTransactions	src/TransactionsCsv.hs	148
+decodeTransactionsFromFile	./src/Transaction.hs	183
 decodeTransactionsFromFile	./src/TransactionsCsv.hs	158
+decodeTransactionsFromFile	src/Transaction.hs	183
 decodeTransactionsFromFile	src/TransactionsCsv.hs	158
 detail	./src/Detail.hs	94
 detail	src/Detail.hs	94
@@ -251,10 +297,10 @@ detailCategory	./src/Command.hs	22
 detailCategory	src/Command.hs	22
 detailLines	./src/Detail.hs	34
 detailLines	src/Detail.hs	34
-detailOrdering	./src/Sorting.hs	81
-detailOrdering	src/Sorting.hs	81
-detailOrderings	./src/Sorting.hs	105
-detailOrderings	src/Sorting.hs	105
+detailOrdering	./src/Sorting.hs	78
+detailOrdering	src/Sorting.hs	78
+detailOrderings	./src/Sorting.hs	102
+detailOrderings	src/Sorting.hs	102
 detailPeriod	./src/Command.hs	23
 detailPeriod	src/Command.hs	23
 detailSortingCriteria	./src/Command.hs	24
@@ -265,13 +311,17 @@ detailTransactionFilePath	./src/Command.hs	20
 detailTransactionFilePath	src/Command.hs	20
 directoryContents	./src/ImportFileName.hs	31
 directoryContents	src/ImportFileName.hs	31
-divideBy	./src/Amount.hs	50
-divideBy	src/Amount.hs	50
+divideBy	./src/Amount.hs	53
+divideBy	src/Amount.hs	53
 doHelp	./src/Help.hs	28
 doHelp	src/Help.hs	28
+encodeTransactions	./src/Transaction.hs	178
 encodeTransactions	./src/TransactionsCsv.hs	153
+encodeTransactions	src/Transaction.hs	178
 encodeTransactions	src/TransactionsCsv.hs	153
+encodeTransactionsToFile	./src/Transaction.hs	191
 encodeTransactionsToFile	./src/TransactionsCsv.hs	166
+encodeTransactionsToFile	src/Transaction.hs	191
 encodeTransactionsToFile	src/TransactionsCsv.hs	166
 equals	./src/Command.hs	36
 equals	./src/Command.hs	48
@@ -281,28 +331,28 @@ equals	src/Command.hs	48
 equals	src/Help.hs	17
 exitWithMsg	./src/ExitWithMsg.hs	5
 exitWithMsg	src/ExitWithMsg.hs	5
-extractName	./src/ImportFileName.hs	14
-extractName	src/ImportFileName.hs	14
+extractName	./src/ImportFileName.hs	13
+extractName	src/ImportFileName.hs	13
+fieldToString	./src/FieldToString.hs	10
+fieldToString	src/FieldToString.hs	10
 filterPostedOrAlreadyAccount	./src/Import.hs	55
 filterPostedOrAlreadyAccount	src/Import.hs	55
-foldOrdering	./src/Sorting.hs	108
-foldOrdering	src/Sorting.hs	108
+foldOrdering	./src/Sorting.hs	105
+foldOrdering	src/Sorting.hs	105
 footer	./src/Detail.hs	62
 footer	src/Detail.hs	62
 formatDate	./src/Detail.hs	52
 formatDate	src/Detail.hs	52
 fromFile	./src/Config.hs	28
 fromFile	src/Config.hs	28
-fromInteger	./src/Amount.hs	42
-fromInteger	src/Amount.hs	42
-fromPeriod	./src/Transaction.hs	59
-fromPeriod	src/Transaction.hs	59
+fromInteger	./src/Amount.hs	45
+fromInteger	src/Amount.hs	45
+fromPeriod	./src/Transaction.hs	92
+fromPeriod	src/Transaction.hs	92
 fromString	./src/Config.hs	15
 fromString	src/Config.hs	15
 help	./src/Help.hs	24
 help	src/Help.hs	24
-importCategorySelector	./src/CategoriesCsv.hs	50
-importCategorySelector	src/CategoriesCsv.hs	50
 importDirectory	./src/ImportFileName.hs	21
 importDirectory	src/ImportFileName.hs	21
 importTransactions	./src/Import.hs	17
@@ -315,89 +365,115 @@ main	./Setup.hs	2
 main	./app/Budget.hs	24
 maybeToEither	./src/MaybeToEither.hs	4
 maybeToEither	src/MaybeToEither.hs	4
-mkDate	./test/TransactionSpec.hs	21
-mkDate	test/TransactionSpec.hs	21
-months	./src/Period.hs	39
-months	src/Period.hs	39
-name	./src/ImportFileName.hs	19
-name	src/ImportFileName.hs	19
-negate	./src/Amount.hs	41
-negate	src/Amount.hs	41
+mkDate	./test/TransactionSpec.hs	22
+mkDate	test/TransactionSpec.hs	22
+months	./src/Period.hs	38
+months	src/Period.hs	38
+name	./src/ImportFileName.hs	18
+name	src/ImportFileName.hs	18
+negate	./src/Amount.hs	44
+negate	src/Amount.hs	44
+normalYear	./src/Transaction.hs	132
 normalYear	./src/TransactionsCsv.hs	101
+normalYear	src/Transaction.hs	132
 normalYear	src/TransactionsCsv.hs	101
-number	./src/Amount.hs	44
-number	src/Amount.hs	44
+number	./src/Amount.hs	47
+number	src/Amount.hs	47
+parseField	./src/Account.hs	16
+parseField	./src/Name.hs	18
+parseField	./src/Note.hs	18
+parseField	./src/Transaction.hs	124
+parseField	./src/Transaction.hs	139
+parseField	./src/Transaction.hs	142
 parseField	./src/TransactionsCsv.hs	83
 parseField	./src/TransactionsCsv.hs	86
 parseField	./src/TransactionsCsv.hs	89
 parseField	./src/TransactionsCsv.hs	93
 parseField	./src/TransactionsCsv.hs	108
 parseField	./src/TransactionsCsv.hs	111
+parseField	src/Account.hs	16
+parseField	src/Name.hs	18
+parseField	src/Note.hs	18
+parseField	src/Transaction.hs	124
+parseField	src/Transaction.hs	139
+parseField	src/Transaction.hs	142
 parseField	src/TransactionsCsv.hs	83
 parseField	src/TransactionsCsv.hs	86
 parseField	src/TransactionsCsv.hs	89
 parseField	src/TransactionsCsv.hs	93
 parseField	src/TransactionsCsv.hs	108
 parseField	src/TransactionsCsv.hs	111
-parseRecord	./src/CategoriesCsv.hs	30
+parseRecord	./src/Category.hs	22
+parseRecord	./src/Transaction.hs	113
 parseRecord	./src/TransactionsCsv.hs	70
-parseRecord	src/CategoriesCsv.hs	30
+parseRecord	src/Category.hs	22
+parseRecord	src/Transaction.hs	113
 parseRecord	src/TransactionsCsv.hs	70
-period	./src/Period.hs	35
-period	src/Period.hs	35
-periodFromMonth	./src/Period.hs	50
-periodFromMonth	src/Period.hs	50
-periodFromMonthString	./src/Period.hs	56
-periodFromMonthString	src/Period.hs	56
-periodFromStrings	./src/Period.hs	42
-periodFromStrings	src/Period.hs	42
-periodFromYear	./src/Period.hs	53
-periodFromYear	src/Period.hs	53
-periodFromYearString	./src/Period.hs	63
-periodFromYearString	src/Period.hs	63
+period	./src/Period.hs	34
+period	src/Period.hs	34
+periodFromMonth	./src/Period.hs	49
+periodFromMonth	src/Period.hs	49
+periodFromMonthString	./src/Period.hs	55
+periodFromMonthString	src/Period.hs	55
+periodFromStrings	./src/Period.hs	41
+periodFromStrings	src/Period.hs	41
+periodFromYear	./src/Period.hs	52
+periodFromYear	src/Period.hs	52
+periodFromYearString	./src/Period.hs	62
+periodFromYearString	src/Period.hs	62
 prettyLine	./src/Detail.hs	40
 prettyLine	src/Detail.hs	40
 printConfig	./src/Help.hs	197
 printConfig	src/Help.hs	197
 processCommand	./app/Budget.hs	42
 processImportDirectory	./app/Budget.hs	78
-readCriteria	./src/Sorting.hs	50
-readCriteria	src/Sorting.hs	50
-readCriterion	./src/Sorting.hs	61
-readCriterion	src/Sorting.hs	61
+readCriteria	./src/Sorting.hs	47
+readCriteria	src/Sorting.hs	47
+readCriterion	./src/Sorting.hs	58
+readCriterion	src/Sorting.hs	58
 readsPrec	./src/Amount.hs	31
 readsPrec	src/Amount.hs	31
+retrieveTransactions	./src/Transaction.hs	198
 retrieveTransactions	./src/TransactionsCsv.hs	173
+retrieveTransactions	src/Transaction.hs	198
 retrieveTransactions	src/TransactionsCsv.hs	173
+retrieveTransactionsFromMainFile	./src/Transaction.hs	203
 retrieveTransactionsFromMainFile	./src/TransactionsCsv.hs	178
+retrieveTransactionsFromMainFile	src/Transaction.hs	203
 retrieveTransactionsFromMainFile	src/TransactionsCsv.hs	178
 runProgram	./app/Budget.hs	31
 same	./src/Same.hs	4
 same	src/Same.hs	4
-sameTransaction	./src/Transaction.hs	62
-sameTransaction	src/Transaction.hs	62
+sameTransaction	./src/Transaction.hs	95
+sameTransaction	src/Transaction.hs	95
+saveTransactions	./src/Transaction.hs	215
 saveTransactions	./src/TransactionsCsv.hs	190
+saveTransactions	src/Transaction.hs	215
 saveTransactions	src/TransactionsCsv.hs	190
 shouldBeLine	./test/ShouldBeOutput.hs	9
 shouldBeLine	test/ShouldBeOutput.hs	9
 shouldBeOutput	./test/ShouldBeOutput.hs	6
 shouldBeOutput	test/ShouldBeOutput.hs	6
 show	./src/Amount.hs	22
-show	./src/Name.hs	8
-show	./src/Note.hs	7
-show	./src/Period.hs	29
+show	./src/Name.hs	15
+show	./src/Note.hs	15
+show	./src/Period.hs	28
+show	./src/SummaryLine.hs	16
 show	src/Amount.hs	22
-show	src/Name.hs	8
-show	src/Note.hs	7
-show	src/Period.hs	29
-showDate	./src/Period.hs	32
-showDate	src/Period.hs	32
-simplified	./test/TransactionSpec.hs	13
-simplified	test/TransactionSpec.hs	13
+show	src/Name.hs	15
+show	src/Note.hs	15
+show	src/Period.hs	28
+show	src/SummaryLine.hs	16
+showDate	./src/Period.hs	31
+showDate	src/Period.hs	31
+signum	./src/Amount.hs	43
+signum	src/Amount.hs	43
+simplified	./test/TransactionSpec.hs	14
+simplified	test/TransactionSpec.hs	14
 sortWith	./src/Summary.hs	33
 sortWith	src/Summary.hs	33
-sortWithCriteria	./src/Sorting.hs	113
-sortWithCriteria	src/Sorting.hs	113
+sortWithCriteria	./src/Sorting.hs	110
+sortWithCriteria	src/Sorting.hs	110
 spec	./test/AccountSpec.hs	8
 spec	./test/AmountSpec.hs	12
 spec	./test/CategoriesCsvSpec.hs	13
@@ -411,7 +487,7 @@ spec	./test/ImportSpec.hs	13
 spec	./test/PeriodSpec.hs	7
 spec	./test/SortingSpec.hs	16
 spec	./test/SummarySpec.hs	18
-spec	./test/TransactionSpec.hs	24
+spec	./test/TransactionSpec.hs	25
 spec	./test/TransactionsCsvSpec.hs	22
 spec	test/AccountSpec.hs	8
 spec	test/AmountSpec.hs	12
@@ -426,91 +502,105 @@ spec	test/ImportSpec.hs	13
 spec	test/PeriodSpec.hs	7
 spec	test/SortingSpec.hs	16
 spec	test/SummarySpec.hs	18
-spec	test/TransactionSpec.hs	24
+spec	test/TransactionSpec.hs	25
 spec	test/TransactionsCsvSpec.hs	22
-summarizeTransactionsMonths	./src/Transaction.hs	44
-summarizeTransactionsMonths	src/Transaction.hs	44
-summary	./src/Summary.hs	70
-summary	src/Summary.hs	70
-summaryAmount	./src/SummaryLine.hs	13
-summaryAmount	src/SummaryLine.hs	13
-summaryAverage	./src/SummaryLine.hs	14
-summaryAverage	src/SummaryLine.hs	14
+stringToField	./src/FieldToString.hs	13
+stringToField	src/FieldToString.hs	13
+summarizeTransactionsMonths	./src/Transaction.hs	74
+summarizeTransactionsMonths	src/Transaction.hs	74
+summary	./src/Summary.hs	67
+summary	src/Summary.hs	67
 summaryCategoriesFilePath	./src/Command.hs	15
 summaryCategoriesFilePath	src/Command.hs	15
 summaryCategory	./src/Command.hs	16
-summaryCategory	./src/SummaryLine.hs	12
 summaryCategory	src/Command.hs	16
-summaryCategory	src/SummaryLine.hs	12
-summaryLine	./src/Summary.hs	47
-summaryLine	src/Summary.hs	47
+summaryLineAmount	./src/SummaryLine.hs	9
+summaryLineAmount	src/SummaryLine.hs	9
+summaryLineAverage	./src/SummaryLine.hs	10
+summaryLineAverage	src/SummaryLine.hs	10
+summaryLineCategory	./src/SummaryLine.hs	8
+summaryLineCategory	src/SummaryLine.hs	8
 summaryLines	./src/Summary.hs	40
 summaryLines	src/Summary.hs	40
-summaryOrdering	./src/Sorting.hs	99
-summaryOrdering	src/Sorting.hs	99
+summaryOrdering	./src/Sorting.hs	96
+summaryOrdering	src/Sorting.hs	96
 summaryPeriod	./src/Command.hs	17
 summaryPeriod	src/Command.hs	17
 summarySortingCriteria	./src/Command.hs	18
 summarySortingCriteria	src/Command.hs	18
-summaryTitle	./src/Summary.hs	50
-summaryTitle	src/Summary.hs	50
+summaryTitle	./src/Summary.hs	47
+summaryTitle	src/Summary.hs	47
 summaryTransactionFilePath	./src/Command.hs	14
 summaryTransactionFilePath	src/Command.hs	14
-theDay	./src/Period.hs	68
+theDay	./src/Period.hs	67
 theDay	./test/TransactionsCsvSpec.hs	19
-theDay	src/Period.hs	68
+theDay	src/Period.hs	67
 theDay	test/TransactionsCsvSpec.hs	19
+toField	./src/Name.hs	21
+toField	./src/Note.hs	21
+toField	./src/Transaction.hs	158
+toField	./src/Transaction.hs	161
+toField	./src/Transaction.hs	164
+toField	./src/Transaction.hs	167
 toField	./src/TransactionsCsv.hs	127
 toField	./src/TransactionsCsv.hs	130
 toField	./src/TransactionsCsv.hs	133
 toField	./src/TransactionsCsv.hs	136
 toField	./src/TransactionsCsv.hs	139
 toField	./src/TransactionsCsv.hs	142
+toField	src/Name.hs	21
+toField	src/Note.hs	21
+toField	src/Transaction.hs	158
+toField	src/Transaction.hs	161
+toField	src/Transaction.hs	164
+toField	src/Transaction.hs	167
 toField	src/TransactionsCsv.hs	127
 toField	src/TransactionsCsv.hs	130
 toField	src/TransactionsCsv.hs	133
 toField	src/TransactionsCsv.hs	136
 toField	src/TransactionsCsv.hs	139
 toField	src/TransactionsCsv.hs	142
+toRecord	./src/Transaction.hs	148
 toRecord	./src/TransactionsCsv.hs	117
+toRecord	src/Transaction.hs	148
 toRecord	src/TransactionsCsv.hs	117
 topic	./src/Help.hs	16
 topic	./src/Help.hs	22
 topic	src/Help.hs	16
 topic	src/Help.hs	22
-total	./src/Amount.hs	47
-total	src/Amount.hs	47
+total	./src/Amount.hs	50
+total	src/Amount.hs	50
 totalLabel	./src/Detail.hs	49
 totalLabel	./src/Summary.hs	37
 totalLabel	src/Detail.hs	49
 totalLabel	src/Summary.hs	37
-totalTransactions	./src/Transaction.hs	38
-totalTransactions	src/Transaction.hs	38
-transactionAccount	./src/Transaction.hs	29
-transactionAccount	src/Transaction.hs	29
-transactionAmount	./src/Transaction.hs	34
-transactionAmount	src/Transaction.hs	34
-transactionCategory	./src/Transaction.hs	33
-transactionCategory	src/Transaction.hs	33
-transactionDate	./src/Transaction.hs	30
-transactionDate	src/Transaction.hs	30
-transactionIntersect	./src/Transaction.hs	67
-transactionIntersect	src/Transaction.hs	67
-transactionName	./src/Transaction.hs	32
-transactionName	src/Transaction.hs	32
-transactionNotes	./src/Transaction.hs	31
-transactionNotes	src/Transaction.hs	31
-transactionsPeriod	./src/Transaction.hs	48
-transactionsPeriod	src/Transaction.hs	48
-validateCriteria	./src/Sorting.hs	116
-validateCriteria	src/Sorting.hs	116
+totalTransactions	./src/Transaction.hs	68
+totalTransactions	src/Transaction.hs	68
+transactionAccount	./src/Transaction.hs	59
+transactionAccount	src/Transaction.hs	59
+transactionAmount	./src/Transaction.hs	64
+transactionAmount	src/Transaction.hs	64
+transactionCategory	./src/Transaction.hs	63
+transactionCategory	src/Transaction.hs	63
+transactionDate	./src/Transaction.hs	60
+transactionDate	src/Transaction.hs	60
+transactionIntersect	./src/Transaction.hs	100
+transactionIntersect	src/Transaction.hs	100
+transactionName	./src/Transaction.hs	62
+transactionName	src/Transaction.hs	62
+transactionNotes	./src/Transaction.hs	61
+transactionNotes	src/Transaction.hs	61
+transactionsPeriod	./src/Transaction.hs	81
+transactionsPeriod	src/Transaction.hs	81
+validateCriteria	./src/Sorting.hs	113
+validateCriteria	src/Sorting.hs	113
 with	./src/Command.hs	52
 with	src/Command.hs	52
-withCategoryIn	./src/Transaction.hs	71
-withCategoryIn	src/Transaction.hs	71
-within	./src/Period.hs	71
-within	src/Period.hs	71
-withinPeriod	./src/Transaction.hs	75
-withinPeriod	src/Transaction.hs	75
-wrongCriteriaMessage	./src/Sorting.hs	127
-wrongCriteriaMessage	src/Sorting.hs	127
+withCategoryIn	./src/Transaction.hs	104
+withCategoryIn	src/Transaction.hs	104
+within	./src/Period.hs	70
+within	src/Period.hs	70
+withinPeriod	./src/Transaction.hs	108
+withinPeriod	src/Transaction.hs	108
+wrongCriteriaMessage	./src/Sorting.hs	124
+wrongCriteriaMessage	src/Sorting.hs	124

@@ -3,10 +3,8 @@
 module Main where
 
 import Detail
-import Transaction ()
-import Category ()
-import CategoriesCsv
-import TransactionsCsv
+import Transaction 
+import Category 
 import Command
 import Summary
 import Sorting ()

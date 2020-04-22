@@ -5,7 +5,6 @@ module ImportFileName ( extractName
 import Message ( Message )
 
 import System.FilePath.Posix
-import System.FilePath
 import System.Directory
 import Data.Char
 import Control.Monad
@@ -16,6 +15,7 @@ extractName fp = case name fp of
                    "" -> Left $ "the file " ++ fp ++ " doesn't contain an account name"
                    n -> Right n
 
+name :: FilePath -> String
 name = filter (not . isDigit) . takeBaseName 
 
 importDirectory :: FilePath -> IO (Either Message [FilePath])

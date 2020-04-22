@@ -1,10 +1,17 @@
 module Transaction ( Transaction (..)
                    , checkNotEmpty
+                   , decodeTransactions
+                   , decodeTransactionsFromFile
+                   , encodeTransactions
+                   , encodeTransactionsToFile
                    , fromPeriod
-                   , transactionIntersect
+                   , retrieveTransactions
+                   , retrieveTransactionsFromMainFile
                    , sameTransaction
+                   , saveTransactions
                    , summarizeTransactionsMonths
                    , totalTransactions
+                   , transactionIntersect
                    , transactionsPeriod
                    , withCategoryIn
                    , withinPeriod
@@ -12,22 +19,43 @@ module Transaction ( Transaction (..)
     where
 
 import Message ( Message )
-import Data.Dates
-import Data.Time.Calendar (Day,diffGregorianDurationClip, fromGregorian, CalendarDiffDays(..))
-import Data.Time 
-import qualified Data.Time as Time
+import SummaryLine
 import Amount
 import Name
 import Note
+import Date
 import Account
 import Period
 import Category
-import Data.Ord
+-- import DecodeString
 import Data.List
 
+import Config      ( Config )
+import Data.Csv
+    ( FromRecord(parseRecord)
+    , (.!)
+    , HasHeader(NoHeader)
+    , EncodeOptions(..)
+    , defaultEncodeOptions
+    , decode
+    , encodeWith
+    , toRecord
+    , record
+    , ToRecord
+    , toField
+    )
+
+import CatchShowIO
+import System.Directory
+
+import Data.ByteString.Lazy (ByteString)
+import qualified Data.ByteString.Lazy as ByteString
+
+
+import qualified Data.Vector as Vector (toList) 
 
 data Transaction = Transaction { transactionAccount  :: Account
-                               , transactionDate     :: Day
+                               , transactionDate     :: Date
                                , transactionNotes    :: Maybe Note
                                , transactionName     :: Maybe Name
                                , transactionCategory :: Category
@@ -39,11 +67,14 @@ totalTransactions :: [Transaction] -> Amount
 totalTransactions = total . map transactionAmount
 
 averageTransactionsPerMonth :: Integer -> [Transaction] -> Amount
-averageTransactionsPerMonth months ts = (totalTransactions ts) `divideBy` months
+averageTransactionsPerMonth ms ts = (totalTransactions ts) `divideBy` ms
 
-summarizeTransactionsMonths :: Integer -> [Transaction] -> (Category, Amount, Amount)
-summarizeTransactionsMonths months ts = 
-    (transactionCategory (head ts), totalTransactions ts, averageTransactionsPerMonth months ts) 
+summarizeTransactionsMonths :: Integer -> [Transaction] -> SummaryLine
+summarizeTransactionsMonths ms ts = 
+    SummaryLine { summaryLineCategory = transactionCategory (head ts)
+                , summaryLineAmount   = totalTransactions ts
+                , summaryLineAverage  = averageTransactionsPerMonth ms ts
+                }
 
 transactionsPeriod :: [Transaction] -> Period
 transactionsPeriod ts = Period date1 date2
@@ -69,8 +100,86 @@ transactionIntersect  = intersectBy sameTransaction
 
 
 withCategoryIn :: Transaction -> [Category] -> Bool
-t `withCategoryIn` [] = True
+_ `withCategoryIn` [] = True
 t `withCategoryIn` cats = transactionCategory t `elem` cats
 
 withinPeriod :: Transaction -> Period -> Bool
 withinPeriod t p = (transactionDate t) `within` p
+
+
+instance FromRecord Transaction where
+    parseRecord v
+      | length v <  7  = fail (show v)
+      | otherwise = Transaction 
+                        <$> v .!  0
+                        <*> v .!  2
+                        <*> v .!  3
+                        <*> v .!  4
+                        <*> v .!  5
+                        <*> v .!  6
+
+instance ToRecord Transaction
+    where toRecord t = record [ toField (transactionAccount t)
+                              , toField ByteString.empty -- dummy empty field
+                              , toField (transactionDate t)
+                              , toField (transactionNotes t)
+                              , toField (transactionName t)
+                              , toField (transactionCategory t)
+                              , toField (transactionAmount t)
+                              ]
+
+                    
+decodeTransactions 
+    :: ByteString 
+    -> Either Message [Transaction]
+decodeTransactions = fmap Vector.toList . decode NoHeader
+
+encodeTransactions
+    :: [Transaction]
+    ->  ByteString
+encodeTransactions = encodeWith defaultEncodeOptions { encUseCrLf = False }
+
+decodeTransactionsFromFile 
+    :: FilePath 
+    -> IO (Either Message [Transaction])
+decodeTransactionsFromFile filePath = 
+    catchShowIO (ByteString.readFile filePath)
+    >>= return . either Left decodeTransactions
+
+encodeTransactionsToFile
+    :: [Transaction]
+    -> FilePath
+    -> IO (Either Message ())
+encodeTransactionsToFile ts filePath =
+    catchShowIO (ByteString.writeFile filePath (encodeTransactions ts))
+
+retrieveTransactions 
+    :: Config
+    -> Maybe FilePath
+    -> IO (Either Message [Transaction])
+retrieveTransactions cfg fp = maybe (retrieveTransactionsFromMainFile cfg) decodeTransactionsFromFile fp
+
+retrieveTransactionsFromMainFile
+    :: Config
+    -> IO (Either Message [Transaction])
+retrieveTransactionsFromMainFile cfg = do
+    home <- getHomeDirectory
+    transactions <- maybe 
+        (fail ("error: TRANSACTION file path not found in " ++ home ++ "/.budget_conf")) 
+        decodeTransactionsFromFile 
+        (lookup "TRANSACTIONS" cfg) 
+    return transactions 
+
+saveTransactions 
+    :: Config
+    -> [Transaction]
+    -> IO (Either Message ())
+saveTransactions cfg transactions = do
+    home <- getHomeDirectory
+    result <- maybe 
+        (fail ("error: TRANSACTION file path not found in " ++ home ++ "/.budget_conf")) 
+        (encodeTransactionsToFile transactions) 
+        (lookup "TRANSACTIONS" cfg) 
+    return result
+        
+

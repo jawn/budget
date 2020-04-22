@@ -6,7 +6,6 @@ module CategoriesCsvSpec
 import Test.Hspec
 
 import Category
-import CategoriesCsv
 
 import qualified Data.ByteString.Lazy as ByteString
 

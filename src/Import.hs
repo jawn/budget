@@ -6,12 +6,9 @@ import Transaction
 import Account
 import Amount
 import Name
-import Data.Time
-import ExitWithMsg
-import Config
-import TransactionsCsv
+import Date
 
-type Attributes = (Day, Maybe Name, Amount)
+type Attributes = (Date, Maybe Name, Amount)
 
 
 importTransactions :: String -> [Transaction] -> [Transaction] -> Either Message [Transaction]

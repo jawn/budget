@@ -9,16 +9,12 @@ module Sorting ( SortingCriteria
     where
 
 import Message
-import Amount
-import Category
-import Account
 import Transaction
 import SummaryLine
 
-import Period
-import Data.Ord
 import Data.List
 import Data.Either
+import Data.Ord
 
 type SortingCriteria = [SortCriterion]
 data Direction = Asc | Desc
@@ -96,10 +92,11 @@ summaryOrdering
     -> SummaryLine
     -> SummaryLine
     -> Ordering
-summaryOrdering CategoryAsc  = comparing summaryCategory
-summaryOrdering AmountAsc    = comparing summaryAmount
-summaryOrdering CategoryDesc = flip $ comparing summaryCategory
-summaryOrdering AmountDesc   = flip $ comparing summaryAmount
+summaryOrdering CategoryAsc  = comparing summaryLineCategory
+summaryOrdering AmountAsc    = comparing summaryLineAmount
+summaryOrdering CategoryDesc = flip $ comparing summaryLineCategory
+summaryOrdering AmountDesc   = flip $ comparing summaryLineAmount
+summaryOrdering _            = summaryOrdering CategoryAsc 
 
 
 detailOrderings :: Transaction -> Transaction -> SortingCriteria -> Ordering
@@ -121,7 +118,7 @@ validateCriteria DetailSortingCriteria s =
     (readCriteria DetailSortingCriteria s)
 
 validateCriteria SummarySortingCriteria s = case readCriteria SummarySortingCriteria s of
-                                              Left s -> Left (wrongCriteriaMessage SummarySortingCriteria s)
+                                              Left msg -> Left (wrongCriteriaMessage SummarySortingCriteria msg)
                                               Right criteria -> Right criteria
 
 wrongCriteriaMessage :: CommandCriteria -> String -> String
