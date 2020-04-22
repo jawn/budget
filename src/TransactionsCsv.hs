@@ -170,28 +170,30 @@ retrieveTransactions
     :: Config
     -> Maybe FilePath
     -> IO (Either Message [Transaction])
-retrieveTransactions cfg Nothing = do
-    home <- getHomeDirectory
-    let fp = maybeToEither ("error: TRANSACTION file path not found in " ++ home ++ "/.budget_conf") (lookup "TRANSACTIONS" cfg) 
-    either (return . Left) (retrieveTransactions cfg . Just) fp
+retrieveTransactions cfg fp = maybe (retrieveTransactionsFromMainFile cfg) decodeTransactionsFromFile fp
 
-retrieveTransactions cfg (Just fp) = do
-    decodeTransactionsFromFile fp
+retrieveTransactionsFromMainFile
+    :: Config
+    -> IO (Either Message [Transaction])
+retrieveTransactionsFromMainFile cfg = do
+    home <- getHomeDirectory
+    transactions <- maybe 
+        (fail ("error: TRANSACTION file path not found in " ++ home ++ "/.budget_conf")) 
+        decodeTransactionsFromFile 
+        (lookup "TRANSACTIONS" cfg) 
+    return transactions 
 
 saveTransactions 
     :: Config
     -> [Transaction]
-    -> IO ()
-saveTransactions cfg ts = do
+    -> IO (Either Message ())
+saveTransactions cfg transactions = do
     home <- getHomeDirectory
-    let fp = maybeToEither ("error: TRANSACTION file path not found in " ++ home ++ "/.budget_conf") (lookup "TRANSACTIONS" cfg) 
-    case fp of
-      Left msg -> exitWithMsg msg
-      Right filePath -> do
-          result <- encodeTransactionsToFile ts filePath
-          case result of
-            Left msg -> exitWithMsg msg
-            Right _ -> return ()
+    result <- maybe 
+        (fail ("error: TRANSACTION file path not found in " ++ home ++ "/.budget_conf")) 
+        (encodeTransactionsToFile transactions) 
+        (lookup "TRANSACTIONS" cfg) 
+    return result
         
 
 canonical :: String -> FilePath -> FilePath

@@ -1,8 +1,7 @@
-module Category ( Category (..)
-                , CategorySelector )
+module Category ( Category (..) )
     where
 
 data Category = Category { categoryName :: String }
     deriving (Eq, Show, Ord)
 
-type CategorySelector = (Category -> Bool)
+

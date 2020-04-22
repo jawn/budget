@@ -36,6 +36,11 @@ spec = do
             transactionName t  `shouldBe` Just (Name "a name")
             transactionNotes t `shouldBe` Just (Note "some notes")
 
+        it "can be within a period" $ do
+            let t = Transaction (Account "MyBank") (mkDate 2020 4 5) (Just $ Note "some notes") (Just $ Name "a name") (Category "Groceries") (amount 48.07)
+            t `withinPeriod` (Period (theDay 2020 1 1) (theDay 2020 4 30)) `shouldBe` True
+            t `withinPeriod` (Period (theDay 2021 1 1) (theDay 2021 4 30)) `shouldBe` False
+
     describe "a list of Transactions" $ do
         it "can be totaled" $ do
             let ts = [ simplified 2020 4 5 "Training" 48.07 
@@ -69,6 +74,7 @@ spec = do
             checkNotEmpty ts `shouldBe` Right ts
             checkNotEmpty [] `shouldBe` Left "no transaction" 
 
+    
     describe "transactionIntersect" $ do
         it "tells the transactions that are common date, name and amount in two transaction lists" $ do
             let t1 = Transaction { transactionAccount = Account "MyBank"

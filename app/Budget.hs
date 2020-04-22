@@ -43,15 +43,15 @@ processCommand _ (Help arg) = help arg
 
 processCommand config (Detail filePath ca_filePath category period criteria) = do 
     transactions <- retrieveTransactions config filePath 
-    selector     <- importCategorySelector ca_filePath
-    let report = (detail filePath ca_filePath category period criteria) <$> selector <*> transactions
+    categories     <- maybe (pure (Right [])) decodeCategoriesFromFile ca_filePath
+    let report = (detail filePath ca_filePath category period criteria) <$> categories <*> transactions
     either exitWithMsg (putStr . unlines) report
     exitSuccess
 
-processCommand config (Summary tr_filePath ca_filePath period criteria) = do
+processCommand config (Summary tr_filePath ca_filePath category period criteria) = do
     transactions <- retrieveTransactions config tr_filePath 
-    selector     <- importCategorySelector ca_filePath
-    let report = (summary tr_filePath ca_filePath period criteria) <$> selector <*> transactions
+    categories     <- maybe (pure (Right [])) decodeCategoriesFromFile ca_filePath
+    let report = (summary tr_filePath ca_filePath category period criteria) <$> categories <*> transactions
     either exitWithMsg (putStr . unlines) report
     exitSuccess
 
@@ -63,7 +63,7 @@ processCommand config (Import im_filePath (Just account)) = do
     case result_trans of
       Left msg -> putStrLn msg
       Right tr -> do
-            saveTransactions config tr
+            _ <- saveTransactions config tr
             either putStrLn (\n-> putStrLn $ (show n) ++ " transactions imported") result_length
 
 processCommand config (Import im_filePath Nothing) = do

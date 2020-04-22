@@ -12,41 +12,51 @@ spec = do
         describe "No command given" $ do
             it "means summary" $ do
                 let args = words ""
-                command args `shouldBe` Right (Summary Nothing Nothing Nothing []) 
+                command args `shouldBe` Right (Summary Nothing Nothing Nothing Nothing []) 
         describe "Summary" $ do
             it "recognize the summary command with a transaction file" $ do
                 let args = words "summary -t foo.csv"
                 command args `shouldBe` 
-                    Right (Summary (Just "foo.csv") Nothing Nothing [])
+                    Right (Summary (Just "foo.csv") Nothing Nothing Nothing [])
 
             it "recognize the summary command with any transaction file" $ do
                 let args = words "summary -t bar.csv"
                 command args `shouldBe` 
-                    Right (Summary (Just "bar.csv") Nothing Nothing [])
+                    Right (Summary (Just "bar.csv") Nothing Nothing Nothing [])
 
             it "recognize the summary command with a transaction file and a category file" $ do
                 let args = words "summary -t bar.csv -c foo.csv"
                 command args `shouldBe` 
-                    Right (Summary (Just "bar.csv") (Just "foo.csv") Nothing [])
+                    Right (Summary (Just "bar.csv") (Just "foo.csv") Nothing Nothing [])
+
+            it "recognize the summary command with a category argument" $ do
+                let args = words "summary -c Groceries"
+                command args `shouldBe` 
+                    Right (Summary Nothing Nothing (Just (Category "Groceries")) Nothing [])
 
             it "recognize the summary command with a only category file" $ do
                 let args = words "summary -c bar.csv"
                 command args `shouldBe` 
-                    Right (Summary Nothing (Just "bar.csv") Nothing [])
+                    Right (Summary Nothing (Just "bar.csv") Nothing Nothing [])
+
+            it "recognize the summary command with a category named argument" $ do
+                let args = words "summary category Groceries"
+                command args `shouldBe` 
+                    Right (Summary Nothing Nothing (Just (Category "Groceries")) Nothing [])
 
             it "recognize the summary command with no arguments" $ do
                 let args = words "summary" 
                 command args `shouldBe` 
-                    Right (Summary Nothing Nothing Nothing [])
+                    Right (Summary Nothing Nothing Nothing Nothing [])
 
             it "recognize the summary command sorting options" $ do
                 let args1 = words "summary -s M" 
                 command args1 `shouldBe` 
-                    Right (Summary Nothing Nothing Nothing [AmountAsc])
+                    Right (Summary Nothing Nothing Nothing Nothing [AmountAsc])
 
                 let args2 = words "summary -s c" 
                 command args2 `shouldBe` 
-                    Right (Summary Nothing Nothing Nothing [CategoryDesc])
+                    Right (Summary Nothing Nothing Nothing Nothing [CategoryDesc])
             it "doesn't recognize the summary command with a wrong sorting criteria argument" $ do
                 let args = words "summary -s f"
                 command args `shouldBe` 
@@ -58,32 +68,32 @@ spec = do
             it "recognize the summary command with named options" $ do
                 let args = words "summary transactions bar.csv categories foo.csv sortby M"
                 command args `shouldBe` 
-                    Right (Summary (Just "bar.csv") (Just "foo.csv") Nothing [AmountAsc])
+                    Right (Summary (Just "bar.csv") (Just "foo.csv") Nothing Nothing [AmountAsc])
 
             it "recognize the summary command with a period option" $ do
                 let args = words "summary -p 01/01/2020 12/31/2020"
                 command args `shouldBe` 
-                    Right (Summary Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
+                    Right (Summary Nothing Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
                 
             it "recognize the summary command with a period named option" $ do
                 let args = words "summary period 01/01/2020 12/31/2020"
                 command args `shouldBe` 
-                    Right (Summary Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
+                    Right (Summary Nothing Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
 
             it "recognize the summary command with a month option" $ do
                 let args = words "summary -m 2020 03"
                 command args `shouldBe` 
-                    Right (Summary Nothing Nothing (Just (Period (theDay 2020 03 01) (theDay 2020 03 31))) [])
+                    Right (Summary Nothing Nothing Nothing (Just (Period (theDay 2020 03 01) (theDay 2020 03 31))) [])
                 
             it "recognize the summary command with a month named option" $ do
                 let args = words "summary month 2020 03"
                 command args `shouldBe` 
-                    Right (Summary Nothing Nothing (Just (Period (theDay 2020 03 01) (theDay 2020 03 31))) [])
+                    Right (Summary Nothing Nothing Nothing (Just (Period (theDay 2020 03 01) (theDay 2020 03 31))) [])
 
             it "recognize the summary command with a year option" $ do
                 let args = words "summary -y 2020"
                 command args `shouldBe` 
-                    Right (Summary Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
+                    Right (Summary Nothing Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
             it "doesn't recognize the summary command with a wrong year option" $ do
                 let args = words "summary -y foo"
                 command args `shouldBe` 
@@ -91,7 +101,7 @@ spec = do
             it "recognize the summary command with a named year option" $ do
                 let args = words "summary year 2020"
                 command args `shouldBe` 
-                    Right (Summary Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
+                    Right (Summary Nothing Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
         describe "Detail" $ do
             it "recognize the detail command with no arguments" $ do
                 let args = words "detail"
@@ -199,15 +209,15 @@ spec = do
         it "recognize the command in uppercase or lowercase" $ do
             let args = words "SUmmary -t foo.csv" 
             command args `shouldBe` 
-                Right (Summary (Just "foo.csv") Nothing Nothing [])
+                Right (Summary (Just "foo.csv") Nothing Nothing Nothing [])
 
         it "recognize a prefix of the command" $ do
             let args1 = words "SU -t foo.csv" 
             command args1 `shouldBe` 
-                Right (Summary (Just "foo.csv") Nothing Nothing [])
+                Right (Summary (Just "foo.csv") Nothing Nothing Nothing [])
             let args2 = words "sum -t foo.csv" 
             command args2 `shouldBe` 
-                Right (Summary (Just "foo.csv") Nothing Nothing [])
+                Right (Summary (Just "foo.csv") Nothing Nothing Nothing [])
 
         it "doesn't recognize a unknown command" $ do
             let args = words "foo bar.csv" 

@@ -13,6 +13,7 @@ import Data.Char (toLower)
 data Command 
     = Summary { summaryTransactionFilePath :: Maybe FilePath
               , summaryCategoriesFilePath  :: Maybe FilePath
+              , summaryCategory            :: Maybe Category
               , summaryPeriod              :: Maybe Period
               , summarySortingCriteria     :: SortingCriteria
               }
@@ -30,9 +31,9 @@ data Command
 command 
     :: [String]
     -> Either Message Command
-command [] = Right (Summary Nothing Nothing Nothing [])
+command [] = command ["summary"]
 command (cmd:args) 
-  | cmd `equals` "summary" = (Summary Nothing Nothing Nothing []) `with` args
+  | cmd `equals` "summary" = (Summary Nothing Nothing Nothing Nothing []) `with` args
   | cmd `equals` "detail"  = (Detail Nothing Nothing Nothing Nothing [])  `with` args
   | cmd `equals` "import" && length args == 2 = Right (Import (args!!0) (Just (args!!1)))
   | cmd `equals` "import" && length args == 1 = Right (Import (args!!0) Nothing)
@@ -52,23 +53,33 @@ with :: Command -> [String] -> Either Message Command
 
 cmd `with` [] = Right cmd
 
-cmd@( Summary _ _ _ _) `with` ("-t":arg:args)  = 
+cmd@( Summary _ _ _ _ _) `with` ("-t":arg:args)  = 
     cmd { summaryTransactionFilePath = Just arg } `with` args
 
-cmd@( Summary _ _ _ _) `with` ("-c":arg:args)  = 
-    cmd { summaryCategoriesFilePath  = Just arg } `with` args 
+cmd@(Summary _ _ _ _ _) `with` ("-c":arg:args) = 
+    addDetailCategory cmd arg
+    -- cmd { detailCategory = Just (Category arg) } `with` args
+    where 
+        addDetailCategory :: Command -> String -> Either Message Command
+        addDetailCategory cmd arg | isCSVFile arg    = cmd { summaryCategoriesFilePath = Just arg } `with` args
+        addDetailCategory cmd name = cmd { summaryCategory = Just (Category name) } `with` args
 
-cmd@( Summary _ _ _ _) `with` ("-p":arg1:arg2:args)  = 
+        isCSVFile :: String -> Bool
+        isCSVFile s = (map toLower (takeExtension s)) == ".csv" 
+
+cmd@( Summary _ _ _ _ _) `with` ("-p":arg1:arg2:args)  = 
     (\p -> cmd { summaryPeriod = Just p }) <$> periodFromStrings arg1 arg2 >>= (`with` args)
 
-cmd@( Summary _ _ _ _) `with` ("-m":arg1:arg2:args)  = 
+cmd@( Summary _ _ _ _ _) `with` ("-m":arg1:arg2:args)  = 
     (\p -> cmd { summaryPeriod = Just p }) <$> periodFromMonthString arg1 arg2 >>= (`with`args)
 
-cmd@( Summary _ _ _ _) `with` ("-y":arg:args)  = 
+cmd@( Summary _ _ _ _ _) `with` ("-y":arg:args)  = 
     (\p -> cmd { summaryPeriod = Just p }) <$> periodFromYearString arg >>= (`with`args)
 
-cmd@( Summary _ _ _ _) `with` ("-s":arg:args) = 
+cmd@( Summary _ _ _ _ _) `with` ("-s":arg:args) = 
     (\c -> cmd { summarySortingCriteria = c }) <$> validateCriteria SummarySortingCriteria arg >>= (`with`args)
+
+cmd@(Summary _ _ _ _ _) `with` (opt:arg:args) | opt `equals` "category" = cmd `with` ("-c":arg:args)  
 
 cmd@(Detail _ _ _ _ _) `with` (opt:arg:args) | opt `equals` "category" = cmd `with` ("-c":arg:args)  
 

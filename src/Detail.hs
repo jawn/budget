@@ -3,7 +3,7 @@ module Detail
 
 import Account     ( Account (..) )
 import Amount      ( Amount (..) )
-import Category    ( Category (..), CategorySelector )
+import Category    ( Category (..) )
 import ExitWithMsg ( exitWithMsg )
 import Message     ( Message )
 import Period      ( Period
@@ -12,7 +12,10 @@ import Sorting     ( SortingCriteria
                    , sortWithCriteria )
 import Transaction ( Transaction (..) 
                    , totalTransactions
-                   , transactionsPeriod )
+                   , transactionsPeriod
+                   , withCategoryIn
+                   , withinPeriod
+                   )
 
 import Data.List   ( intercalate )
 import Data.Maybe  ( catMaybes )
@@ -22,22 +25,16 @@ import Data.Time   ( Day
                    , formatTime
                    )
 
-maybeFilter :: Maybe (Transaction -> Bool) -> [Transaction] -> [Transaction]
-maybeFilter Nothing tr = tr
-maybeFilter (Just p) tr  = filter p tr
-
 detailLines 
-    :: Maybe Category
-    -> Maybe Period
+    :: Maybe Period
     -> SortingCriteria
-    -> CategorySelector
+    -> [Category]
     -> [Transaction]
     -> [Transaction]
-detailLines cat per sct sel = 
+detailLines per sct sel = 
     (sortWithCriteria sct)
-        . maybeFilter (fmap (\c -> \t -> ((transactionCategory t)== c)) cat)
-        . maybeFilter (fmap (\p -> \t -> ((transactionDate t) `within` p)) per)
-        . maybeFilter (fmap (\s -> \t -> (s (transactionCategory t))) (pure sel))
+        . maybe id (\p -> filter (`withinPeriod` p)) per
+        . filter (`withCategoryIn` sel) 
         
 
 prettyLine :: Transaction -> String
@@ -91,11 +88,12 @@ detail
     -> Maybe Category
     -> Maybe Period
     -> SortingCriteria
-    -> CategorySelector
+    -> [Category]
     -> [Transaction]
     -> [String]
 detail tfp cfp cat per sct sel trs = 
-        let selection = detailLines cat per sct sel trs
+        let categories = maybe sel pure cat
+            selection = detailLines per sct categories trs
         in [ detailTitle tfp cfp cat per ]
         ++ (map prettyLine selection)
         ++ (footer tfp selection)

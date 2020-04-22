@@ -6,6 +6,8 @@ module Transaction ( Transaction (..)
                    , summarizeTransactionsMonths
                    , totalTransactions
                    , transactionsPeriod
+                   , withCategoryIn
+                   , withinPeriod
     )
     where
 
@@ -64,3 +66,11 @@ sameTransaction t1 t2 = transactionDate t1 == transactionDate t2
 
 transactionIntersect :: [Transaction] -> [Transaction] -> [Transaction]
 transactionIntersect  = intersectBy sameTransaction
+
+
+withCategoryIn :: Transaction -> [Category] -> Bool
+t `withCategoryIn` [] = True
+t `withCategoryIn` cats = transactionCategory t `elem` cats
+
+withinPeriod :: Transaction -> Period -> Bool
+withinPeriod t p = (transactionDate t) `within` p

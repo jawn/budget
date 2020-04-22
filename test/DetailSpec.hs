@@ -57,23 +57,25 @@ spec = do
                  ]
     describe "detail lines" $ do
         it "filter the transactions" $ do
-            detailLines Nothing Nothing [] (const True) [t1,t2] `shouldBe` [t1,t2]
+            detailLines Nothing [] [] [t1,t2] `shouldBe` [t1,t2]
 
         it "for a given category" $ do
             let c = Category "Devices and other house utilities"
-            detailLines (Just c) Nothing [] (const True) [t1,t2] `shouldBe` [t2]
+            detailLines Nothing [] [c] [t1,t2] `shouldBe` [t2]
 
-        it "for a given category selector" $ do
-            let s = \c -> length (categoryName c) < 20
-            detailLines Nothing Nothing [] s [t1,t2] `shouldBe` [t1]
+        it "for a given category selection" $ do
+            let sel = [ Category "Groceries"
+                      , Category "Credit Card Payments"
+                      ]
+            detailLines Nothing [] sel [t1,t2] `shouldBe` [t1]
                  
         it "for a given period" $ do
             let p = Period (theDay 2020 1 1) (theDay 2020 5 1)
-            detailLines Nothing (Just p) [] (const True) [t1,t2] `shouldBe` [t2]
+            detailLines (Just p) [] [] [t1,t2] `shouldBe` [t2]
 
         it "in a an order given by sort criteria" $ do
             let sc = [AmountAsc]
-            detailLines Nothing Nothing sc (const True) [t1,t2] `shouldBe` [t2,t1]
+            detailLines Nothing sc [] [t1,t2] `shouldBe` [t2,t1]
 
     describe "title" $ do
         it "show a header for the detail report for all transactions" $ do
@@ -103,7 +105,7 @@ spec = do
                    (Just (Category "Groceries"))
                    (Just (Period (theDay 2020 1 1) (theDay 2020 12 31))) 
                    []
-                   (const True)
+                   []
                    [t1,t2] `shouldBeOutput` 
                            ["Transactions from file: foo.csv with categories from the file: bar.csv with category: Groceries from 01/01/2020 to 12/31/2020"
                            , "MyBank 06/01/2020 some notes Joe's shop Groceries | -48.07"
