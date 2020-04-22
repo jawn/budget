@@ -1,4 +1,5 @@
-module Summary ( summaryLines
+module Summary ( summary
+               , summaryLines
                , summaryTitle
                )
     where
@@ -21,9 +22,8 @@ import qualified Data.Time as Time
 import Same
 
 type NbMonths = Integer
--- swap summary and summaryLines, call summary from Budget
-summary :: NbMonths -> [Transaction] -> SortingCriteria -> [String]
-summary nbMonths ts criteria = 
+categoryTotals :: NbMonths -> [Transaction] -> SortingCriteria -> [String]
+categoryTotals nbMonths ts criteria = 
         (map (\(c,a,m) -> summaryLine c a m) 
         . sortWith criteria
         . map (summarizeTransactionsMonths nbMonths)
@@ -34,16 +34,14 @@ sortWith :: SortingCriteria -> [SummaryLine] ->  [SummaryLine]
 sortWith [] = id
 sortWith [criterion] = sortBy $ summaryOrdering criterion
 
-summaryForPeriod :: Period -> SortingCriteria -> [Transaction] -> [String]
-summaryForPeriod p criteria ts = summary (Period.months p) ts criteria ++ [totalLabel p (totalTransactions ts)]
-
 totalLabel :: Period -> Amount -> String
 totalLabel p a = printf "%-49s:%10s |%10s" ("TOTAL "++ (show p)) (show a) (show (a `divideBy` (Period.months p))) 
 
 summaryLines :: (Maybe Period) -> SortingCriteria -> (Category -> Bool) -> [Transaction] -> [String]
-summaryLines p criteria isValid ts = summaryForPeriod period criteria (selection ts)
+summaryLines p criteria isValid tr = categoryTotals (Period.months period) ts criteria ++ [totalLabel period (totalTransactions ts)]
     where
-        period = maybe (transactionsPeriod ts) id p
+        ts = selection tr
+        period = maybe (transactionsPeriod tr) id p
         selection = filter ((`within` period) . transactionDate) . filter (isValid . transactionCategory) 
 
 summaryLine :: Category -> Amount -> Amount -> String
@@ -59,23 +57,17 @@ summaryTitle tra_fp cat_fp per = "Summary " ++ title tra_fp cat_fp per
         , show p
         ]
 
--- printSummary
---     :: Maybe FilePath
---     -> Maybe FilePath
---     -> Maybe Period
---     -> SortingCriteria
---     -> Either Message (Category -> Bool)
---     -> Either Message [Transaction]
---     -> IO ()
--- printSummary transactionFilePath categoryFilePath period criteria selector transactions = do
---     either exitWithMsg processSummary (transactions >>= checkNotEmpty)
---         where
---             processSummary :: [Transaction] -> IO ()
---             processSummary transactions = do
---                 let summary = case categoryFilePath of
---                             Nothing -> summaryLines (const True)
---                             Just _ -> case selector of
---                                         Right f -> summaryLines f 
---                                         Left msg -> error $ printf "while importing categories: %s" msg
---                 putStrLn (summaryTitle transactionFilePath categoryFilePath (maybe (transactionsPeriod transactions) id period))
---                 putStrLn (unlines (summary period criteria transactions))
+summary
+    :: Maybe FilePath
+    -> Maybe FilePath
+    -> Maybe Period
+    -> SortingCriteria
+    -> CategorySelector
+    -> [Transaction]
+    -> [String]
+summary tr_fp ca_fp per sct sel tr = 
+    [ summaryTitle tr_fp ca_fp period ] 
+    ++ summaryLines per sct sel tr
+        where
+            period = maybe (transactionsPeriod tr) id per
+

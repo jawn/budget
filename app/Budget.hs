@@ -8,6 +8,7 @@ import Category ()
 import CategoriesCsv
 import TransactionsCsv
 import Command
+import Summary
 import Sorting ()
 import Import
 import ImportFileName
@@ -50,7 +51,7 @@ processCommand config (Detail filePath ca_filePath category period criteria) = d
 processCommand config (Summary tr_filePath ca_filePath period criteria) = do
     transactions <- retrieveTransactions config tr_filePath 
     selector     <- importCategorySelector ca_filePath
-    let report = (summary ts_filepath period criteria) <$> selector <*> transactions
+    let report = (summary tr_filePath ca_filePath period criteria) <$> selector <*> transactions
     either exitWithMsg (putStr . unlines) report
     exitSuccess
 
