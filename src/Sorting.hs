@@ -42,7 +42,7 @@ data CommandCriteria = DetailSortingCriteria
 readCriteria 
     :: CommandCriteria 
     -> String 
-    ->  Either Message [SortCriterion]
+    ->  Either Message SortingCriteria
 readCriteria SummarySortingCriteria s 
     | length s > 1 = Left $ "too many criteria: " ++ s
 readCriteria cmd s =

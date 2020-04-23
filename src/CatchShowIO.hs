@@ -15,5 +15,4 @@ catchShowIO action =
             handleIOException 
                 :: IOException
                 -> IO (Either Message a)
-            handleIOException =
-                return . Left . show
+            handleIOException = return . Left . show

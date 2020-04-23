@@ -1,22 +1,22 @@
-module ImportFileName ( extractName 
+module ImportFileName ( extractAccountNamePart 
                       , importDirectory )
     where
 
 import Message ( Message )
 
-import System.FilePath.Posix
-import System.Directory
 import Data.Char
-import Control.Monad
+import System.Directory
+import System.FilePath.Posix
 import Data.List
+import Control.Monad
 
-extractName :: FilePath -> Either Message String
-extractName fp = case name fp of
+extractAccountNamePart :: FilePath -> Either Message String
+extractAccountNamePart fp = case accountNamePart fp of
                    "" -> Left $ "the file " ++ fp ++ " doesn't contain an account name"
                    n -> Right n
 
-name :: FilePath -> String
-name = filter (not . isDigit) . takeBaseName 
+accountNamePart :: FilePath -> String
+accountNamePart = filter (not . isDigit) . takeBaseName 
 
 importDirectory :: FilePath -> IO (Either Message [FilePath])
 importDirectory fp = do

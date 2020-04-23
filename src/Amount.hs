@@ -40,7 +40,7 @@ instance Read Amount
 instance Num Amount
     where
         (+) (Amount n) (Amount m) = Amount (n+m)
-        (*) (Amount n) (Amount m) = Amount (n*m)
+        (*) (Amount n) (Amount m) = Amount ((n*m) `div` 100)
         abs (Amount n) = Amount (abs n)
         signum (Amount n) = Amount (signum n)
         negate (Amount n) = Amount (negate n)

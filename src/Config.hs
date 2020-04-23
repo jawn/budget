@@ -2,9 +2,10 @@
 module Config
     where
 
-import Message (Message)
-import qualified Data.Text as Text (Text, toUpper, splitOn, strip, pack, unpack)
 import CatchShowIO
+import Message (Message)
+
+import qualified Data.Text as Text (Text, toUpper, splitOn, strip, pack, unpack)
 
 type Config = [(String, String)]
 
@@ -17,7 +18,7 @@ fromString = sequence . map toKeyValuePair . lines
         toKeyValuePair :: String -> Either Message (String,String)
         toKeyValuePair s = 
             case Text.splitOn ":" (Text.pack s) of
-              [key,pair] -> Right (strip (Text.toUpper key),strip pair)
+              [key,value] -> Right (strip (Text.toUpper key),strip value)
               _ ->          Left $  "error while reading config file: not a key/value pair: " ++ s
         strip :: Text.Text -> String
         strip = Text.unpack . Text.strip

@@ -2,19 +2,19 @@
 
 module Main where
 
-import Detail
-import Transaction 
 import Category 
 import Command
-import Summary
-import Sorting ()
-import Import
-import ImportFileName
-import qualified Config as Config
+import Config
+import Detail
 import ExitWithMsg
 import Help
-import System.Environment
+import Import
+import ImportFileName
+import Summary
+import Transaction 
+
 import System.Directory
+import System.Environment
 import System.Exit
 import Control.Monad
 
@@ -67,7 +67,7 @@ processCommand config (Import im_filePath (Just account)) = do
 processCommand config (Import im_filePath Nothing) = do
     isDirectory <- doesDirectoryExist im_filePath 
     case isDirectory of
-      False -> either exitWithMsg (\name -> processCommand config (Import im_filePath (Just name))) (extractName im_filePath)
+      False -> either exitWithMsg (\name -> processCommand config (Import im_filePath (Just name))) (extractAccountNamePart im_filePath)
       True -> do 
 
        directory <- importDirectory im_filePath  

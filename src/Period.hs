@@ -11,11 +11,12 @@ module Period ( Period (..)
               )
     where
 
+import Date
 import Message ( Message )
+
+import Text.Printf
 import Data.Time ( defaultTimeLocale , parseTimeM)
 import Data.Time.Calendar (Day,diffGregorianDurationClip, gregorianMonthLength, CalendarDiffDays(..))
-import Text.Printf
-import Date
 
 data Period = Period Date Date
     deriving (Eq)

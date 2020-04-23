@@ -1,12 +1,13 @@
 module Command
     where   
 
-import Message ( Message )
-import Data.Char
 import Category
+import Message ( Message )
 import Period
 import Same
 import Sorting
+
+import Data.Char
 import System.FilePath.Posix (takeExtension)
 
 data Command 
@@ -45,10 +46,12 @@ lowerCase :: String -> String
 lowerCase = map toLower 
 
 equals :: String -> String -> Bool
-s `equals` t = same (lowerCase . take l) s t 
-    where l = length s
+s `equals` t = same (lowerCase . take (length s)) s t 
 
-with :: Command -> [String] -> Either Message Command
+with 
+    :: Command 
+    -> [String] 
+    -> Either Message Command
 
 cmd `with` [] = Right cmd
 
@@ -56,14 +59,11 @@ cmd@( Summary _ _ _ _ _) `with` ("-t":arg:args)  =
     cmd { summaryTransactionFilePath = Just arg } `with` args
 
 cmd@(Summary _ _ _ _ _) `with` ("-c":arg:args) = 
-    addDetailCategory cmd arg
+    cmd `withCategoryOption` arg `with` args
     where 
-        addDetailCategory :: Command -> String -> Either Message Command
-        addDetailCategory c arg1 | isCSVFile arg1    = c { summaryCategoriesFilePath = Just arg1 } `with` args
-        addDetailCategory c name = c { summaryCategory = Just (Category name) } `with` args
-
-        isCSVFile :: String -> Bool
-        isCSVFile s = (map toLower (takeExtension s)) == ".csv" 
+        withCategoryOption :: Command -> String -> Command
+        c `withCategoryOption` name | isCSVFile name = c { summaryCategoriesFilePath = Just name  } 
+                                    | otherwise      = c { summaryCategory = Just (Category name) } 
 
 cmd@( Summary _ _ _ _ _) `with` ("-p":arg1:arg2:args)  = 
     (\p -> cmd { summaryPeriod = Just p }) <$> periodFromStrings arg1 arg2 >>= (`with` args)
@@ -92,15 +92,11 @@ cmd@(Detail _ _ _ _ _) `with` ("-t":arg:args) =
     cmd { detailTransactionFilePath = Just arg } `with` args
 
 cmd@(Detail _ _ _ _ _) `with` ("-c":arg:args) = 
-    addDetailCategory cmd arg
-    -- cmd { detailCategory = Just (Category arg) } `with` args
+    cmd `withCategoryOption` arg `with` args
     where 
-        addDetailCategory :: Command -> String -> Either Message Command
-        addDetailCategory c arg1 | isCSVFile arg1    = c { detailCategoriesFilePath = Just arg1 } `with` args
-        addDetailCategory c name = c { detailCategory = Just (Category name) } `with` args
-
-        isCSVFile :: String -> Bool
-        isCSVFile s = (map toLower (takeExtension s)) == ".csv" 
+        withCategoryOption :: Command -> String -> Command
+        c `withCategoryOption` name | isCSVFile name = c { detailCategoriesFilePath = Just name  } 
+                                    | otherwise      = c { detailCategory = Just (Category name) } 
 
 cmd@(Detail _ _ _ _ _) `with` ("-p":arg1:arg2:args) = 
     (\p -> cmd { detailPeriod = Just p }) <$> periodFromStrings arg1 arg2 >>= (`with` args)
@@ -117,4 +113,7 @@ cmd@(Detail _ _ _ _ _) `with` ("-s":arg:args) =
 
 _ `with` (arg:_) = Left ("option unrecognized or incomplete: " ++ arg)
 
+
+isCSVFile :: String -> Bool
+isCSVFile s = (map toLower (takeExtension s)) == ".csv" 
 

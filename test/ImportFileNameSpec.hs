@@ -10,13 +10,13 @@ spec :: SpecWith ()
 spec = do
     describe "extract name" $ do
         it "can determine the account name from the file path" $ do
-            extractName "/Users/foo/data/Savings202004.csv" 
+            extractAccountNamePart "/Users/foo/data/Savings202004.csv" 
                 `shouldBe` Right "Savings"
-            extractName "./Checking202004.csv" 
+            extractAccountNamePart "./Checking202004.csv" 
                 `shouldBe` Right "Checking"
 
         it "cannot determine the account name if all digits" $ do
-            extractName "/Users/foo/data/202004.csv" 
+            extractAccountNamePart "/Users/foo/data/202004.csv" 
                 `shouldBe` Left "the file /Users/foo/data/202004.csv doesn't contain an account name"
 
 

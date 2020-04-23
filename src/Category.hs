@@ -4,17 +4,16 @@ module Category ( Category (..)
                 )
     where
 
-import Message
 import CatchShowIO
 import FieldToString
-import Data.Csv
+import Message
 
-
-import qualified Data.Vector as Vector 
 
 import Data.ByteString.Lazy (ByteString)
 import qualified Data.ByteString.Lazy as ByteString
+import Data.Csv
 import Control.Monad
+import qualified Data.Vector as Vector 
 
 data Category = Category { categoryName :: String }
     deriving (Eq, Show, Ord)
