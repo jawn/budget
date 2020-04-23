@@ -24,6 +24,7 @@ dependencies:
 - dates
 - cassava
 - bytestring
+- mtl
 - vector
 - split
 - time
@@ -36,7 +37,7 @@ library:
   source-dirs: src
   ghc-options:
   - -freverse-errors
-  - -Wall 
+  - -Wall
   - -Werror
   - -Wincomplete-patterns
 
@@ -49,7 +50,7 @@ executables:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
-    - -Wall 
+    - -Wall
     - -Werror
     - -Wincomplete-patterns
     dependencies:
@@ -64,7 +65,7 @@ tests:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
-    - -Wall 
+    - -Wall
     - -Werror
     - -Wincomplete-patterns
     dependencies:

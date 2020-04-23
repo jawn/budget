@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1578e451b2a10699761f4a6d0f95014c9b18ad0c68682af082ebea8821462329
+-- hash: 88b9023ce320bcaf725db3278ec429b2a629a9fbd2e5efcf617d674b5d1771d9
 
 name:           budget
 version:        0.1.0.0
@@ -63,6 +63,7 @@ library
     , dates
     , directory
     , filepath
+    , mtl
     , process
     , split
     , text
@@ -85,6 +86,7 @@ executable budget
     , dates
     , directory
     , filepath
+    , mtl
     , process
     , split
     , text
@@ -125,6 +127,7 @@ test-suite budget-test
     , directory
     , filepath
     , hspec
+    , mtl
     , process
     , split
     , text
