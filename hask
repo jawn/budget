@@ -1,1 +1,1 @@
-hasktags --ctags . src test
+hasktags --ctags src test app
