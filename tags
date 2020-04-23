@@ -42,7 +42,7 @@ FromField Date	src/Date.hs	31
 FromField Name	src/Name.hs	17
 FromField Note	src/Note.hs	17
 FromRecord Category	src/Category.hs	21
-FromRecord Transaction	src/Transaction.hs	110
+FromRecord Transaction	src/Transaction.hs	113
 Help	src/Command.hs	27
 Help	src/Help.hs	1
 HelpSpec	test/HelpSpec.hs	1
@@ -51,7 +51,7 @@ Import	src/Import.hs	1
 ImportFileName	src/ImportFileName.hs	1
 ImportFileNameSpec	test/ImportFileNameSpec.hs	1
 ImportSpec	test/ImportSpec.hs	1
-Main	app/Budget.hs	3
+Main	app/Budget.hs	6
 MaybeToEither	src/MaybeToEither.hs	1
 Message	src/Message.hs	1
 Name	src/Name.hs	11
@@ -66,6 +66,7 @@ Period	src/Period.hs	21
 Period	src/Period.hs	21
 PeriodSpec	test/PeriodSpec.hs	1
 Read Amount	src/Amount.hs	31
+RetrieveTransaction	app/Budget.hs	88
 Same	src/Same.hs	1
 ShouldBeOutput	test/ShouldBeOutput.hs	1
 Show Amount	src/Amount.hs	22
@@ -89,29 +90,34 @@ ToField Category	src/Category.hs	29
 ToField Date	src/Date.hs	28
 ToField Name	src/Name.hs	20
 ToField Note	src/Note.hs	20
-ToRecord Transaction	src/Transaction.hs	121
+ToRecord Transaction	src/Transaction.hs	124
 Topic	src/Help.hs	9
 TopicDetail	src/Help.hs	9
 TopicHelp	src/Help.hs	9
 TopicImport	src/Help.hs	9
 TopicSort	src/Help.hs	9
 TopicSummary	src/Help.hs	9
-Transaction	src/Transaction.hs	57
-Transaction	src/Transaction.hs	57
+Transaction	src/Transaction.hs	60
+Transaction	src/Transaction.hs	60
 TransactionSpec	test/TransactionSpec.hs	1
+Transactional	app/Budget.hs	76
+Transactional (ExceptT Message IO)	app/Budget.hs	90
+TransactionalF	app/Budget.hs	87
+TransactionalR	app/Budget.hs	83
+TransactionalR	app/Budget.hs	84
 TransactionsCsvSpec	test/TransactionsCsvSpec.hs	3
 abs	src/Amount.hs	44
 accountName	src/Account.hs	15
 accountNamePart	src/ImportFileName.hs	18
-alreadyAnAccountName	src/Import.hs	35
+alreadyAnAccountName	src/Import.hs	47
 amount	src/Amount.hs	14
-averageTransactionsPerMonth	src/Transaction.hs	69
+averageTransactionsPerMonth	src/Transaction.hs	72
 catchShowIO	src/CatchShowIO.hs	12
 categoryName	src/Category.hs	18
 categoryTotals	src/Summary.hs	19
-changeAccount	src/Import.hs	22
+changeAccount	src/Import.hs	34
 checkNotEmpty	src/ImportFileName.hs	27
-checkNotEmpty	src/Transaction.hs	86
+checkNotEmpty	src/Transaction.hs	89
 command	src/Command.hs	34
 command	src/Command.hs	42
 day	src/Date.hs	19
@@ -122,8 +128,9 @@ day3	test/SummarySpec.hs	12
 day3	test/SummarySpec.hs	15
 decodeCategories	src/Category.hs	35
 decodeCategoriesFromFile	src/Category.hs	41
-decodeTransactions	src/Transaction.hs	135
-decodeTransactionsFromFile	src/Transaction.hs	145
+decodeTransactions	src/Transaction.hs	138
+decodeTransactionsFromFile	src/Transaction.hs	148
+decodeTransactionsFromFileE	src/Transaction.hs	155
 detail	src/Detail.hs	91
 detailCategoriesFilePath	src/Command.hs	21
 detailCategory	src/Command.hs	22
@@ -137,28 +144,32 @@ detailTransactionFilePath	src/Command.hs	20
 directoryContents	src/ImportFileName.hs	31
 divideBy	src/Amount.hs	55
 doHelp	src/Help.hs	24
-encodeTransactions	src/Transaction.hs	140
-encodeTransactionsToFile	src/Transaction.hs	153
+encodeTransactions	src/Transaction.hs	143
+encodeTransactionsToFile	src/Transaction.hs	163
+encodeTransactionsToFileE	src/Transaction.hs	170
 equals	src/Command.hs	36
 equals	src/Command.hs	48
 equals	src/Help.hs	13
 exitWithMsg	src/ExitWithMsg.hs	5
 extractAccountNamePart	src/ImportFileName.hs	13
 fieldToString	src/FieldToString.hs	12
-filterPostedOrAlreadyAccount	src/Import.hs	32
+filterPostedOrAlreadyAccount	src/Import.hs	44
 foldOrdering	src/Sorting.hs	105
 footer	src/Detail.hs	59
 formatDate	src/Detail.hs	49
 fromFile	src/Config.hs	29
 fromInteger	src/Amount.hs	47
-fromPeriod	src/Transaction.hs	90
+fromPeriod	src/Transaction.hs	93
 fromString	src/Config.hs	16
 help	src/Help.hs	20
 importDirectory	src/ImportFileName.hs	21
+importTransactionsDelta	src/Import.hs	23
+importTransactionsT	app/Budget.hs	79
+importTransactionsT	app/Budget.hs	93
 isCSVFile	src/Command.hs	117
 lengthLabel	src/Detail.hs	52
 lowerCase	src/Command.hs	45
-main	app/Budget.hs	22
+main	app/Budget.hs	25
 maybeToEither	src/MaybeToEither.hs	4
 months	src/Period.hs	33
 negate	src/Amount.hs	46
@@ -170,7 +181,7 @@ parseField	src/Date.hs	32
 parseField	src/Name.hs	18
 parseField	src/Note.hs	18
 parseRecord	src/Category.hs	22
-parseRecord	src/Transaction.hs	111
+parseRecord	src/Transaction.hs	114
 period	src/Period.hs	29
 periodFromMonth	src/Period.hs	44
 periodFromMonthString	src/Period.hs	50
@@ -179,17 +190,28 @@ periodFromYear	src/Period.hs	47
 periodFromYearString	src/Period.hs	57
 prettyLine	src/Detail.hs	37
 printConfig	src/Help.hs	194
-processCommand	app/Budget.hs	40
-processImportDirectory	app/Budget.hs	76
+processCommand	app/Budget.hs	43
+processImport	app/Budget.hs	98
+processImportDirectory	app/Budget.hs	71
 readCriteria	src/Sorting.hs	46
 readCriterion	src/Sorting.hs	57
 readsPrec	src/Amount.hs	33
-retrieveTransactions	src/Transaction.hs	160
-retrieveTransactionsFromMainFile	src/Transaction.hs	165
-runProgram	app/Budget.hs	29
+reportT	app/Budget.hs	80
+reportT	app/Budget.hs	94
+retrieveTransactions	src/Transaction.hs	177
+retrieveTransactionsE	src/Transaction.hs	183
+retrieveTransactionsFromMainFile	src/Transaction.hs	189
+retrieveTransactionsFromMainFileE	src/Transaction.hs	200
+retrieveTransactionsR	app/Budget.hs	84
+retrieveTransactionsT	app/Budget.hs	77
+retrieveTransactionsT	app/Budget.hs	91
+runProgram	app/Budget.hs	32
 same	src/Same.hs	4
-sameTransaction	src/Transaction.hs	93
-saveTransactions	src/Transaction.hs	177
+sameTransaction	src/Transaction.hs	96
+saveTransactions	src/Transaction.hs	212
+saveTransactionsE	src/Transaction.hs	224
+saveTransactionsT	app/Budget.hs	78
+saveTransactionsT	app/Budget.hs	92
 shouldBeLine	test/ShouldBeOutput.hs	9
 shouldBeOutput	test/ShouldBeOutput.hs	6
 show	src/Amount.hs	24
@@ -218,7 +240,7 @@ spec	test/SummarySpec.hs	18
 spec	test/TransactionSpec.hs	21
 spec	test/TransactionsCsvSpec.hs	18
 stringToField	src/FieldToString.hs	15
-summarizeTransactionsMonths	src/Transaction.hs	72
+summarizeTransactionsMonths	src/Transaction.hs	75
 summary	src/Summary.hs	61
 summaryCategoriesFilePath	src/Command.hs	15
 summaryCategory	src/Command.hs	16
@@ -238,25 +260,25 @@ toField	src/Category.hs	30
 toField	src/Date.hs	29
 toField	src/Name.hs	21
 toField	src/Note.hs	21
-toRecord	src/Transaction.hs	122
+toRecord	src/Transaction.hs	125
 topic	src/Help.hs	12
 topic	src/Help.hs	18
 total	src/Amount.hs	52
 totalLabel	src/Detail.hs	46
 totalLabel	src/Summary.hs	31
-totalTransactions	src/Transaction.hs	66
-transactionAccount	src/Transaction.hs	57
-transactionAmount	src/Transaction.hs	62
-transactionCategory	src/Transaction.hs	61
-transactionDate	src/Transaction.hs	58
+totalTransactions	src/Transaction.hs	69
+transactionAccount	src/Transaction.hs	60
+transactionAmount	src/Transaction.hs	65
+transactionCategory	src/Transaction.hs	64
+transactionDate	src/Transaction.hs	61
 transactionIntersect	src/Import.hs	15
-transactionIntersect	src/Transaction.hs	98
-transactionName	src/Transaction.hs	60
-transactionNotes	src/Transaction.hs	59
-transactionsPeriod	src/Transaction.hs	79
+transactionIntersect	src/Transaction.hs	101
+transactionName	src/Transaction.hs	63
+transactionNotes	src/Transaction.hs	62
+transactionsPeriod	src/Transaction.hs	82
 validateCriteria	src/Sorting.hs	113
 with	src/Command.hs	56
-withCategoryIn	src/Transaction.hs	102
+withCategoryIn	src/Transaction.hs	105
 within	src/Period.hs	62
-withinPeriod	src/Transaction.hs	106
+withinPeriod	src/Transaction.hs	109
 wrongCriteriaMessage	src/Sorting.hs	124

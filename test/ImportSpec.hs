@@ -97,3 +97,33 @@ spec = do
                 let to_import = [t1,t2]
                 let result = importTransactions "CreditFoo" existing to_import 
                 result  `shouldBe` Left "transactions already imported"
+
+    describe "ImportWithDeltaResult" $ do
+        it "should not import transactions already imported" $ do
+                let existing = [t1,t2] 
+                let to_import = [t1,t2]
+                let result = importTransactionsDelta "CreditFoo" existing to_import 
+                fmap (length . fst) result `shouldBe` Right 2 
+                fmap fst result `shouldBe` Right [ t1 , t2 ]
+                fmap snd result `shouldBe` Right [ t1 , t2 ]
+        it "should import new transactions and ignore duplicates" $ do
+                let existing = [t1,t2] 
+                let to_import = [t1,t2,t3,t4]
+                let result = importTransactionsDelta "CreditFoo" existing to_import 
+                fmap (length . fst) result `shouldBe` Right 4 
+                fmap fst result `shouldBe` 
+                    Right [ t1
+                           , t2
+                           , t3 { transactionAccount = Account "CreditFoo" }
+                           , t4 { transactionAccount = Account "CreditFoo" }
+                           ]
+                fmap snd result `shouldBe` Right [ t1, t2 ]
+        it "should return duplicates too" $ do
+                let existing = [t1,t2] 
+                let to_import = [t1,t2,t3,t4]
+                let result = importTransactionsDelta "CreditFoo" existing to_import 
+                fmap (length . snd) result `shouldBe` Right 2
+                fmap snd result `shouldBe` 
+                    Right [ t1
+                          , t2
+                          ]

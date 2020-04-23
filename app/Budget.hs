@@ -76,7 +76,7 @@ processImportDirectory config = mapM_ (\filePath -> processCommand config (Impor
 class (Monad m) => Transactional m where
   retrieveTransactionsT :: Config -> Maybe FilePath -> m [Transaction]
   saveTransactionsT :: Config -> [Transaction] -> m ()
-  importTransactionsT :: String -> [Transaction] -> [Transaction] -> m [Transaction]
+  importTransactionsT :: String -> [Transaction] -> [Transaction] -> m ([Transaction],[Transaction])
   reportT :: String -> m ()
 
 -- record of functions
@@ -90,7 +90,7 @@ data TransactionalF a where
 instance Transactional (ExceptT Message IO) where
   retrieveTransactionsT = retrieveTransactionsE
   saveTransactionsT = saveTransactionsE
-  importTransactionsT acc txs imps = ExceptT $ return $ importTransactions acc txs imps
+  importTransactionsT acc txs imps = ExceptT $ return $ importTransactionsDelta acc txs imps
   reportT = liftIO . putStrLn
 
 -- processImport :: Config
@@ -100,7 +100,10 @@ processImport :: Transactional m =>
 processImport config im_filePath account = do
     transactions <- retrieveTransactionsT config Nothing
     importations <- retrieveTransactionsT config (Just im_filePath)
-    tr <- importTransactionsT account transactions importations
-    let result_length = length tr - length transactions
-    saveTransactionsT config tr
+    result <- importTransactionsT account transactions importations
+    let result_length = length (fst result) - length transactions
+    let result_dupes  = snd result
+    let result_new_trans = fst result
+    saveTransactionsT config result_new_trans
     reportT $ show result_length ++ " transactions imported"
+    reportT $ show result_dupes
