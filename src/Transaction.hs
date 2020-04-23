@@ -6,9 +6,11 @@ module Transaction ( Transaction (..)
                    , encodeTransactionsToFile
                    , fromPeriod
                    , retrieveTransactions
+                   , retrieveTransactionsE
                    , retrieveTransactionsFromMainFile
                    , sameTransaction
                    , saveTransactions
+                   , saveTransactionsE
                    , summarizeTransactionsMonths
                    , totalTransactions
                    , transactionIntersect
@@ -18,6 +20,7 @@ module Transaction ( Transaction (..)
     )
     where
 
+import Control.Monad.Except
 import Message ( Message )
 import SummaryLine
 import Amount
@@ -52,14 +55,14 @@ import Data.ByteString.Lazy (ByteString)
 import qualified Data.ByteString.Lazy as ByteString
 
 
-import qualified Data.Vector as Vector (toList) 
+import qualified Data.Vector as Vector (toList)
 
 data Transaction = Transaction { transactionAccount  :: Account
                                , transactionDate     :: Date
                                , transactionNotes    :: Maybe Note
                                , transactionName     :: Maybe Name
                                , transactionCategory :: Category
-                               , transactionAmount   :: Amount 
+                               , transactionAmount   :: Amount
                                }
     deriving (Eq, Ord, Show)
 
@@ -70,7 +73,7 @@ averageTransactionsPerMonth :: Integer -> [Transaction] -> Amount
 averageTransactionsPerMonth ms ts = (totalTransactions ts) `divideBy` ms
 
 summarizeTransactionsMonths :: Integer -> [Transaction] -> SummaryLine
-summarizeTransactionsMonths ms ts = 
+summarizeTransactionsMonths ms ts =
     SummaryLine { summaryLineCategory = transactionCategory (head ts)
                 , summaryLineAmount   = totalTransactions ts
                 , summaryLineAverage  = averageTransactionsPerMonth ms ts
@@ -85,7 +88,7 @@ transactionsPeriod ts = Period date1 date2
 
 checkNotEmpty :: [Transaction] -> Either Message [Transaction]
 checkNotEmpty [] = Left "no transaction"
-checkNotEmpty ts = Right ts 
+checkNotEmpty ts = Right ts
 
 fromPeriod :: Period -> [Transaction] -> [Transaction]
 fromPeriod p = filter ((`within` p) . transactionDate)
@@ -110,7 +113,7 @@ withinPeriod t p = (transactionDate t) `within` p
 instance FromRecord Transaction where
     parseRecord v
       | length v <  7  = fail (show v)
-      | otherwise = Transaction 
+      | otherwise = Transaction
                         <$> v .!  0
                         <*> v .!  2
                         <*> v .!  3
@@ -128,9 +131,9 @@ instance ToRecord Transaction
                               , toField (transactionAmount t)
                               ]
 
-                    
-decodeTransactions 
-    :: ByteString 
+
+decodeTransactions
+    :: ByteString
     -> Either Message [Transaction]
 decodeTransactions = fmap Vector.toList . decode NoHeader
 
@@ -139,12 +142,19 @@ encodeTransactions
     ->  ByteString
 encodeTransactions = encodeWith defaultEncodeOptions { encUseCrLf = False }
 
-decodeTransactionsFromFile 
-    :: FilePath 
+decodeTransactionsFromFile
+    :: FilePath
     -> IO (Either Message [Transaction])
-decodeTransactionsFromFile filePath = 
+decodeTransactionsFromFile filePath =
     catchShowIO (ByteString.readFile filePath)
     >>= return . either Left decodeTransactions
+
+decodeTransactionsFromFileE
+    :: FilePath
+    -> ExceptT Message IO [Transaction]
+decodeTransactionsFromFileE filePath =
+    ExceptT (catchShowIO (ByteString.readFile filePath))
+    >>= ExceptT . return . decodeTransactions
 
 encodeTransactionsToFile
     :: [Transaction]
@@ -153,33 +163,67 @@ encodeTransactionsToFile
 encodeTransactionsToFile ts filePath =
     catchShowIO (ByteString.writeFile filePath (encodeTransactions ts))
 
-retrieveTransactions 
+encodeTransactionsToFileE
+    :: [Transaction]
+    -> FilePath
+    -> ExceptT Message IO ()
+encodeTransactionsToFileE ts filePath =
+    ExceptT $ catchShowIO (ByteString.writeFile filePath (encodeTransactions ts))
+
+retrieveTransactions
     :: Config
     -> Maybe FilePath
     -> IO (Either Message [Transaction])
 retrieveTransactions cfg fp = maybe (retrieveTransactionsFromMainFile cfg) decodeTransactionsFromFile fp
+
+retrieveTransactionsE
+    :: Config
+    -> Maybe FilePath
+    -> ExceptT Message IO [Transaction]
+retrieveTransactionsE cfg Nothing = retrieveTransactionsFromMainFileE cfg
+retrieveTransactionsE _   (Just fp) =  decodeTransactionsFromFileE fp
 
 retrieveTransactionsFromMainFile
     :: Config
     -> IO (Either Message [Transaction])
 retrieveTransactionsFromMainFile cfg = do
     home <- getHomeDirectory
-    transactions <- maybe 
-        (fail ("error: TRANSACTION file path not found in " ++ home ++ "/.budget_conf")) 
-        decodeTransactionsFromFile 
-        (lookup "TRANSACTIONS" cfg) 
-    return transactions 
+    transactions <- maybe
+        (fail ("error: TRANSACTION file path not found in " ++ home ++ "/.budget_conf"))
+        decodeTransactionsFromFile
+        (lookup "TRANSACTIONS" cfg)
+    return transactions
 
-saveTransactions 
+retrieveTransactionsFromMainFileE
+    :: Config
+    -> ExceptT Message IO [Transaction]
+retrieveTransactionsFromMainFileE cfg = do
+    home <- liftIO getHomeDirectory
+    transactions <- maybe
+        (fail ("error: TRANSACTION file path not found in " ++ home ++ "/.budget_conf"))
+        decodeTransactionsFromFileE
+        (lookup "TRANSACTIONS" cfg)
+    return transactions
+
+saveTransactions
     :: Config
     -> [Transaction]
     -> IO (Either Message ())
 saveTransactions cfg transactions = do
     home <- getHomeDirectory
-    result <- maybe 
-        (fail ("error: TRANSACTION file path not found in " ++ home ++ "/.budget_conf")) 
-        (encodeTransactionsToFile transactions) 
-        (lookup "TRANSACTIONS" cfg) 
+    result <- maybe
+        (fail ("error: TRANSACTION file path not found in " ++ home ++ "/.budget_conf"))
+        (encodeTransactionsToFile transactions)
+        (lookup "TRANSACTIONS" cfg)
     return result
-        
 
+saveTransactionsE
+    :: Config
+    -> [Transaction]
+    -> ExceptT Message IO ()
+saveTransactionsE cfg transactions = do
+    home <- liftIO getHomeDirectory
+    maybe
+      (fail ("error: TRANSACTION file path not found in " ++ home ++ "/.budget_conf"))
+      (encodeTransactionsToFileE transactions)
+      (lookup "TRANSACTIONS" cfg)
