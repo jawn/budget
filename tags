@@ -109,13 +109,13 @@ TransactionsCsvSpec	test/TransactionsCsvSpec.hs	3
 abs	src/Amount.hs	44
 accountName	src/Account.hs	15
 accountNamePart	src/ImportFileName.hs	18
-alreadyAnAccountName	src/Import.hs	47
+alreadyAnAccountName	src/Import.hs	51
 amount	src/Amount.hs	14
 averageTransactionsPerMonth	src/Transaction.hs	72
 catchShowIO	src/CatchShowIO.hs	12
 categoryName	src/Category.hs	18
 categoryTotals	src/Summary.hs	19
-changeAccount	src/Import.hs	34
+changeAccount	src/Import.hs	38
 checkNotEmpty	src/ImportFileName.hs	27
 checkNotEmpty	src/Transaction.hs	89
 command	src/Command.hs	34
@@ -153,7 +153,7 @@ equals	src/Help.hs	13
 exitWithMsg	src/ExitWithMsg.hs	5
 extractAccountNamePart	src/ImportFileName.hs	13
 fieldToString	src/FieldToString.hs	12
-filterPostedOrAlreadyAccount	src/Import.hs	44
+filterPostedOrAlreadyAccount	src/Import.hs	48
 foldOrdering	src/Sorting.hs	105
 footer	src/Detail.hs	59
 formatDate	src/Detail.hs	49
@@ -163,7 +163,7 @@ fromPeriod	src/Transaction.hs	93
 fromString	src/Config.hs	16
 help	src/Help.hs	20
 importDirectory	src/ImportFileName.hs	21
-importTransactionsDelta	src/Import.hs	23
+importTransactions	src/Import.hs	16
 importTransactionsT	app/Budget.hs	79
 importTransactionsT	app/Budget.hs	93
 isCSVFile	src/Command.hs	117
@@ -220,6 +220,7 @@ show	src/Name.hs	15
 show	src/Note.hs	15
 show	src/Period.hs	26
 show	src/SummaryLine.hs	16
+showDuplicates	src/Import.hs	26
 signum	src/Amount.hs	45
 simplified	test/TransactionSpec.hs	13
 sortWith	src/Summary.hs	27
@@ -233,7 +234,7 @@ spec	test/ConfigSpec.hs	6
 spec	test/DetailSpec.hs	24
 spec	test/HelpSpec.hs	7
 spec	test/ImportFileNameSpec.hs	9
-spec	test/ImportSpec.hs	13
+spec	test/ImportSpec.hs	14
 spec	test/PeriodSpec.hs	7
 spec	test/SortingSpec.hs	16
 spec	test/SummarySpec.hs	18
@@ -271,7 +272,6 @@ transactionAccount	src/Transaction.hs	60
 transactionAmount	src/Transaction.hs	65
 transactionCategory	src/Transaction.hs	64
 transactionDate	src/Transaction.hs	61
-transactionIntersect	src/Import.hs	15
 transactionIntersect	src/Transaction.hs	101
 transactionName	src/Transaction.hs	63
 transactionNotes	src/Transaction.hs	62

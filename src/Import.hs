@@ -1,31 +1,36 @@
-module Import ( importTransactions, importTransactionsDelta )
+module Import ( importTransactions
+              , showDuplicates )
     where
 
 import Account
 import Message ( Message )
 import Transaction
 
-importTransactions 
-    :: String 
-    -> [Transaction] 
-    -> [Transaction] 
-    -> Either Message [Transaction]
-importTransactions name transactions importations 
-    | importations `transactionIntersect` transactions /= [] = Left "transactions already imported"
-    | otherwise                             = Right (transactions ++ (changeAccount name . filterPostedOrAlreadyAccount) importations)
+import Text.Printf ( printf )
 
-importTransactionsDelta
+importTransactions
     :: String 
     -> [Transaction] 
     -> [Transaction] 
     -> Either Message ([Transaction],[Transaction])
-importTransactionsDelta name transactions importations = 
-    Right ( transactions ++ ((changeAccount name . filterPostedOrAlreadyAccount) (filter (not . (`elem` duplicates)) importations))
+importTransactions name transactions importations = 
+    Right ( transactions ++ 
+            ( changeAccount name 
+            $ filterPostedOrAlreadyAccount 
+            $ filter (not . (`elem` duplicates)) importations)
           , duplicates )
     where
         duplicates :: [Transaction]
         duplicates = importations `transactionIntersect` transactions
 
+showDuplicates :: [Transaction] -> [String]
+showDuplicates = map showDuplicate
+    where
+    showDuplicate :: Transaction -> String
+    showDuplicate t = printf "%10s %-60s %10s"
+        (show (transactionDate t))
+        (maybe "" show (transactionName t))
+        (show (transactionAmount t))
 changeAccount 
     :: String 
     -> [Transaction] 

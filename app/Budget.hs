@@ -90,7 +90,7 @@ data TransactionalF a where
 instance Transactional (ExceptT Message IO) where
   retrieveTransactionsT = retrieveTransactionsE
   saveTransactionsT = saveTransactionsE
-  importTransactionsT acc txs imps = ExceptT $ return $ importTransactionsDelta acc txs imps
+  importTransactionsT acc txs imps = ExceptT $ return $ importTransactions acc txs imps
   reportT = liftIO . putStrLn
 
 -- processImport :: Config
@@ -106,4 +106,7 @@ processImport config im_filePath account = do
     let result_new_trans = fst result
     saveTransactionsT config result_new_trans
     reportT $ show result_length ++ " transactions imported"
-    reportT $ show result_dupes
+    reportT $ case result_dupes of
+                [] -> "no duplicates were found"
+                _ -> unlines ([ "transactions that where already in the main file and were not imported:" ] 
+                              ++ (showDuplicates result_dupes))

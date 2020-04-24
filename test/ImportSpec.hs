@@ -1,6 +1,7 @@
 module ImportSpec
     where
 import Test.Hspec
+import ShouldBeOutput
 import Transaction
 import Name
 import Note
@@ -67,63 +68,68 @@ spec = do
                 let existing = [t1,t2] 
                 let to_import = [t3,t4]
                 let result = importTransactions "CreditFoo" existing to_import 
-                fmap length result `shouldBe` Right 4
-                fmap (map (number . transactionAmount) . (drop 2)) result
+                fmap (length . fst) result `shouldBe` Right 4
+                fmap (map (number . transactionAmount) . (drop 2) . fst) result
                     `shouldBe` Right [-10000,-5000]
 
             it "while setting the account name to the given name" $ do
                 let existing = [t1,t2] 
                 let to_import = [t3,t4]
                 let result = importTransactions "CreditFoo" existing to_import 
-                fmap (map (accountName . transactionAccount) . (drop 2)) result
+                fmap (map (accountName . transactionAccount) . (drop 2) .fst) result
                     `shouldBe` Right ["CreditFoo","CreditFoo"]
 
             it "doesn't append transactions where status is different from posted and not already an account" $ do
                 let existing = [t1,t2] 
                 let to_import = [t5,t3,t6,t4]
                 let result = importTransactions "CreditFoo" existing to_import 
-                fmap (filter (\t -> transactionAmount t == amount (-40050.00))) result 
+                fmap ((filter (\t -> transactionAmount t == amount (-40050.00))) . fst) result 
                     `shouldBe` Right []
 
             it "append transactions where status is already changed to Account (starting with an uppercase letter)" $ do
                 let existing = [t1,t2] 
                 let to_import = [t3,t7]
                 let result = importTransactions "CreditFoo" existing to_import 
-                fmap (map (accountName . transactionAccount)) result
+                fmap (map (accountName . transactionAccount) . fst) result
                     `shouldBe` Right ["MyBank", "Investment", "CreditFoo", "Already An Account"]
 
-            it "give a message is the import list has already been imported" $ do
+            it "should not import transactions already imported" $ do
+                    let existing = [t1,t2] 
+                    let to_import = [t1,t2]
+                    let result = importTransactions "CreditFoo" existing to_import 
+                    fmap (length . fst) result `shouldBe` Right 2 
+                    fmap fst result `shouldBe` Right [ t1 , t2 ]
+                    fmap snd result `shouldBe` Right [ t1 , t2 ]
+            it "should not import transactions already imported even with status = posted" $ do
+                    let existing = [t1,t2,t3] 
+                    let to_import = [t1,t2,t3]
+                    let result = importTransactions "CreditFoo" existing to_import 
+                    fmap fst result `shouldBe` Right [ t1 , t2, t3 ]
+                    fmap snd result `shouldBe` Right [ t1 , t2, t3 ]
+            it "should import new transactions and ignore duplicates" $ do
+                    let existing = [t1,t2] 
+                    let to_import = [t1,t2,t3,t4]
+                    let result = importTransactions "CreditFoo" existing to_import 
+                    fmap (length . fst) result `shouldBe` Right 4 
+                    fmap fst result `shouldBe` 
+                        Right [ t1
+                              , t2
+                              , t3 { transactionAccount = Account "CreditFoo" }
+                              , t4 { transactionAccount = Account "CreditFoo" }
+                              ]
+                    fmap snd result `shouldBe` Right [ t1, t2 ]
+            it "should return duplicates too" $ do
                 let existing = [t1,t2] 
-                let to_import = [t1,t2]
+                let to_import = [t1,t2,t3,t4]
                 let result = importTransactions "CreditFoo" existing to_import 
-                result  `shouldBe` Left "transactions already imported"
-
-    describe "ImportWithDeltaResult" $ do
-        it "should not import transactions already imported" $ do
-                let existing = [t1,t2] 
-                let to_import = [t1,t2]
-                let result = importTransactionsDelta "CreditFoo" existing to_import 
-                fmap (length . fst) result `shouldBe` Right 2 
-                fmap fst result `shouldBe` Right [ t1 , t2 ]
-                fmap snd result `shouldBe` Right [ t1 , t2 ]
-        it "should import new transactions and ignore duplicates" $ do
-                let existing = [t1,t2] 
-                let to_import = [t1,t2,t3,t4]
-                let result = importTransactionsDelta "CreditFoo" existing to_import 
-                fmap (length . fst) result `shouldBe` Right 4 
-                fmap fst result `shouldBe` 
-                    Right [ t1
-                           , t2
-                           , t3 { transactionAccount = Account "CreditFoo" }
-                           , t4 { transactionAccount = Account "CreditFoo" }
-                           ]
-                fmap snd result `shouldBe` Right [ t1, t2 ]
-        it "should return duplicates too" $ do
-                let existing = [t1,t2] 
-                let to_import = [t1,t2,t3,t4]
-                let result = importTransactionsDelta "CreditFoo" existing to_import 
                 fmap (length . snd) result `shouldBe` Right 2
-                fmap snd result `shouldBe` 
-                    Right [ t1
-                          , t2
-                          ]
+                fmap snd result `shouldBe` Right [ t1 , t2 ]
+
+        describe "show duplicate" $ do
+            it "show a list of transactions already present (Date, Name, Amount)" $ do
+                let duplicates = [t1,t2,t3]
+                showDuplicates duplicates `shouldBeOutput` 
+                    [ "06/01/2020 Joe's shop -48.07"
+                    , "05/01/2020 Another very long name,Apple -1000.00"
+                    , "07/01/2020 Jack shop -100.00"
+                    ]

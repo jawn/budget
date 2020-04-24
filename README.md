@@ -30,7 +30,7 @@
 - [ ] after importing a file, tell how many transactions were imported, and list the transactions that were rejected because they are duplicates (on the Date, Amount, Name criteria)
 - [x] do not reject the whole file when a file to be imported contains transactions already imported and some that are not yet imported
 - [ ] clarify the examples in the tests (e.g import)
-- [ ] add a test to import where status is different from posted, reproduce the bug about filtering order
+- [X] add a test to import where status is different from posted, reproduce the bug about filtering order
 
 ## how to run the tests
 
