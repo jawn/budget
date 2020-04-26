@@ -1,9 +1,10 @@
-module CatchShowIO ( catchShowIO )
+module CatchShowIO ( catchShowIO, catchShowIOE )
     where
 
 import Message
 
 import Control.Exception (IOException)
+import Control.Monad.Except
 import qualified Control.Exception as Exception
 
 catchShowIO 
@@ -16,3 +17,8 @@ catchShowIO action =
                 :: IOException
                 -> IO (Either Message a)
             handleIOException = return . Left . show
+
+catchShowIOE 
+    :: IO a
+    -> ExceptT Message IO a
+catchShowIOE action = ExceptT (catchShowIO action) 

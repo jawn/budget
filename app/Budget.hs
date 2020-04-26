@@ -74,24 +74,16 @@ processImportDirectory config = mapM_ (\filePath -> processCommand config (Impor
 
 -- MTL Style
 class (Monad m) => Transactional m where
-  retrieveTransactionsT :: Config -> Maybe FilePath -> m [Transaction]
-  saveTransactionsT :: Config -> [Transaction] -> m ()
-  importTransactionsT :: String -> [Transaction] -> [Transaction] -> m ([Transaction],[Transaction])
-  reportT :: String -> m ()
-
--- record of functions
-data TransactionalR m =
-  TransactionalR { retrieveTransactionsR :: Config -> Maybe FilePath -> m [Transaction] }
-
--- free-monad style
-data TransactionalF a where
-  RetrieveTransaction :: Config -> Maybe FilePath -> TransactionalF [Transaction]
+    retrieveTransactionsT :: Config -> Maybe FilePath -> m [Transaction]
+    saveTransactionsT :: Config -> [Transaction] -> m ()
+    importTransactionsT :: String -> [Transaction] -> [Transaction] -> m ([Transaction],[Transaction])
+    reportT :: String -> m ()
 
 instance Transactional (ExceptT Message IO) where
-  retrieveTransactionsT = retrieveTransactionsE
-  saveTransactionsT = saveTransactionsE
-  importTransactionsT acc txs imps = ExceptT $ return $ importTransactions acc txs imps
-  reportT = liftIO . putStrLn
+    retrieveTransactionsT = retrieveTransactionsE
+    saveTransactionsT = saveTransactionsE
+    importTransactionsT acc txs imps = ExceptT $ return $ importTransactions acc txs imps
+    reportT = liftIO . putStrLn
 
 -- processImport :: Config
 --               -> FilePath -> String -> ExceptT Message IO ()

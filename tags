@@ -21,8 +21,10 @@ CategorySpec	test/CategorySpec.hs	2
 Command	src/Command.hs	13
 CommandCriteria	src/Sorting.hs	38
 CommandSpec	test/CommandSpec.hs	1
-Config	src/Config.hs	10
+Config	src/Config.hs	11
 ConfigSpec	test/ConfigSpec.hs	1
+Configuration	src/Configuration.hs	17
+ConfigurationSpec	test/ConfigurationSpec.hs	1
 Date	src/Date.hs	16
 DateAsc	src/Sorting.hs	28
 DateDesc	src/Sorting.hs	29
@@ -33,6 +35,8 @@ Detail	src/Detail.hs	1
 DetailSortingCriteria	src/Sorting.hs	38
 DetailSpec	test/DetailSpec.hs	2
 Direction	src/Sorting.hs	20
+Domain	src/Domain.hs	12
+DomainSpec	test/DomainSpec.hs	1
 ExitWithMsg	src/ExitWithMsg.hs	1
 FieldToString	src/FieldToString.hs	1
 FromField Account	src/Account.hs	18
@@ -51,6 +55,7 @@ Import	src/Import.hs	1
 ImportFileName	src/ImportFileName.hs	1
 ImportFileNameSpec	test/ImportFileNameSpec.hs	1
 ImportSpec	test/ImportSpec.hs	1
+Key	src/Configuration.hs	15
 Main	app/Budget.hs	6
 MaybeToEither	src/MaybeToEither.hs	1
 Message	src/Message.hs	1
@@ -66,7 +71,6 @@ Period	src/Period.hs	21
 Period	src/Period.hs	21
 PeriodSpec	test/PeriodSpec.hs	1
 Read Amount	src/Amount.hs	31
-RetrieveTransaction	app/Budget.hs	88
 Same	src/Same.hs	1
 ShouldBeOutput	test/ShouldBeOutput.hs	1
 Show Amount	src/Amount.hs	22
@@ -101,18 +105,19 @@ Transaction	src/Transaction.hs	60
 Transaction	src/Transaction.hs	60
 TransactionSpec	test/TransactionSpec.hs	1
 Transactional	app/Budget.hs	76
-Transactional (ExceptT Message IO)	app/Budget.hs	90
-TransactionalF	app/Budget.hs	87
-TransactionalR	app/Budget.hs	83
-TransactionalR	app/Budget.hs	84
+Transactional (ExceptT Message IO)	app/Budget.hs	82
 TransactionsCsvSpec	test/TransactionsCsvSpec.hs	3
+Value	src/Configuration.hs	16
 abs	src/Amount.hs	44
 accountName	src/Account.hs	15
 accountNamePart	src/ImportFileName.hs	18
 alreadyAnAccountName	src/Import.hs	51
 amount	src/Amount.hs	14
+atKey	src/Configuration.hs	19
 averageTransactionsPerMonth	src/Transaction.hs	72
-catchShowIO	src/CatchShowIO.hs	12
+catchIODomain	src/Domain.hs	14
+catchShowIO	src/CatchShowIO.hs	13
+catchShowIOE	src/CatchShowIO.hs	24
 categoryName	src/Category.hs	18
 categoryTotals	src/Summary.hs	19
 changeAccount	src/Import.hs	38
@@ -157,15 +162,19 @@ filterPostedOrAlreadyAccount	src/Import.hs	48
 foldOrdering	src/Sorting.hs	105
 footer	src/Detail.hs	59
 formatDate	src/Detail.hs	49
-fromFile	src/Config.hs	29
+fromFile	src/Config.hs	42
+fromFile	src/Configuration.hs	35
+fromFileE	src/Config.hs	49
 fromInteger	src/Amount.hs	47
 fromPeriod	src/Transaction.hs	93
-fromString	src/Config.hs	16
+fromString	src/Config.hs	17
+fromString	src/Configuration.hs	24
+fromStringE	src/Config.hs	30
 help	src/Help.hs	20
 importDirectory	src/ImportFileName.hs	21
 importTransactions	src/Import.hs	16
 importTransactionsT	app/Budget.hs	79
-importTransactionsT	app/Budget.hs	93
+importTransactionsT	app/Budget.hs	85
 isCSVFile	src/Command.hs	117
 lengthLabel	src/Detail.hs	52
 lowerCase	src/Command.hs	45
@@ -191,27 +200,26 @@ periodFromYearString	src/Period.hs	57
 prettyLine	src/Detail.hs	37
 printConfig	src/Help.hs	194
 processCommand	app/Budget.hs	43
-processImport	app/Budget.hs	98
+processImport	app/Budget.hs	90
 processImportDirectory	app/Budget.hs	71
 readCriteria	src/Sorting.hs	46
 readCriterion	src/Sorting.hs	57
 readsPrec	src/Amount.hs	33
 reportT	app/Budget.hs	80
-reportT	app/Budget.hs	94
+reportT	app/Budget.hs	86
 retrieveTransactions	src/Transaction.hs	177
 retrieveTransactionsE	src/Transaction.hs	183
 retrieveTransactionsFromMainFile	src/Transaction.hs	189
 retrieveTransactionsFromMainFileE	src/Transaction.hs	200
-retrieveTransactionsR	app/Budget.hs	84
 retrieveTransactionsT	app/Budget.hs	77
-retrieveTransactionsT	app/Budget.hs	91
+retrieveTransactionsT	app/Budget.hs	83
 runProgram	app/Budget.hs	32
 same	src/Same.hs	4
 sameTransaction	src/Transaction.hs	96
 saveTransactions	src/Transaction.hs	212
 saveTransactionsE	src/Transaction.hs	224
 saveTransactionsT	app/Budget.hs	78
-saveTransactionsT	app/Budget.hs	92
+saveTransactionsT	app/Budget.hs	84
 shouldBeLine	test/ShouldBeOutput.hs	9
 shouldBeOutput	test/ShouldBeOutput.hs	6
 show	src/Amount.hs	24
@@ -231,7 +239,9 @@ spec	test/CategoriesCsvSpec.hs	12
 spec	test/CategorySpec.hs	11
 spec	test/CommandSpec.hs	9
 spec	test/ConfigSpec.hs	6
+spec	test/ConfigurationSpec.hs	8
 spec	test/DetailSpec.hs	24
+spec	test/DomainSpec.hs	8
 spec	test/HelpSpec.hs	7
 spec	test/ImportFileNameSpec.hs	9
 spec	test/ImportSpec.hs	14
@@ -277,6 +287,7 @@ transactionName	src/Transaction.hs	63
 transactionNotes	src/Transaction.hs	62
 transactionsPeriod	src/Transaction.hs	82
 validateCriteria	src/Sorting.hs	113
+valueAtKeyfromFile	src/Configuration.hs	41
 with	src/Command.hs	56
 withCategoryIn	src/Transaction.hs	105
 within	src/Period.hs	62
