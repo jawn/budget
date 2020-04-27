@@ -63,5 +63,5 @@ spec = do
             let fileContent = "key:value\nother:other\n"
                 fp = "test/test-config" 
             writeFile fp fileContent
-            value <- runExceptT (valueAtKeyfromFile "KEY" fp)
+            value <- runExceptT (valueAtKeyFromFile "KEY" fp)
             value `shouldBe` Right "value"

@@ -8,8 +8,9 @@ module Main where
 import Message
 import Category
 import Command
-import Config
+import Configuration
 import Detail
+import Domain
 import ExitWithMsg
 import Help
 import Import
@@ -24,19 +25,30 @@ import System.Exit
 
 main :: IO ()
 main = do
-    home <- getHomeDirectory
-    cfg <- Config.fromFile $ home ++ "/.budget_conf"
-    either exitWithMsg runProgram cfg
+    run <- runExceptT budget
+    either putStrLn return run
 
+configFilePath :: FilePath
+configFilePath = "/.budget_conf"
 
-runProgram ::  Config.Config -> IO ()
+budget :: Domain ()
+budget = do
+    args <- liftIO getArgs
+    home <- liftIO getHomeDirectory
+    cfg <- fromFile (home ++ configFilePath)
+    cmd <- ExceptT ((return . command) args)
+    _ <- liftIO $ processCommand cfg cmd
+    liftIO $ putStrLn $ show cmd
+    
+
+runProgram ::  Configuration -> IO ()
 runProgram cfg = do
     cmd <- fmap command getArgs
     either exitWithMsg (processCommand cfg) cmd
 
 
 processCommand
-    :: Config.Config
+    :: Configuration
     -> Command
     -> IO ()
 
@@ -68,14 +80,14 @@ processCommand config (Import im_filePath Nothing) = do
        directory <- importDirectory im_filePath
        either exitWithMsg (processImportDirectory config) directory
 
-processImportDirectory :: Config.Config -> [FilePath] -> IO ()
+processImportDirectory :: Configuration -> [FilePath] -> IO ()
 processImportDirectory config = mapM_ (\filePath -> processCommand config (Import filePath Nothing))
 
 
 -- MTL Style
 class (Monad m) => Transactional m where
-    retrieveTransactionsT :: Config -> Maybe FilePath -> m [Transaction]
-    saveTransactionsT :: Config -> [Transaction] -> m ()
+    retrieveTransactionsT :: Configuration -> Maybe FilePath -> m [Transaction]
+    saveTransactionsT :: Configuration -> [Transaction] -> m ()
     importTransactionsT :: String -> [Transaction] -> [Transaction] -> m ([Transaction],[Transaction])
     reportT :: String -> m ()
 
@@ -85,10 +97,10 @@ instance Transactional (ExceptT Message IO) where
     importTransactionsT acc txs imps = ExceptT $ return $ importTransactions acc txs imps
     reportT = liftIO . putStrLn
 
--- processImport :: Config
+-- processImport :: Configuration
 --               -> FilePath -> String -> ExceptT Message IO ()
 processImport :: Transactional m =>
-                 Config -> FilePath -> String -> m ()
+                 Configuration -> FilePath -> String -> m ()
 processImport config im_filePath account = do
     transactions <- retrieveTransactionsT config Nothing
     importations <- retrieveTransactionsT config (Just im_filePath)

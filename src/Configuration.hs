@@ -4,7 +4,7 @@ module Configuration ( Configuration
                      , atKey
                      , fromFile
                      , fromString 
-                     , valueAtKeyfromFile 
+                     , valueAtKeyFromFile 
                      )
     where
 
@@ -38,8 +38,8 @@ fromFile filePath = do
     config <- fromString content
     return config
 
-valueAtKeyfromFile :: Key -> FilePath -> Domain Value      
-valueAtKeyfromFile key filePath = do
+valueAtKeyFromFile :: Key -> FilePath -> Domain Value      
+valueAtKeyFromFile key filePath = do
     config <- fromFile filePath
     value <-  config `atKey` key
     return value
