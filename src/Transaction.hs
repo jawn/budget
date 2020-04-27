@@ -39,6 +39,7 @@ import Data.Csv
     , (.!)
     , HasHeader(NoHeader)
     , EncodeOptions(..)
+    , Parser 
     , defaultEncodeOptions
     , decode
     , encodeWith
@@ -116,8 +117,8 @@ instance FromRecord Transaction where
       | otherwise = Transaction
                         <$> v .!  0
                         <*> v .!  2
-                        <*> v .!  3
-                        <*> v .!  4
+                        <*> (v .!  3 :: Parser (Maybe Note))
+                        <*> (v .!  4 :: Parser (Maybe Name))
                         <*> v .!  5
                         <*> v .!  6
 

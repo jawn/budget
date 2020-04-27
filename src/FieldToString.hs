@@ -13,5 +13,5 @@ fieldToString :: Field -> String
 fieldToString = Data.Text.unpack . strip . decodeUtf8
 
 stringToField :: String -> Field
-stringToField = encodeUtf8 . Data.Text.pack 
+stringToField = encodeUtf8 . strip . Data.Text.pack 
 

@@ -1,6 +1,7 @@
 module DomainSpec where
 
 import Domain
+import Message
 
 import Control.Monad.Except
 import Test.Hspec
@@ -16,6 +17,16 @@ spec = describe "values of type Domain" $ do
         v <- runExceptT (throwError "foo" :: Domain Int)
         v  `shouldBe` Left "foo"
 
+    it "can be created from an Either Message a value" $ do
+        let a = Right 42 :: Either Message Int
+        let d = domain a
+        v <- runExceptT d
+        v `shouldBe` Right 42
+
+    it "can be extracted to an Either Message a value" $ do
+        let d = (domain (Right 42) :: Domain Int)
+        v <- runDomain d
+        v `shouldBe` Right 42
     it "can be calculated in a chained computation" $ do
         let p :: Domain Int
             p = do

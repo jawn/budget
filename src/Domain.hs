@@ -1,5 +1,7 @@
 module Domain ( Domain
               , catchIODomain
+              , domain
+              , runDomain
               )
     where
 
@@ -19,3 +21,9 @@ catchIODomain action = ExceptT (action `catch` handle)
 
     handle :: IOException -> IO (Either Message a)
     handle = return . Left . show
+
+domain :: Either Message a -> Domain a
+domain = ExceptT . return
+
+runDomain :: Domain a -> IO (Either Message a)
+runDomain = runExceptT
