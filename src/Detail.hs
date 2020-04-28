@@ -8,11 +8,12 @@ import Period      ( Period )
 import Sorting     ( SortingCriteria
                    , sortWithCriteria )
 import Transaction ( Transaction (..) 
-                   , totalTransactions
-                   , transactionsPeriod
                    , withCategoryIn
                    , withinPeriod
                    )
+import TransactionList ( transactionsPeriod
+                       , totalTransactions
+                       )
 
 import Data.List   ( intercalate )
 import Data.Maybe  ( catMaybes )

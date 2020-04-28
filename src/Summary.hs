@@ -6,14 +6,16 @@ module Summary ( summary
 
 import Amount
 import Category
-import Transaction
-import SummaryLine
-import Sorting
-import Data.List
 import Period
-import Text.Printf
-import Data.Ord
 import Same
+import Sorting
+import SummaryLine
+import Transaction
+import TransactionList
+
+import Data.List
+import Data.Ord
+import Text.Printf
 
 type NbMonths = Integer
 categoryTotals :: NbMonths -> [Transaction] -> SortingCriteria -> [String]

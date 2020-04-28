@@ -5,6 +5,7 @@ module Import ( importTransactions
 import Account
 import Message ( Message )
 import Transaction
+import TransactionList
 
 import Text.Printf ( printf )
 
