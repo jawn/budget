@@ -2,11 +2,13 @@ module Command
     where   
 
 import Category
+import Domain
 import Message ( Message )
 import Period
 import Same
 import Sorting
 
+import Control.Monad.Except
 import Data.Char
 import System.FilePath.Posix (takeExtension)
 
@@ -30,16 +32,16 @@ data Command
 
 command 
     :: [String]
-    -> Either Message Command
+    -> Domain Command
 command [] = command ["summary"]
 command (cmd:args) 
-  | cmd `equals` "summary" = (Summary Nothing Nothing Nothing Nothing []) `with` args
-  | cmd `equals` "detail"  = (Detail Nothing Nothing Nothing Nothing [])  `with` args
-  | cmd `equals` "import" && length args == 2 = Right (Import (args!!0) (Just (args!!1)))
-  | cmd `equals` "import" && length args == 1 = Right (Import (args!!0) Nothing)
-  | cmd `equals` "import" && length args < 1 = Left "import: missing argument (import {<filename> <accountname> | <folder> }"
-  | cmd `equals` "help" = Right (Help args)
-command (cmd:args) = Left $ "unknown command: "++ unwords (cmd:args)
+  | cmd `equals` "summary" = domain $ (Summary Nothing Nothing Nothing Nothing []) `with` args
+  | cmd `equals` "detail"  = domain $ (Detail Nothing Nothing Nothing Nothing [])  `with` args
+  | cmd `equals` "import" && length args == 2 = domain $ Right (Import (args!!0) (Just (args!!1)))
+  | cmd `equals` "import" && length args == 1 = domain $ Right (Import (args!!0) Nothing)
+  | cmd `equals` "import" && length args < 1 = domain $ Left "import: missing argument (import {<filename> <accountname> | <folder> }"
+  | cmd `equals` "help" = domain $ Right (Help args)
+command (cmd:args) = throwError $ "unknown command: "++ unwords (cmd:args)
 
 
 lowerCase :: String -> String

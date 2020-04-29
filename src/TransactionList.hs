@@ -26,13 +26,9 @@ import Data.Csv
     , encUseCrLf
     )
 import Data.List
-
-
-
 import qualified Data.Vector as Vector (toList)
 import Data.ByteString.Lazy (ByteString)
 import qualified Data.ByteString.Lazy as ByteString
-
 
 type TransactionList = [Transaction]
 
