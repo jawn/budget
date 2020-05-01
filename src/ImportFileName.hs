@@ -31,6 +31,7 @@ checkNotEmpty _ fs  = Right $ fs
 directoryContents :: FilePath -> IO [FilePath]
 directoryContents = liftM (filter notDots) . getDirectoryContents
     where 
-        notDots p = p /= "." && p /= ".."
+        notDots p = head p /= '.'
+
 
             

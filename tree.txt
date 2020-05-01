@@ -1,0 +1,143 @@
+* [1;34mce65410[m - [1;32m(33 hours ago)[m [37mrefactoring[m [2;37m- Christophe Thibaut[m[1;33m (HEAD -> master, origin/master, origin/HEAD)[m
+* [1;34mfd55f7d[m - [1;32m(2 days ago)[m [37mrefactoring[m [2;37m- Christophe Thibaut[m[1;33m[m
+* [1;34mf48f7f5[m - [1;32m(3 days ago)[m [37mtidying[m [2;37m- Christophe Thibaut[m[1;33m[m
+* [1;34m00a50ff[m - [1;32m(3 days ago)[m [37mrefactoring to Domain[m [2;37m- Christophe Thibaut[m[1;33m[m
+* [1;34mff026a8[m - [1;32m(3 days ago)[m [37musing Domain in the main program[m [2;37m- Christophe Thibaut[m[1;33m[m
+* [1;34m47115e0[m - [1;32m(4 days ago)[m [37mrefactoring[m [2;37m- Christophe Thibaut[m[1;33m[m
+* [1;34m5b8a27a[m - [1;32m(4 days ago)[m [37mDomain a = ExceptT Message IO a, and Domain Configuration[m [2;37m- Christophe Thibaut[m[1;33m[m
+| *   [1;34m9c2ee37[m - [1;32m(4 days ago)[m [37mWIP on master: 3d81d66 show the duplicates after import[m [2;37m- Christophe Thibaut[m[1;33m (refs/stash)[m
+| |\  
+|/ /  
+| * [1;34mf04a57d[m - [1;32m(4 days ago)[m [37mindex on master: 3d81d66 show the duplicates after import[m [2;37m- Christophe Thibaut[m[1;33m[m
+|/  
+* [1;34m3d81d66[m - [1;32m(7 days ago)[m [37mshow the duplicates after import[m [2;37m- ToF-[m[1;33m[m
+* [1;34m1b12bb0[m - [1;32m(7 days ago)[m [37mimport non duplicates new transactions, show the duplicates[m [2;37m- ToF-[m[1;33m[m
+*   [1;34m0287754[m - [1;32m(7 days ago)[m [37mMerge pull request #1 from abailly/playing-mtl[m [2;37m- ToF[m[1;33m[m
+|\  
+| * [1;34m1446fc3[m - [1;32m(7 days ago)[m [37mplaying with I/O encoding[m [2;37m- Arnaud Bailly[m[1;33m[m
+|/  
+* [1;34m6df9d8c[m - [1;32m(8 days ago)[m [37mimproved hask (ctags)[m [2;37m- ToF-[m[1;33m[m
+* [1;34m935ca28[m - [1;32m(8 days ago)[m [37mrefactorings[m [2;37m- ToF-[m[1;33m[m
+* [1;34mc0b342e[m - [1;32m(8 days ago)[m [37mhask[m [2;37m- ToF-[m[1;33m[m
+* [1;34me221f70[m - [1;32m(8 days ago)[m [37mgiant refactoring[m [2;37m- ToF-[m[1;33m[m
+* [1;34m989ff34[m - [1;32m(9 days ago)[m [37mrefactoring[m [2;37m- ToF-[m[1;33m[m
+* [1;34m8dbf3b5[m - [1;32m(9 days ago)[m [37mrefactoring[m [2;37m- ToF-[m[1;33m[m
+* [1;34m5781eb7[m - [1;32m(9 days ago)[m [37mrefactoring in process[m [2;37m- ToF-[m[1;33m[m
+* [1;34m1474a60[m - [1;32m(9 days ago)[m [37mintersection of two transaction[m [2;37m- Andrea Chiou[m[1;33m[m
+* [1;34mbe7ef78[m - [1;32m(9 days ago)[m [37madded options to the compiler[m [2;37m- ToF-[m[1;33m[m
+* [1;34m20e457a[m - [1;32m(9 days ago)[m [37mrefactoring[m [2;37m- ToF-[m[1;33m[m
+* [1;34me6ca20e[m - [1;32m(10 days ago)[m [37madded story[m [2;37m- ToF-[m[1;33m[m
+* [1;34m0c1d906[m - [1;32m(10 days ago)[m [37madded show the rejected transactions on import story[m [2;37m- ToF-[m[1;33m[m
+* [1;34m96369ea[m - [1;32m(10 days ago)[m [37mrefactoring[m [2;37m- ToF-[m[1;33m[m
+* [1;34m556d4fb[m - [1;32m(10 days ago)[m [37mmisc edit[m [2;37m- ToF-[m[1;33m[m
+* [1;34m4c28887[m - [1;32m(10 days ago)[m [37mrefactoring of detail, separating IO concern (IO is in Budget.hs only)[m [2;37m- Andrea Chiou[m[1;33m[m
+* [1;34ma2b69d6[m - [1;32m(10 days ago)[m [37madded data to .gitignore[m [2;37m- ToF-[m[1;33m[m
+* [1;34m3874370[m - [1;32m(10 days ago)[m [37mrefactoring[m [2;37m- ToF-[m[1;33m[m
+* [1;34m01567ba[m - [1;32m(11 days ago)[m [37madded detail selection on list of categories in a csv file[m [2;37m- Andrea Chiou[m[1;33m[m
+* [1;34m9c6c1a1[m - [1;32m(11 days ago)[m [37madded the category file option to detail command[m [2;37m- ToF-[m[1;33m[m
+* [1;34m94682fe[m - [1;32m(11 days ago)[m [37madded the lego picture on the manual[m [2;37m- ToF-[m[1;33m[m
+* [1;34me32b288[m - [1;32m(11 days ago)[m [37mrefactoring[m [2;37m- ToF-[m[1;33m[m
+* [1;34ma0917d4[m - [1;32m(11 days ago)[m [37mrevised manual[m [2;37m- ToF-[m[1;33m[m
+* [1;34ma7176dd[m - [1;32m(12 days ago)[m [37mupdated help[m [2;37m- ToF-[m[1;33m[m
+* [1;34m2ecfc32[m - [1;32m(12 days ago)[m [37madded the year option to summary and detail commands[m [2;37m- ToF-[m[1;33m[m
+* [1;34m35cdeae[m - [1;32m(12 days ago)[m [37medits to the manual[m [2;37m- ToF-[m[1;33m[m
+* [1;34md1a5683[m - [1;32m(13 days ago)[m [37mmanual done[m [2;37m- ToF-[m[1;33m[m
+* [1;34m3f2f425[m - [1;32m(13 days ago)[m [37madded manual pages[m [2;37m- ToF-[m[1;33m[m
+* [1;34m3f829d4[m - [1;32m(13 days ago)[m [37mstarted manual[m [2;37m- ToF-[m[1;33m[m
+* [1;34m899a2d7[m - [1;32m(13 days ago)[m [37mextended category name length on detail[m [2;37m- ToF-[m[1;33m[m
+* [1;34m996e965[m - [1;32m(2 weeks ago)[m [37mupdated help topic on summary[m [2;37m- ToF-[m[1;33m[m
+* [1;34m38a0efa[m - [1;32m(2 weeks ago)[m [37madded period selection for summary[m [2;37m- ToF-[m[1;33m[m
+* [1;34meb00268[m - [1;32m(2 weeks ago)[m [37madding the period and months options for summary command[m [2;37m- ToF-[m[1;33m[m
+* [1;34me4df19e[m - [1;32m(2 weeks ago)[m [37madded tags generated by hasktask[m [2;37m- ToF-[m[1;33m[m
+* [1;34mb7fbba9[m - [1;32m(2 weeks ago)[m [37madded named options feature[m [2;37m- ToF-[m[1;33m[m
+* [1;34mba90f96[m - [1;32m(2 weeks ago)[m [37mfixed import bugs (date format, supplementary field, account already named[m [2;37m- ToF-[m[1;33m[m
+* [1;34m29740a5[m - [1;32m(2 weeks ago)[m [37mrefactoring[m [2;37m- ToF-[m[1;33m[m
+* [1;34m2adc4e6[m - [1;32m(2 weeks ago)[m [37mrefactoring[m [2;37m- ToF-[m[1;33m[m
+* [1;34mf2f5d8c[m - [1;32m(2 weeks ago)[m [37mrefactoring[m [2;37m- ToF-[m[1;33m[m
+* [1;34m6b1d100[m - [1;32m(2 weeks ago)[m [37mrefactoring sort criteria to types. debugged options[m [2;37m- ToF-[m[1;33m[m
+* [1;34m93da426[m - [1;32m(2 weeks ago)[m [37madded printing the name of the main transaction file in help config[m [2;37m- ToF-[m[1;33m[m
+* [1;34mb49c3ff[m - [1;32m(2 weeks ago)[m [37mupdated .gitignore[m [2;37m- ToF-[m[1;33m[m
+* [1;34m75778a9[m - [1;32m(2 weeks ago)[m [37mremoved .stack-work directory[m [2;37m- ToF-[m[1;33m[m
+* [1;34m99c9a0a[m - [1;32m(2 weeks ago)[m [37madded sorting criteria to summary[m [2;37m- ToF-[m[1;33m[m
+* [1;34md900d5d[m - [1;32m(2 weeks ago)[m [37mrecognize sorting criteria for summary[m [2;37m- ToF-[m[1;33m[m
+* [1;34mcb75940[m - [1;32m(2 weeks ago)[m [37mremoved .rspec[m [2;37m- ToF-[m[1;33m[m
+* [1;34m1e315c5[m - [1;32m(2 weeks ago)[m [37mrestructed, removed rb files[m [2;37m- ToF-[m[1;33m[m
+* [1;34mfac8df8[m - [1;32m(2 weeks ago)[m [37mreplaced lost README.md[m [2;37m- ToF-[m[1;33m[m
+* [1;34mc378125[m - [1;32m(2 weeks ago)[m [37mremoved old haskell folder[m [2;37m- ToF-[m[1;33m[m
+* [1;34m26735e8[m - [1;32m(2 weeks ago)[m [37mrestructured the repo[m [2;37m- ToF-[m[1;33m[m
+* [1;34m571a1e4[m - [1;32m(2 weeks ago)[m [37mcompleted the help command[m [2;37m- ToF-[m[1;33m[m
+* [1;34m6ca02ea[m - [1;32m(2 weeks ago)[m [37mupdate todo[m [2;37m- ToF-[m[1;33m[m
+* [1;34mea838db[m - [1;32m(2 weeks ago)[m [37mfixed double messaging bug[m [2;37m- ToF-[m[1;33m[m
+* [1;34m9307eca[m - [1;32m(2 weeks ago)[m [37madded feature: import a whole directory[m [2;37m- ToF-[m[1;33m[m
+* [1;34mfcff2fe[m - [1;32m(2 weeks ago)[m [37madded a story«[m [2;37m- ToF-[m[1;33m[m
+* [1;34mabb9f44[m - [1;32m(2 weeks ago)[m [37mfixed bug with dot and tilde in file paths[m [2;37m- ToF-[m[1;33m[m
+* [1;34m0dda25d[m - [1;32m(3 weeks ago)[m [37mrefactoring[m [2;37m- ToF-[m[1;33m[m
+* [1;34med9251c[m - [1;32m(3 weeks ago)[m [37mupdated help and doc[m [2;37m- ToF-[m[1;33m[m
+* [1;34madeee4d[m - [1;32m(3 weeks ago)[m [37mstrip fields while importing them[m [2;37m- ToF-[m[1;33m[m
+* [1;34m78c2fb6[m - [1;32m(3 weeks ago)[m [37mcompleted stories about import, detail, sorting[m [2;37m- ToF-[m[1;33m[m
+* [1;34m1659233[m - [1;32m(3 weeks ago)[m [37mordering option for detail[m [2;37m- ToF-[m[1;33m[m
+* [1;34madfc42e[m - [1;32m(3 weeks ago)[m [37mtest update[m [2;37m- ToF-[m[1;33m[m
+* [1;34mfe7a0c4[m - [1;32m(3 weeks ago)[m [37msorting criteria[m [2;37m- ToF-[m[1;33m[m
+* [1;34mff997fd[m - [1;32m(3 weeks ago)[m [37msignal when no transaction in the main file[m [2;37m- ToF-[m[1;33m[m
+* [1;34meaeb01c[m - [1;32m(3 weeks ago)[m [37mfixed import bug[m [2;37m- ToF-[m[1;33m[m
+* [1;34mb3a0ad8[m - [1;32m(3 weeks ago)[m [37mimport delivered but not working (append ??)[m [2;37m- ToF-[m[1;33m[m
+* [1;34mb8038b1[m - [1;32m(3 weeks ago)[m [37mimport feature (missing: save file)[m [2;37m- ToF-[m[1;33m[m
+* [1;34m4e1e79e[m - [1;32m(3 weeks ago)[m [37madded a story[m [2;37m- ToF-[m[1;33m[m
+* [1;34m06d5e6e[m - [1;32m(3 weeks ago)[m [37madded the detail feature[m [2;37m- ToF-[m[1;33m[m
+* [1;34mf6c58a4[m - [1;32m(3 weeks ago)[m [37mabsence of command means : summary[m [2;37m- ToF-[m[1;33m[m
+* [1;34md5abe68[m - [1;32m(3 weeks ago)[m [37mchanged Period type from tuple to data[m [2;37m- ToF-[m[1;33m[m
+* [1;34mc1cb481[m - [1;32m(3 weeks ago)[m [37madded Detail listing of transactions, with total[m [2;37m- ToF-[m[1;33m[m
+* [1;34m8822437[m - [1;32m(3 weeks ago)[m [37madded period from month parameter[m [2;37m- ToF-[m[1;33m[m
+* [1;34mcbf1689[m - [1;32m(3 weeks ago)[m [37madded period logic, refactored command processing, added detail command[m [2;37m- ToF-[m[1;33m[m
+* [1;34m3f79e05[m - [1;32m(3 weeks ago)[m [37mcompleted the transaction structure with all fields[m [2;37m- ToF-[m[1;33m[m
+* [1;34mefcd118[m - [1;32m(3 weeks ago)[m [37mrenamed report into summary[m [2;37m- ToF-[m[1;33m[m
+* [1;34m9d107ea[m - [1;32m(3 weeks ago)[m [37madded stories and detail in README[m [2;37m- ToF-[m[1;33m[m
+* [1;34m8a03731[m - [1;32m(3 weeks ago)[m [37mremoved toList from the callers of retrievers[m [2;37m- ToF-[m[1;33m[m
+* [1;34mbabf0ea[m - [1;32m(3 weeks ago)[m [37mrenamed expense to transaction[m [2;37m- ToF-[m[1;33m[m
+* [1;34m3f90357[m - [1;32m(3 weeks ago)[m [37mrefactoring[m [2;37m- ToF-[m[1;33m[m
+* [1;34m79678a0[m - [1;32m(3 weeks ago)[m [37mrefactoring[m [2;37m- ToF-[m[1;33m[m
+* [1;34m18d8c09[m - [1;32m(3 weeks ago)[m [37mupdated documentation[m [2;37m- ToF-[m[1;33m[m
+* [1;34m740192f[m - [1;32m(3 weeks ago)[m [37medit readme[m [2;37m- ToF-[m[1;33m[m
+* [1;34m115a2ac[m - [1;32m(3 weeks ago)[m [37mrefactoring[m [2;37m- ToF-[m[1;33m[m
+* [1;34mb53cea7[m - [1;32m(3 weeks ago)[m [37madd a config file with the main transaction file, simplified command[m [2;37m- ToF-[m[1;33m[m
+* [1;34maa1c120[m - [1;32m(3 weeks ago)[m [37madded a story[m [2;37m- ToF-[m[1;33m[m
+* [1;34maefac39[m - [1;32m(3 weeks ago)[m [37madded commands summary, help[m [2;37m- ToF-[m[1;33m[m
+* [1;34m896158e[m - [1;32m(3 weeks ago)[m [37madded stories[m [2;37m- ToF-[m[1;33m[m
+* [1;34mbed4827[m - [1;32m(3 weeks ago)[m [37mchecked story about average in readme[m [2;37m- ToF-[m[1;33m[m
+* [1;34m45a0c39[m - [1;32m(3 weeks ago)[m [37mrenamed budget-exe budget[m [2;37m- ToF-[m[1;33m[m
+* [1;34m8c20a76[m - [1;32m(3 weeks ago)[m [37madded average per category[m [2;37m- ToF-[m[1;33m[m
+* [1;34m833ce0b[m - [1;32m(3 weeks ago)[m [37mnote to self[m [2;37m- ToF-[m[1;33m[m
+* [1;34m80a190f[m - [1;32m(3 weeks ago)[m [37maverages (buggy)[m [2;37m- ToF-[m[1;33m[m
+* [1;34mcece144[m - [1;32m(3 weeks ago)[m [37madded an error case while importing expenses[m [2;37m- ToF-[m[1;33m[m
+* [1;34mfa9f2b7[m - [1;32m(3 weeks ago)[m [37mrefactoring[m [2;37m- ToF-[m[1;33m[m
+* [1;34m091189f[m - [1;32m(3 weeks ago)[m [37madded Cassava CSV for expenses[m [2;37m- ToF-[m[1;33m[m
+* [1;34m644434f[m - [1;32m(3 weeks ago)[m [37mrefactoring, and improving Category csv import[m [2;37m- ToF-[m[1;33m[m
+* [1;34m9da161d[m - [1;32m(3 weeks ago)[m [37mrefactoring[m [2;37m- ToF-[m[1;33m[m
+* [1;34m861e93f[m - [1;32m(3 weeks ago)[m [37mrefactoring towards Amount type[m [2;37m- ToF-[m[1;33m[m
+* [1;34me67f22b[m - [1;32m(3 weeks ago)[m [37mrefactoring[m [2;37m- ToF-[m[1;33m[m
+* [1;34m7122570[m - [1;32m(3 weeks ago)[m [37madded features: print filenames, print expense period[m [2;37m- ToF-[m[1;33m[m
+* [1;34m0c03fd1[m - [1;32m(4 weeks ago)[m [37madded to do feature in README.md[m [2;37m- ToF-[m[1;33m[m
+* [1;34mffb1603[m - [1;32m(4 weeks ago)[m [37mupdated readme[m [2;37m- ToF-[m[1;33m[m
+* [1;34mc9ef304[m - [1;32m(4 weeks ago)[m [37madded categories selection feature[m [2;37m- ToF-[m[1;33m[m
+* [1;34m52f6ec0[m - [1;32m(4 weeks ago)[m [37mcheck the readme file[m [2;37m- ToF-[m[1;33m[m
+* [1;34ma50c91a[m - [1;32m(4 weeks ago)[m [37madded the grand total feature[m [2;37m- ToF-[m[1;33m[m
+* [1;34m227fb18[m - [1;32m(4 weeks ago)[m [37mremoved a README file that was not used[m [2;37m- ToF-[m[1;33m[m
+* [1;34mf39fea8[m - [1;32m(4 weeks ago)[m [37mupdated documentation[m [2;37m- ToF-[m[1;33m[m
+* [1;34mab7e418[m - [1;32m(4 weeks ago)[m [37madded the haskell version[m [2;37m- ToF-[m[1;33m[m
+* [1;34m73b9696[m - [1;32m(4 weeks ago)[m [37mchecked todo[m [2;37m- ToF-[m[1;33m[m
+* [1;34mfa6bf9c[m - [1;32m(4 weeks ago)[m [37mMain report executable[m [2;37m- ToF-[m[1;33m[m
+* [1;34mb05f6f5[m - [1;32m(4 weeks ago)[m [37mchanged README[m [2;37m- ToF-[m[1;33m[m
+* [1;34mc6def7c[m - [1;32m(4 weeks ago)[m [37mimport expenses from bank csv file[m [2;37m- ToF-[m[1;33m[m
+* [1;34m6a7f790[m - [1;32m(4 weeks ago)[m [37madded example csv file from bank[m [2;37m- ToF-[m[1;33m[m
+* [1;34ma0ffa38[m - [1;32m(4 weeks ago)[m [37medited README[m [2;37m- ToF-[m[1;33m[m
+* [1;34me4493cd[m - [1;32m(4 weeks ago)[m [37madded a todo list[m [2;37m- ToF-[m[1;33m[m
+* [1;34m885f24d[m - [1;32m(4 weeks ago)[m [37mremoved Category class, not needed in new (simplified) budget app[m [2;37m- ToF-[m[1;33m[m
+* [1;34m04f1a6a[m - [1;32m(4 weeks ago)[m [37madded comments to make to code clearer[m [2;37m- ToF-[m[1;33m[m
+* [1;34m518205c[m - [1;32m(4 weeks ago)[m [37madded a comment for the sake of testing push[m [2;37m- ToF-[m[1;33m[m
+* [1;34m7859e92[m - [1;32m(4 weeks ago)[m [37madded a test case for report, two distinct categories[m [2;37m- Andrea Chiou[m[1;33m[m
+* [1;34m868b191[m - [1;32m(4 weeks ago)[m [37mRemoved sensitive files from repo[m [2;37m- Andrea Chiou[m[1;33m[m
+* [1;34mebc7a6b[m - [1;32m(5 weeks ago)[m [37mreport first spec (one category, 2 expenses)[m [2;37m- Andrea Chiou[m[1;33m[m
+* [1;34mee5fdc9[m - [1;32m(5 weeks ago)[m [37madded spec for category[m [2;37m- Andrea Chiou[m[1;33m[m
+* [1;34mfa48ce5[m - [1;32m(5 weeks ago)[m [37madded new source folder[m [2;37m- Andrea Chiou[m[1;33m[m
+* [1;34m388c49c[m - [1;32m(5 weeks ago)[m [37mCommitted the old app in the REPO[m [2;37m- Andrea Chiou[m[1;33m[m
+* [1;34m0e11674[m - [1;32m(5 weeks ago)[m [37mInitial commit[m [2;37m- Andrea Chiou[m[1;33m[m
