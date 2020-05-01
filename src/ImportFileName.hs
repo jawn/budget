@@ -29,9 +29,10 @@ checkNotEmpty fp [] = Left $ "the directory " ++ fp ++ " doesn't contain import 
 checkNotEmpty _ fs  = Right $ fs
 
 directoryContents :: FilePath -> IO [FilePath]
-directoryContents = liftM (filter notDots) . getDirectoryContents
+directoryContents = liftM ((filter notDots) . (filter csvs)) . getDirectoryContents
     where 
         notDots p = head p /= '.'
+        csvs p  = map toLower (takeExtension p) == ".csv"
 
 
             
