@@ -22,8 +22,6 @@ CategorySpec	test/CategorySpec.hs	2
 Command	src/Command.hs	15
 CommandCriteria	src/Sorting.hs	38
 CommandSpec	test/CommandSpec.hs	1
-Config	src/Config.hs	11
-ConfigSpec	test/ConfigSpec.hs	1
 Configuration	src/Configuration.hs	17
 ConfigurationSpec	test/ConfigurationSpec.hs	1
 Date	src/Date.hs	16
@@ -98,13 +96,13 @@ ToField Date	src/Date.hs	28
 ToField Name	src/Name.hs	20
 ToField Note	src/Note.hs	20
 ToRecord Transaction	src/Transaction.hs	61
-Topic	src/Help.hs	9
-TopicDetail	src/Help.hs	9
-TopicHelp	src/Help.hs	9
-TopicImport	src/Help.hs	9
-TopicSort	src/Help.hs	9
-TopicSummary	src/Help.hs	9
-TopicVersion	src/Help.hs	9
+Topic	src/Help.hs	11
+TopicDetail	src/Help.hs	11
+TopicHelp	src/Help.hs	11
+TopicImport	src/Help.hs	11
+TopicSort	src/Help.hs	11
+TopicSummary	src/Help.hs	11
+TopicVersion	src/Help.hs	11
 Transaction	src/Transaction.hs	28
 Transaction	src/Transaction.hs	28
 TransactionList	src/TransactionList.hs	33
@@ -156,11 +154,11 @@ detailTransactionFilePath	src/Command.hs	22
 directoryContents	src/ImportFileName.hs	31
 divideBy	src/Amount.hs	55
 doCommand	app/Budget.hs	37
-doHelp	src/Help.hs	25
+doHelp	src/Help.hs	27
 domain	src/Domain.hs	25
 equals	src/Command.hs	39
 equals	src/Command.hs	52
-equals	src/Help.hs	13
+equals	src/Help.hs	15
 exitWithMsg	src/ExitWithMsg.hs	5
 extractAccountNamePart	src/ImportFileName.hs	13
 fieldToString	src/FieldToString.hs	12
@@ -168,15 +166,11 @@ filterPostedOrAlreadyAccount	src/Import.hs	49
 foldOrdering	src/Sorting.hs	105
 footer	src/Detail.hs	60
 formatDate	src/Detail.hs	50
-fromFile	src/Config.hs	42
 fromFile	src/Configuration.hs	35
-fromFileE	src/Config.hs	49
 fromInteger	src/Amount.hs	47
 fromPeriod	src/TransactionList.hs	81
-fromString	src/Config.hs	17
 fromString	src/Configuration.hs	24
-fromStringE	src/Config.hs	30
-help	src/Help.hs	21
+help	src/Help.hs	23
 importDirectory	src/ImportFileName.hs	21
 importTransactions	src/Import.hs	17
 isCSVFile	src/Command.hs	121
@@ -205,7 +199,7 @@ periodFromStrings	src/Period.hs	36
 periodFromYear	src/Period.hs	47
 periodFromYearString	src/Period.hs	57
 prettyLine	src/Detail.hs	38
-printConfig	src/Help.hs	203
+printConfig	src/Help.hs	205
 readCriteria	src/Sorting.hs	46
 readCriterion	src/Sorting.hs	57
 readsPrec	src/Amount.hs	33
@@ -232,7 +226,6 @@ spec	test/AmountSpec.hs	12
 spec	test/CategoryListSpec.hs	16
 spec	test/CategorySpec.hs	11
 spec	test/CommandSpec.hs	12
-spec	test/ConfigSpec.hs	6
 spec	test/ConfigurationSpec.hs	8
 spec	test/DetailSpec.hs	24
 spec	test/DomainSpec.hs	9
@@ -268,8 +261,8 @@ toField	src/Date.hs	29
 toField	src/Name.hs	21
 toField	src/Note.hs	21
 toRecord	src/Transaction.hs	62
-topic	src/Help.hs	12
-topic	src/Help.hs	19
+topic	src/Help.hs	14
+topic	src/Help.hs	21
 total	src/Amount.hs	52
 totalLabel	src/Detail.hs	47
 totalLabel	src/Summary.hs	33

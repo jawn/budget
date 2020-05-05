@@ -1,10 +1,10 @@
 name:                budget
-version:             0.1.0.0
+version:             1.0.1.0
 github:              "githubuser/budget"
 license:             BSD3
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2020 Author name here"
+author:              "Andrea Chiou, Christophe Thibaut"
+maintainer:          "cthibauttof@gmail.com"
+copyright:           "2020 Andrea Chiou & Christophe Thibaut"
 
 extra-source-files:
 - README.md

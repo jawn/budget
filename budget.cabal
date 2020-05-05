@@ -4,16 +4,16 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 0c42801e544ea6c018479086f57de1ee392afa56eaae550831b8c74bfc2f91df
+-- hash: 809ace3b82f8994a16f3015e5c7b7c153b483fd5f1d0789afd9907c1f38245ba
 
 name:           budget
-version:        0.1.0.0
+version:        1.0.1.0
 description:    Please see the README on GitHub at <https://github.com/githubuser/budget#readme>
 homepage:       https://github.com/githubuser/budget#readme
 bug-reports:    https://github.com/githubuser/budget/issues
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2020 Author name here
+author:         Andrea Chiou, Christophe Thibaut
+maintainer:     cthibauttof@gmail.com
+copyright:      2020 Andrea Chiou & Christophe Thibaut
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
