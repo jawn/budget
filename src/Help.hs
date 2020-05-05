@@ -3,8 +3,10 @@ module Help ( Topic (..)
             , topic )
     where
 import Command
-import Config
+import Configuration
+
 import System.Directory
+import Control.Monad.Except
 
 data Topic = TopicHelp | TopicSummary | TopicDetail | TopicImport | TopicSort | TopicConfig | TopicVersion
     deriving (Eq, Show)
@@ -190,7 +192,7 @@ doHelp TopicConfig = do
         ]
 
     home <- getHomeDirectory
-    cfg <- Config.fromFile $ home ++ "/.budget_conf"
+    cfg <- runExceptT $ Configuration.fromFile $ home ++ "/.budget_conf"
     either putStrLn printConfig cfg
 
 doHelp TopicVersion = do
@@ -200,7 +202,7 @@ doHelp TopicVersion = do
         , "will print the version of the application, using the scheme Major.minor.patch"
         ]
 
-printConfig :: Config -> IO ()
+printConfig :: Configuration -> IO ()
 printConfig cfg = do
     mapM_ (\(k,v) -> putStrLn (k ++ ":" ++ v)) cfg
 
