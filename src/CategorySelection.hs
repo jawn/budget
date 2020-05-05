@@ -1,4 +1,5 @@
 module CategorySelection ( CategorySelection (..)
+                         , CategorySelector
                          , categorySelection 
                          , excluded
                          , categorySelector
@@ -15,7 +16,7 @@ import Transaction
 data CategorySelection = AllCategories
                        | SingleCategory     Category SelectionType
                        | CategoriesFromFile FilePath SelectionType
-    deriving (Eq, Show)
+    deriving (Eq)
 
 type CategorySelector = (Transaction -> Bool)
 
@@ -47,3 +48,9 @@ categorySelector (CategoriesFromFile fp Excluded)
       cs <- categoriesFromFile fp
       return $ (not . (`elem` cs) . transactionCategory)
 
+instance Show CategorySelection where
+    show (AllCategories) = "all categories"
+    show (SingleCategory c Selected) = "category: " ++ categoryName c
+    show (SingleCategory c Excluded) = "all categories except: " ++ categoryName c
+    show (CategoriesFromFile fp Selected) = "categories in the file: " ++ fp
+    show (CategoriesFromFile fp Excluded) = "all categories except those in the file: " ++ fp

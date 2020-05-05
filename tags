@@ -5,6 +5,7 @@ Account	src/Account.hs	15
 AccountAsc	src/Sorting.hs	24
 AccountDesc	src/Sorting.hs	25
 AccountSpec	test/AccountSpec.hs	1
+AllCategories	src/CategorySelection.hs	16
 Amount	src/Amount.hs	11
 Amount	src/Amount.hs	11
 AmountAsc	src/Sorting.hs	30
@@ -12,14 +13,18 @@ AmountDesc	src/Sorting.hs	31
 AmountSpec	test/AmountSpec.hs	1
 Asc	src/Sorting.hs	20
 CatchShowIO	src/CatchShowIO.hs	1
+CategoriesFromFile	src/CategorySelection.hs	18
 Category	src/Category.hs	18
 Category	src/Category.hs	18
 CategoryAsc	src/Sorting.hs	26
 CategoryDesc	src/Sorting.hs	27
 CategoryList	src/CategoryList.hs	17
 CategoryListSpec	test/CategoryListSpec.hs	1
+CategorySelection	src/CategorySelection.hs	16
+CategorySelectionSpec	test/CategorySelectionSpec.hs	1
+CategorySelector	src/CategorySelection.hs	21
 CategorySpec	test/CategorySpec.hs	2
-Command	src/Command.hs	15
+Command	src/Command.hs	16
 CommandCriteria	src/Sorting.hs	38
 CommandSpec	test/CommandSpec.hs	1
 Configuration	src/Configuration.hs	17
@@ -36,6 +41,7 @@ DetailSpec	test/DetailSpec.hs	2
 Direction	src/Sorting.hs	20
 Domain	src/Domain.hs	14
 DomainSpec	test/DomainSpec.hs	1
+Excluded	src/SelectionType.hs	4
 ExitWithMsg	src/ExitWithMsg.hs	1
 FieldToString	src/FieldToString.hs	1
 FromField Account	src/Account.hs	18
@@ -54,6 +60,7 @@ Import	src/Import.hs	1
 ImportFileName	src/ImportFileName.hs	1
 ImportFileNameSpec	test/ImportFileNameSpec.hs	1
 ImportSpec	test/ImportSpec.hs	1
+IsCsvFile	src/IsCsvFile.hs	1
 Key	src/Configuration.hs	15
 Main	app/Budget.hs	2
 MaybeToEither	src/MaybeToEither.hs	1
@@ -72,19 +79,23 @@ Period	src/Period.hs	21
 PeriodSpec	test/PeriodSpec.hs	1
 Read Amount	src/Amount.hs	31
 Same	src/Same.hs	1
+Selected	src/SelectionType.hs	4
+SelectionType	src/SelectionType.hs	1
 ShouldBeOutput	test/ShouldBeOutput.hs	1
 Show Amount	src/Amount.hs	22
+Show CategorySelection	src/CategorySelection.hs	51
 Show Date	src/Date.hs	25
 Show Name	src/Name.hs	14
 Show Note	src/Note.hs	14
 Show Period	src/Period.hs	24
 Show SummaryLine	src/SummaryLine.hs	14
 Show VersionNumber	src/VersionNumber.hs	9
+SingleCategory	src/CategorySelection.hs	17
 SortCriterion	src/Sorting.hs	23
 Sorting	src/Sorting.hs	1
 SortingCriteria	src/Sorting.hs	19
 SortingSpec	test/SortingSpec.hs	1
-Summary	src/Command.hs	16
+Summary	src/Command.hs	17
 Summary	src/Summary.hs	1
 SummaryLine	src/SummaryLine.hs	1
 SummarySortingCriteria	src/Sorting.hs	39
@@ -115,30 +126,33 @@ VersionNumberSpec	test/VersionNumberSpec.hs	1
 abs	src/Amount.hs	44
 accountName	src/Account.hs	15
 accountNamePart	src/ImportFileName.hs	18
+allCategories	test/SummarySpec.hs	20
 alreadyAnAccountName	src/Import.hs	52
 amount	src/Amount.hs	14
 atKey	src/Configuration.hs	19
 averageTransactionsPerMonth	src/TransactionList.hs	60
-budget	app/Budget.hs	29
+budget	app/Budget.hs	30
 catchIODomain	src/Domain.hs	16
 catchShowIO	src/CatchShowIO.hs	13
 catchShowIOE	src/CatchShowIO.hs	24
 categoriesFromByteString	src/CategoryList.hs	26
 categoriesFromFile	src/CategoryList.hs	20
 categoryName	src/Category.hs	18
+categorySelection	src/CategorySelection.hs	23
+categorySelector	src/CategorySelection.hs	33
 categoryTotals	src/Summary.hs	21
 changeAccount	src/Import.hs	39
 checkNotEmpty	src/ImportFileName.hs	27
 checkNotEmpty	src/TransactionList.hs	77
 command	src/Command.hs	37
 command	src/Command.hs	46
-configFilePath	app/Budget.hs	26
+configFilePath	app/Budget.hs	27
 day	src/Date.hs	19
-day1	test/SummarySpec.hs	12
-day2	test/SummarySpec.hs	12
-day2	test/SummarySpec.hs	14
-day3	test/SummarySpec.hs	12
+day1	test/SummarySpec.hs	15
+day2	test/SummarySpec.hs	15
+day2	test/SummarySpec.hs	17
 day3	test/SummarySpec.hs	15
+day3	test/SummarySpec.hs	18
 decodeCategories	src/Category.hs	35
 decodeCategoriesFromFile	src/Category.hs	41
 detail	src/Detail.hs	92
@@ -153,12 +167,13 @@ detailTitle	src/Detail.hs	74
 detailTransactionFilePath	src/Command.hs	22
 directoryContents	src/ImportFileName.hs	31
 divideBy	src/Amount.hs	55
-doCommand	app/Budget.hs	37
+doCommand	app/Budget.hs	38
 doHelp	src/Help.hs	27
 domain	src/Domain.hs	25
 equals	src/Command.hs	39
 equals	src/Command.hs	52
 equals	src/Help.hs	15
+excluded	src/CategorySelection.hs	28
 exitWithMsg	src/ExitWithMsg.hs	5
 extractAccountNamePart	src/ImportFileName.hs	13
 fieldToString	src/FieldToString.hs	12
@@ -173,10 +188,10 @@ fromString	src/Configuration.hs	24
 help	src/Help.hs	23
 importDirectory	src/ImportFileName.hs	21
 importTransactions	src/Import.hs	17
-isCSVFile	src/Command.hs	121
+isCSVFile	src/IsCsvFile.hs	7
 lengthLabel	src/Detail.hs	53
 lowerCase	src/Command.hs	49
-main	app/Budget.hs	21
+main	app/Budget.hs	22
 major	src/VersionNumber.hs	4
 maybeToEither	src/MaybeToEither.hs	4
 minor	src/VersionNumber.hs	5
@@ -199,7 +214,7 @@ periodFromStrings	src/Period.hs	36
 periodFromYear	src/Period.hs	47
 periodFromYearString	src/Period.hs	57
 prettyLine	src/Detail.hs	38
-printConfig	src/Help.hs	205
+printConfig	src/Help.hs	212
 readCriteria	src/Sorting.hs	46
 readCriterion	src/Sorting.hs	57
 readsPrec	src/Amount.hs	33
@@ -209,6 +224,7 @@ sameTransaction	src/Transaction.hs	37
 shouldBeLine	test/ShouldBeOutput.hs	9
 shouldBeOutput	test/ShouldBeOutput.hs	6
 show	src/Amount.hs	24
+show	src/CategorySelection.hs	52
 show	src/Date.hs	26
 show	src/Name.hs	15
 show	src/Note.hs	15
@@ -224,8 +240,9 @@ sortWithCriteria	src/Sorting.hs	110
 spec	test/AccountSpec.hs	8
 spec	test/AmountSpec.hs	12
 spec	test/CategoryListSpec.hs	16
+spec	test/CategorySelectionSpec.hs	17
 spec	test/CategorySpec.hs	11
-spec	test/CommandSpec.hs	12
+spec	test/CommandSpec.hs	14
 spec	test/ConfigurationSpec.hs	8
 spec	test/DetailSpec.hs	24
 spec	test/DomainSpec.hs	9
@@ -235,15 +252,14 @@ spec	test/ImportSpec.hs	14
 spec	test/NoteSpec.hs	9
 spec	test/PeriodSpec.hs	7
 spec	test/SortingSpec.hs	16
-spec	test/SummarySpec.hs	18
+spec	test/SummarySpec.hs	23
 spec	test/TransactionListSpec.hs	32
 spec	test/TransactionSpec.hs	20
 spec	test/VersionNumberSpec.hs	8
 stringToField	src/FieldToString.hs	15
 summarizeTransactionsMonths	src/TransactionList.hs	63
-summary	src/Summary.hs	63
-summaryCategoriesFilePath	src/Command.hs	17
-summaryCategory	src/Command.hs	18
+summary	src/Summary.hs	62
+summaryCategorySelection	src/Command.hs	18
 summaryLineAmount	src/SummaryLine.hs	9
 summaryLineAverage	src/SummaryLine.hs	10
 summaryLineCategory	src/SummaryLine.hs	8
@@ -252,7 +268,7 @@ summaryOrdering	src/Sorting.hs	95
 summaryPeriod	src/Command.hs	19
 summarySortingCriteria	src/Command.hs	20
 summaryTitle	src/Summary.hs	43
-summaryTransactionFilePath	src/Command.hs	16
+summaryTransactionFilePath	src/Command.hs	17
 theDay	src/Date.hs	22
 toField	src/Account.hs	25
 toField	src/Amount.hs	65

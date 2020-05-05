@@ -1,10 +1,12 @@
 module CommandSpec
     where
 
+import CategorySelection
 import Command
 import Sorting
 import Category
 import Period
+import SelectionType
 
 import Control.Monad.Except
 import Test.Hspec
@@ -16,61 +18,75 @@ spec = do
             it "means summary" $ do
                 let args = words ""
                 cmd <- runExceptT $ command args
-                cmd `shouldBe` Right (Summary Nothing Nothing Nothing Nothing []) 
+                cmd `shouldBe` Right (Summary Nothing AllCategories  Nothing []) 
 
         describe "Summary" $ do
             it "recognize the summary command with a transaction file" $ do
                 let args = words "summary -t foo.csv"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` Right 
-                    (Summary (Just "foo.csv") Nothing Nothing Nothing [])
+                    (Summary (Just "foo.csv") AllCategories  Nothing [])
 
             it "recognize the summary command with any transaction file" $ do
                 let args = words "summary -t bar.csv"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Summary (Just "bar.csv") Nothing Nothing Nothing [])
+                    Right (Summary (Just "bar.csv") AllCategories  Nothing [])
 
             it "recognize the summary command with a transaction file and a category file" $ do
                 let args = words "summary -t bar.csv -c foo.csv"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Summary (Just "bar.csv") (Just "foo.csv") Nothing Nothing [])
+                    Right (Summary (Just "bar.csv") (CategoriesFromFile "foo.csv" Selected)  Nothing [])
 
             it "recognize the summary command with a category argument" $ do
                 let args = words "summary -c Groceries"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Summary Nothing Nothing (Just (Category "Groceries")) Nothing [])
+                    Right (Summary Nothing (SingleCategory (Category "Groceries") Selected)  Nothing [])
+
+            it "recognize the summary command with an excluded category argument" $ do
+                let args = words "summary -x Groceries"
+                cmd <- runExceptT $ command args
+                cmd `shouldBe` 
+                    Right (Summary Nothing (SingleCategory (Category "Groceries") Excluded)  Nothing [])
 
             it "recognize the summary command with a only category file" $ do
                 let args = words "summary -c bar.csv"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Summary Nothing (Just "bar.csv") Nothing Nothing [])
+                    Right (Summary Nothing (CategoriesFromFile "bar.csv" Selected)  Nothing [])
 
             it "recognize the summary command with a category named argument" $ do
                 let args = words "summary category Groceries"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Summary Nothing Nothing (Just (Category "Groceries")) Nothing [])
+                    Right (Summary Nothing (SingleCategory (Category "Groceries") Selected)  Nothing [])
+
+            it "recognize the summary command with an excluded category named argument" $ do
+                let args = words "summary except Groceries"
+                cmd <- runExceptT $ command args
+                cmd `shouldBe` 
+                    Right (Summary Nothing (SingleCategory (Category "Groceries") Excluded)  Nothing [])
+
+
 
             it "recognize the summary command with no arguments" $ do
                 let args = words "summary" 
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Summary Nothing Nothing Nothing Nothing [])
+                    Right (Summary Nothing AllCategories  Nothing [])
 
             it "recognize the summary command sorting options" $ do
                 let args1 = words "summary -s M" 
                 cmd1 <- runExceptT $ command args1
                 cmd1 `shouldBe` 
-                    Right (Summary Nothing Nothing Nothing Nothing [AmountAsc])
+                    Right (Summary Nothing AllCategories  Nothing [AmountAsc])
 
                 let args2 = words "summary -s c" 
                 cmd2 <- runExceptT $ command args2
                 cmd2 `shouldBe` 
-                    Right (Summary Nothing Nothing Nothing Nothing [CategoryDesc])
+                    Right (Summary Nothing AllCategories  Nothing [CategoryDesc])
             it "doesn't recognize the summary command with a wrong sorting criteria argument" $ do
                 let args = words "summary -s f"
                 cmd <- runExceptT $ command args
@@ -84,37 +100,37 @@ spec = do
                 let args = words "summary transactions bar.csv categories foo.csv sortby M"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Summary (Just "bar.csv") (Just "foo.csv") Nothing Nothing [AmountAsc])
+                    Right (Summary (Just "bar.csv") (CategoriesFromFile "foo.csv" Selected)  Nothing [AmountAsc])
 
             it "recognize the summary command with a period option" $ do
                 let args = words "summary -p 01/01/2020 12/31/2020"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Summary Nothing Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
+                    Right (Summary Nothing AllCategories  (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
 
             it "recognize the summary command with a period named option" $ do
                 let args = words "summary period 01/01/2020 12/31/2020"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Summary Nothing Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
+                    Right (Summary Nothing AllCategories  (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
 
             it "recognize the summary command with a month option" $ do
                 let args = words "summary -m 2020 03"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Summary Nothing Nothing Nothing (Just (Period (theDay 2020 03 01) (theDay 2020 03 31))) [])
+                    Right (Summary Nothing AllCategories  (Just (Period (theDay 2020 03 01) (theDay 2020 03 31))) [])
 
             it "recognize the summary command with a month named option" $ do
                 let args = words "summary month 2020 03"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Summary Nothing Nothing Nothing (Just (Period (theDay 2020 03 01) (theDay 2020 03 31))) [])
+                    Right (Summary Nothing AllCategories  (Just (Period (theDay 2020 03 01) (theDay 2020 03 31))) [])
 
             it "recognize the summary command with a year option" $ do
                 let args = words "summary -y 2020"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Summary Nothing Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
+                    Right (Summary Nothing AllCategories  (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
             it "doesn't recognize the summary command with a wrong year option" $ do
                 let args = words "summary -y foo"
                 cmd <- runExceptT $ command args
@@ -124,7 +140,7 @@ spec = do
                 let args = words "summary year 2020"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Summary Nothing Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
+                    Right (Summary Nothing AllCategories  (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
         describe "Detail" $ do
             it "recognize the detail command with no arguments" $ do
                 let args = words "detail"
@@ -262,17 +278,17 @@ spec = do
             let args = words "SUmmary -t foo.csv" 
             cmd <- runExceptT $ command args
             cmd `shouldBe` 
-                Right (Summary (Just "foo.csv") Nothing Nothing Nothing [])
+                Right (Summary (Just "foo.csv") AllCategories Nothing [])
 
         it "recognize a prefix of the command" $ do
             let args1 = words "SU -t foo.csv" 
             cmd1 <- runExceptT $ command args1
             cmd1 `shouldBe` 
-                Right (Summary (Just "foo.csv") Nothing Nothing Nothing [])
+                Right (Summary (Just "foo.csv") AllCategories Nothing [])
             let args2 = words "sum -t foo.csv" 
             cmd2 <- runExceptT $ command args2
             cmd2 `shouldBe` 
-                Right (Summary (Just "foo.csv") Nothing Nothing Nothing [])
+                Right (Summary (Just "foo.csv") AllCategories Nothing [])
 
         it "doesn't recognize a unknown command" $ do
             let args = words "foo bar.csv" 

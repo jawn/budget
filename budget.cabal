@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 809ace3b82f8994a16f3015e5c7b7c153b483fd5f1d0789afd9907c1f38245ba
+-- hash: 11fc0c382f58cb6bf80335fe0bc00207bbea12980bac8b881bc894fe6c41e6e7
 
 name:           budget
 version:        1.0.1.0
@@ -32,6 +32,7 @@ library
       CatchShowIO
       Category
       CategoryList
+      CategorySelection
       Command
       Configuration
       Date
@@ -43,12 +44,14 @@ library
       Help
       Import
       ImportFileName
+      IsCsvFile
       MaybeToEither
       Message
       Name
       Note
       Period
       Same
+      SelectionType
       Sorting
       Summary
       SummaryLine
@@ -105,6 +108,7 @@ test-suite budget-test
       AccountSpec
       AmountSpec
       CategoryListSpec
+      CategorySelectionSpec
       CategorySpec
       CommandSpec
       ConfigurationSpec

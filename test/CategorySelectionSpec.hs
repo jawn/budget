@@ -86,3 +86,15 @@ spec = do
                 filter <$> f <*> Right txs `shouldBe`
                     Left "foo.csv: openBinaryFile: does not exist (No such file or directory)"
 
+        describe "can be showed for summary recap" $ do
+            it "for all categories" $ do
+                show (categorySelection "")  `shouldBe` "all categories"
+            it "for a single category" $ do
+                show (categorySelection "Groceries")  `shouldBe` "category: Groceries"
+            it "for a single category, excluded" $ do
+                show (excluded (categorySelection "Groceries"))  `shouldBe` "all categories except: Groceries"
+            it "for categories in a file" $ do
+                show (categorySelection "foo.csv")  `shouldBe` "categories in the file: foo.csv"
+            it "for categories in a file, excluded" $ do
+                show (excluded (categorySelection "foo.csv"))  `shouldBe` "all categories except those in the file: foo.csv"
+

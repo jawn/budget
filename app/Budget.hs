@@ -2,6 +2,7 @@
 module Main where
 
 import CategoryList
+import CategorySelection
 import Command
 import Configuration
 import Detail
@@ -42,11 +43,11 @@ doCommand cfg (Detail mFilePath mCatFilePath mCategory mPeriod criteria) = do
     let report = detail mFilePath mCatFilePath mCategory mPeriod criteria <$> pure categories <*> pure transactions
     liftIO (either exitWithMsg (putStr . unlines) report)
 
-doCommand cfg (Summary mFilePath mCatFilePath mCategory mPeriod criteria) = do 
+doCommand cfg (Summary mFilePath catSel mPeriod criteria) = do 
     mainFilePath <- cfg `atKey` "TRANSACTIONS"
     transactions <- transactionsFromFile (maybe mainFilePath id mFilePath)
-    categories   <- maybe (domain (Right [])) categoriesFromFile mCatFilePath
-    let report = (summary mFilePath mCatFilePath mCategory mPeriod criteria) <$> pure categories <*> pure transactions
+    selector <- categorySelector catSel
+    let report = (summary mFilePath catSel mPeriod criteria) <$> pure selector <*> pure transactions
     liftIO (either exitWithMsg (putStr . unlines) report)
 
 doCommand cfg (Import importFilePath (Just account)) = do
