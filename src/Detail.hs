@@ -4,11 +4,11 @@ module Detail
 import Account     ( Account (..) )
 import Amount      ( Amount (..) )
 import Category    ( Category (..) )
+import CategorySelection
 import Period      ( Period )
 import Sorting     ( SortingCriteria
                    , sortWithCriteria )
 import Transaction ( Transaction (..) 
-                   , withCategoryIn
                    , withinPeriod
                    )
 import TransactionList ( transactionsPeriod
@@ -26,13 +26,13 @@ import Data.Time   ( Day
 detailLines 
     :: Maybe Period
     -> SortingCriteria
-    -> [Category]
+    -> CategorySelector
     -> [Transaction]
     -> [Transaction]
 detailLines per sct sel = 
     (sortWithCriteria sct)
         . maybe id (\p -> filter (`withinPeriod` p)) per
-        . filter (`withCategoryIn` sel) 
+        . filter sel
         
 
 prettyLine :: Transaction -> String
@@ -67,31 +67,27 @@ footer fp ts =  [ totalLabel (transactionsPeriod ts) (totalTransactions ts)
 
 detailTitle 
     :: Maybe FilePath
-    -> Maybe FilePath
-    -> Maybe Category
+    -> CategorySelection
     -> Maybe Period
     -> String
-detailTitle Nothing Nothing Nothing Nothing = "Transactions (all)"
-detailTitle fp cf c p = "Transactions " ++ intercalate " " (catMaybes options)
+detailTitle Nothing AllCategories Nothing = "Transactions (all)"
+detailTitle fp catSel p = "Transactions " ++ intercalate " " (catMaybes options)
     where
         options = [ fmap ("from file: "++) fp
-                  , fmap ("with categories from the file: "++) cf 
-                  , fmap (("with category: "++) . categoryName) c
+                  , Just $ "for " ++ show catSel
                   , fmap show p
                   ]
 
 detail 
     :: Maybe FilePath
-    -> Maybe FilePath
-    -> Maybe Category
+    -> CategorySelection
     -> Maybe Period
     -> SortingCriteria
-    -> [Category]
+    -> CategorySelector
     -> [Transaction]
     -> [String]
-detail tfp cfp cat per sct sel trs = 
-        let categories = maybe sel pure cat
-            selection = detailLines per sct categories trs
-        in [ detailTitle tfp cfp cat per ]
+detail tfp catSel per sct sel trs = 
+        let selection = detailLines per sct sel trs
+        in [ detailTitle tfp catSel per ]
         ++ (map prettyLine selection)
         ++ (footer tfp selection)

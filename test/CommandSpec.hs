@@ -146,77 +146,77 @@ spec = do
                 let args = words "detail"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Detail Nothing Nothing Nothing Nothing [])
+                    Right (Detail Nothing AllCategories Nothing [])
             it "recognize the detail command with a transaction file name argument" $ do
                 let args = words "detail -t MyTransaction.csv"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Detail (Just "MyTransaction.csv") Nothing Nothing Nothing [])
+                    Right (Detail (Just "MyTransaction.csv") AllCategories Nothing [])
             it "recognize the detail command with a transaction file named option" $ do
                 let args = words "detail transactions MyTransaction.csv"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Detail (Just "MyTransaction.csv") Nothing Nothing Nothing [])
+                    Right (Detail (Just "MyTransaction.csv") AllCategories Nothing [])
             it "recognize the detail command with a category argument" $ do
                 let args = words "detail -c Groceries"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Detail Nothing Nothing (Just (Category "Groceries")) Nothing [])
+                    Right (Detail Nothing (SingleCategory (Category "Groceries") Selected) Nothing [])
             it "recognize the detail command with a category named argument" $ do
                 let args = words "detail category Groceries"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Detail Nothing Nothing (Just (Category "Groceries")) Nothing [])
+                    Right (Detail Nothing (SingleCategory (Category "Groceries") Selected) Nothing [])
             it "recognize the detail command with a transaction file and a category arguments" $ do
                 let args = words "detail -t MyTransactions.csv -c Groceries"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Detail (Just "MyTransactions.csv") Nothing (Just (Category "Groceries")) Nothing [])
+                    Right (Detail (Just "MyTransactions.csv") (SingleCategory (Category "Groceries") Selected) Nothing [])
             it "recognize the detail command with a category and a transaction arguments" $ do
                 let args = words "detail -c Groceries -t MyTransactions.csv"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Detail (Just "MyTransactions.csv") Nothing (Just (Category "Groceries")) Nothing [])
+                    Right (Detail (Just "MyTransactions.csv") (SingleCategory (Category "Groceries") Selected) Nothing [])
             it "recognize the detail command with a period argument" $ do
                 let args = words "detail -p 04/30/2020 05/31/2020"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Detail Nothing Nothing Nothing (Just (Period (theDay 2020 04 30) (theDay 2020 05 31))) [])
+                    Right (Detail Nothing AllCategories (Just (Period (theDay 2020 04 30) (theDay 2020 05 31))) [])
             it "recognize the detail command with a named period argument" $ do
                 let args = words "detail period 04/30/2020 05/31/2020"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Detail Nothing Nothing Nothing (Just (Period (theDay 2020 04 30) (theDay 2020 05 31))) [])
+                    Right (Detail Nothing AllCategories (Just (Period (theDay 2020 04 30) (theDay 2020 05 31))) [])
             it "recognize the detail command with a month argument" $ do
                 let args = words "detail -m 2020 4"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Detail Nothing Nothing Nothing (Just (Period (theDay 2020 04 01) (theDay 2020 04 30))) [])
+                    Right (Detail Nothing AllCategories (Just (Period (theDay 2020 04 01) (theDay 2020 04 30))) [])
             it "recognize the detail command with a named month argument" $ do
                 let args = words "detail month 2020 4"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Detail Nothing Nothing Nothing (Just (Period (theDay 2020 04 01) (theDay 2020 04 30))) [])
+                    Right (Detail Nothing AllCategories (Just (Period (theDay 2020 04 01) (theDay 2020 04 30))) [])
             it "recognize the detail command with a year argument" $ do
                 let args = words "detail -y 2020"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Detail Nothing Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
+                    Right (Detail Nothing AllCategories (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
             it "recognize the detail command with a named year argument" $ do
                 let args = words "detail year 2020"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Detail Nothing Nothing Nothing (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
+                    Right (Detail Nothing AllCategories (Just (Period (theDay 2020 01 01) (theDay 2020 12 31))) [])
             it "recognize the detail command with a sorting criteria argument" $ do
                 let args = words "detail -s ADm"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Detail Nothing Nothing Nothing Nothing [AccountAsc,DateAsc,AmountDesc])
+                    Right (Detail Nothing AllCategories Nothing [AccountAsc,DateAsc,AmountDesc])
             it "recognize the detail command with a named sorting criteria argument" $ do
                 let args = words "detail sortby ADm"
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` 
-                    Right (Detail Nothing Nothing Nothing Nothing [AccountAsc,DateAsc,AmountDesc])
+                    Right (Detail Nothing AllCategories Nothing [AccountAsc,DateAsc,AmountDesc])
 
             it "doesn't recognize the detail command with a wrong sorting criteria argument" $ do
                 let args = words "detail -s ADX"
@@ -235,11 +235,16 @@ spec = do
                 let args1 = words "detail -c IncomeCategories.csv"
                 cmd1 <- runExceptT $ command args1
                 cmd1 `shouldBe` 
-                    Right (Detail Nothing (Just "IncomeCategories.csv") Nothing Nothing [])
+                    Right (Detail Nothing (CategoriesFromFile "IncomeCategories.csv" Selected) Nothing [])
+            it "recognize the detail command with an excludedcategories file argument" $ do
+                let args1 = words "detail -x IncomeCategories.csv"
+                cmd1 <- runExceptT $ command args1
+                cmd1 `shouldBe` 
+                    Right (Detail Nothing (CategoriesFromFile "IncomeCategories.csv" Excluded) Nothing [])
                 let args2 = words "detail -c BusinessExpenses.CSV"
                 cmd2 <- runExceptT $ command args2
                 cmd2 `shouldBe` 
-                    Right (Detail Nothing (Just "BusinessExpenses.CSV") Nothing Nothing [])
+                    Right (Detail Nothing (CategoriesFromFile "BusinessExpenses.CSV" Selected) Nothing [])
             it "doesn't recognize a unknown option" $ do
                 let args = words "detail -z"
                 cmd <- runExceptT $ command args

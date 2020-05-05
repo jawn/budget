@@ -1,7 +1,6 @@
 
 module Main where
 
-import CategoryList
 import CategorySelection
 import Command
 import Configuration
@@ -36,11 +35,11 @@ budget = do
     doCommand cfg cmd
 
 doCommand :: Configuration -> Command -> Domain ()
-doCommand cfg (Detail mFilePath mCatFilePath mCategory mPeriod criteria) = do
+doCommand cfg (Detail mFilePath catSel mPeriod criteria) = do
     mainFilePath <- cfg `atKey` "TRANSACTIONS"   
     transactions <- transactionsFromFile (maybe mainFilePath id mFilePath)
-    categories   <- maybe (domain (Right [])) categoriesFromFile mCatFilePath
-    let report = detail mFilePath mCatFilePath mCategory mPeriod criteria <$> pure categories <*> pure transactions
+    selector <- categorySelector catSel
+    let report = detail mFilePath catSel mPeriod criteria <$> pure selector <*> pure transactions
     liftIO (either exitWithMsg (putStr . unlines) report)
 
 doCommand cfg (Summary mFilePath catSel mPeriod criteria) = do 
