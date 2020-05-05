@@ -6,7 +6,7 @@ import Command
 import Config
 import System.Directory
 
-data Topic = TopicHelp | TopicSummary | TopicDetail | TopicImport | TopicSort | TopicConfig
+data Topic = TopicHelp | TopicSummary | TopicDetail | TopicImport | TopicSort | TopicConfig | TopicVersion
     deriving (Eq, Show)
 
 topic :: String -> Topic
@@ -15,6 +15,7 @@ topic args | args `equals` "detail"  = TopicDetail
 topic args | args `equals` "import"  = TopicImport
 topic args | args `equals` "sort"    = TopicSort
 topic args | args `equals` "config"  = TopicConfig
+topic args | args `equals` "version" = TopicVersion
 topic _ = TopicHelp
 
 help :: [String] -> IO ()
@@ -31,6 +32,7 @@ doHelp TopicHelp =
                   , "   import"
                   , "   sort"
                   , "   config"
+                  , "   version"
                   ]
 doHelp TopicSummary =
     (putStr . unlines)
@@ -191,7 +193,15 @@ doHelp TopicConfig = do
     cfg <- Config.fromFile $ home ++ "/.budget_conf"
     either putStrLn printConfig cfg
 
+doHelp TopicVersion = do
+    (putStr . unlines)
+        [ "    budget version"
+        , ""
+        , "will print the version of the application, using the scheme Major.minor.patch"
+        ]
+
 printConfig :: Config -> IO ()
 printConfig cfg = do
     mapM_ (\(k,v) -> putStrLn (k ++ ":" ++ v)) cfg
+
 

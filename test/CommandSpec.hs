@@ -252,6 +252,12 @@ spec = do
                 cmd <- runExceptT $ command args
                 cmd `shouldBe` Right (Help ["foo","bar"])
 
+        describe "Version" $ do 
+            it "recognize the version command" $ do
+                let args = words "version"
+                cmd <- runExceptT $ command args
+                cmd `shouldBe` Right Version
+
         it "recognize the command in uppercase or lowercase" $ do
             let args = words "SUmmary -t foo.csv" 
             cmd <- runExceptT $ command args

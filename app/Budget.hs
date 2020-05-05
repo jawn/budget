@@ -12,6 +12,7 @@ import Import
 import ImportFileName
 import Summary
 import TransactionList
+import VersionNumber 
 
 import Control.Monad.Except
 import System.Directory
@@ -76,4 +77,7 @@ doCommand cfg (Import importFilePath Nothing) = do
 
         
 doCommand _ (Help arg) = liftIO (help arg)
+
+doCommand _ Version = liftIO $ putStrLn $ unlines $ [ "budget " ++ show versionNumber
+                                                    , "by Andrea Chiou & Christophe Thibaut"]
 

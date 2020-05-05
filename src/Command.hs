@@ -27,6 +27,7 @@ data Command
               }
     | Import FilePath (Maybe String)
     | Help  [String]
+    | Version
             
     deriving (Eq, Show)
 
@@ -41,6 +42,7 @@ command (cmd:args)
   | cmd `equals` "import" && length args == 1 = domain $ Right (Import (args!!0) Nothing)
   | cmd `equals` "import" && length args < 1 = domain $ Left "import: missing argument (import {<filename> <accountname> | <folder> }"
   | cmd `equals` "help" = domain $ Right (Help args)
+  | cmd `equals` "version" = domain $ Right Version
 command (cmd:args) = throwError $ "unknown command: "++ unwords (cmd:args)
 
 
