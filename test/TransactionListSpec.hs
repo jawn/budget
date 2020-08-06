@@ -31,6 +31,69 @@ writeTestFile content = do
 
 spec :: SpecWith ()
 spec = do
+    let t1 = Transaction { transactionAccount = Account "MyBank"
+                         , transactionDate    = theDay 2020 6 1
+                         , transactionNotes   = Just $ Note "t1 some notes"
+                         , transactionName    = Just $ Name "Joe's shop"
+                         , transactionCategory = Category "Groceries"
+                         , transactionAmount   = amount (-48.07)
+                         }
+    let t2 = Transaction { transactionAccount = Account "Investment"
+                         , transactionDate    = theDay 2020 5 1
+                         , transactionNotes   = Just $ Note "t2 a long category name indeed"
+                         , transactionName    = Just $ Name "Another very long name,Apple"
+                         , transactionCategory = Category "Devices"
+                         , transactionAmount   = amount (-1000.00)
+                         }
+    let t3 = Transaction { transactionAccount = Account "posted"
+                         , transactionDate    = theDay 2020 7 1
+                         , transactionNotes   = Just $ Note "t3 notes"
+                         , transactionName    = Just $ Name "Jack shop"
+                         , transactionCategory = Category "Groceries"
+                         , transactionAmount   = amount (-100.00)
+                         }
+    let t4 = Transaction { transactionAccount = Account "posted"
+                         , transactionDate    = theDay 2020 8 1
+                         , transactionNotes   = Just $ Note "t4 NOTES"
+                         , transactionName    = Just $ Name "General"
+                         , transactionCategory = Category "Devices"
+                         , transactionAmount   = amount (-50.00)
+                         }
+    let t5 = Transaction { transactionAccount = Account "pending"
+                         , transactionDate    = theDay 2020 9 1
+                         , transactionNotes   = Just $ Note "t5 bad transaction"
+                         , transactionName    = Just $ Name "General"
+                         , transactionCategory = Category "Devices"
+                         , transactionAmount   = amount (-40050.00)
+                         }
+    let t6 = Transaction { transactionAccount = Account "forecasted"
+                         , transactionDate    = theDay 2020 9 1
+                         , transactionNotes   = Just $ Note "t6 bad transaction"
+                         , transactionName    = Just $ Name "General"
+                         , transactionCategory = Category "Devices"
+                         , transactionAmount   = amount (-40050.00)
+                         }
+    let t7 = Transaction { transactionAccount = Account "Already An Account"
+                         , transactionDate    = theDay 2020 8 1
+                         , transactionNotes   = Just $ Note "t7"
+                         , transactionName    = Just $ Name "General"
+                         , transactionCategory = Category "Devices"
+                         , transactionAmount   = amount (-50.00)
+                         }
+    let t8 = Transaction { transactionAccount = Account "Investment"
+                         , transactionDate    = theDay 2020 8 6
+                         , transactionNotes   = Just $ Note "t8 a long note indeed"
+                         , transactionName    = Just $ Name "A name that contains more than forty characters" 
+                         , transactionCategory = Category "Devices"
+                         , transactionAmount   = amount (-1000.00)
+                         }
+    let t9 = Transaction { transactionAccount = Account "Investment"
+                         , transactionDate    = theDay 2020 8 6
+                         , transactionNotes   = Just $ Note "t9 a long note inded"
+                         , transactionName    = Just $ Name "A name that contains more than forty characters but is a different name" 
+                         , transactionCategory = Category "Devices"
+                         , transactionAmount   = amount (-1000.00)
+                         }
     describe "TransationList" $ do
         describe "can be read from file" $ do
             it "containing simple values" $ do
@@ -99,88 +162,46 @@ spec = do
 
     describe "transactionIntersect" $ do
         it "tells the transactions that are common date, name and amount in two transaction lists" $ do
-            let t1 = Transaction { transactionAccount = Account "MyBank"
-                                 , transactionDate    = theDay 2020 6 1
-                                 , transactionNotes   = Just $ Note "some notes"
-                                 , transactionName    = Just $ Name "Joe's shop"
-                                 , transactionCategory = Category "Groceries"
-                                 , transactionAmount   = amount (-48.07)
-                                 }
-            let t2 = Transaction { transactionAccount = Account "Investment"
-                                 , transactionDate    = theDay 2020 5 1
-                                 , transactionNotes   = Just $ Note "a long category name indeed"
-                                 , transactionName    = Just $ Name "Another very long name,Apple"
-                                 , transactionCategory = Category "Devices"
-                                 , transactionAmount   = amount (-1000.00)
-                                 }
-            let t3 = Transaction { transactionAccount = Account "posted"
-                                 , transactionDate    = theDay 2020 7 1
-                                 , transactionNotes   = Just $ Note "notes"
-                                 , transactionName    = Just $ Name "Jack shop"
-                                 , transactionCategory = Category "Groceries"
-                                 , transactionAmount   = amount (-100.00)
-                                 }
-            let t4 = Transaction { transactionAccount = Account "posted"
-                                 , transactionDate    = theDay 2020 8 1
-                                 , transactionNotes   = Just $ Note "NOTES"
-                                 , transactionName    = Just $ Name "General"
-                                 , transactionCategory = Category "Devices"
-                                 , transactionAmount   = amount (-50.00)
-                                 }
-            let t5 = Transaction { transactionAccount = Account "pending"
-                                 , transactionDate    = theDay 2020 9 1
-                                 , transactionNotes   = Just $ Note "bad transaction"
-                                 , transactionName    = Just $ Name "General"
-                                 , transactionCategory = Category "Devices"
-                                 , transactionAmount   = amount (-40050.00)
-                                 }
-            let t6 = Transaction { transactionAccount = Account "forecasted"
-                                 , transactionDate    = theDay 2020 9 1
-                                 , transactionNotes   = Just $ Note "bad transaction"
-                                 , transactionName    = Just $ Name "General"
-                                 , transactionCategory = Category "Devices"
-                                 , transactionAmount   = amount (-40050.00)
-                                 }
-            let t7 = Transaction { transactionAccount = Account "Already An Account"
-                                 , transactionDate    = theDay 2020 8 1
-                                 , transactionNotes   = Nothing
-                                 , transactionName    = Just $ Name "General"
-                                 , transactionCategory = Category "Devices"
-                                 , transactionAmount   = amount (-50.00)
-                                 }
             let import_list = [t1,t2,t3,t4] 
             let main_list   = [t3,t5,t6,t7]
             t4 == t7 `shouldBe` False -- t4 and t7 are equals in terms of Date, Name and Amount, while being different
             t4 `sameTransaction` t7 `shouldBe` True
             (import_list `transactionIntersect` main_list) `shouldBe` [t3,t4] 
-            
+
+    describe "transactionDeduplicate" $ do
+        it "allows for deduplication of a transation list" $ do
+            let ts = [t1,t2,t3,t4,t5,t6,t7,t8,t9] -- t4 and t7 are same, t8 and t9 are same, t5 and t6 are same
+                td = transactionDeduplicate ts
+            snd td  `shouldBe` [t4,t5,t9] 
+            fst td  `shouldBe` [t1,t2,t3,t6,t7,t8]
 
 
-        it "can be totaled" $ do
+    it "can be totaled" $ do
+        let ts = [ simplified 2020 4 5 "Training" 48.07 
+                 , simplified 2020 4 7 "Food" 42.17 
+                 , simplified 2020 4 9 "Business Expenses" 1000.00 ]
+        totalTransactions ts `shouldBe` amount 1090.24
+
+    describe "can have an average" $ do
+        it "for a period of one months" $ do
             let ts = [ simplified 2020 4 5 "Training" 48.07 
-                     , simplified 2020 4 7 "Food" 42.17 
-                     , simplified 2020 4 9 "Business Expenses" 1000.00 ]
-            totalTransactions ts `shouldBe` amount 1090.24
+                     , simplified 2020 4 7 "Training" 42.17 
+                     , simplified 2020 4 9 "Training" 1000.00 ]
+            summarizeTransactionsMonths 1 ts `shouldBe` 
+                SummaryLine (Category "Training") (amount 1090.24) (amount 1090.24)
+        it "for a two month period " $ do
+            let ts = [ simplified 2020 4 1 "Training" 48.07 
+                     , simplified 2020 4 7 "Training" 42.17 
+                     , simplified 2020 5 1 "Training" 1000.00 ]
+            summarizeTransactionsMonths 2 ts `shouldBe` 
+                SummaryLine (Category "Training") (amount 1090.24) (amount 545.12)
 
-        describe "can have an average" $ do
-            it "for a period of one months" $ do
-                let ts = [ simplified 2020 4 5 "Training" 48.07 
-                         , simplified 2020 4 7 "Training" 42.17 
-                         , simplified 2020 4 9 "Training" 1000.00 ]
-                summarizeTransactionsMonths 1 ts `shouldBe` 
-                    SummaryLine (Category "Training") (amount 1090.24) (amount 1090.24)
-            it "for a two month period " $ do
-                let ts = [ simplified 2020 4 1 "Training" 48.07 
-                         , simplified 2020 4 7 "Training" 42.17 
-                         , simplified 2020 5 1 "Training" 1000.00 ]
-                summarizeTransactionsMonths 2 ts `shouldBe` 
-                    SummaryLine (Category "Training") (amount 1090.24) (amount 545.12)
+    it "can determine a period" $ do
+        let ts = [ simplified 2020 4 31 "Training" 48.07 
+                 , simplified 2020 4 7  "Training" 42.17 
+                 , simplified 2020 3 4  "Training" 1000.00 ]
+        transactionsPeriod ts `shouldBe` Period (theDay 2020 3 4) (theDay 2020 4 31)
 
-        it "can determine a period" $ do
-            let ts = [ simplified 2020 4 31 "Training" 48.07 
-                     , simplified 2020 4 7  "Training" 42.17 
-                     , simplified 2020 3 4  "Training" 1000.00 ]
-            transactionsPeriod ts `shouldBe` Period (theDay 2020 3 4) (theDay 2020 4 31)
 
     describe "check not empty" $ do
         it "yields a message is transaction list is empty" $ do

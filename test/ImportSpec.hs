@@ -62,6 +62,20 @@ spec = do
                          , transactionCategory = Category "Devices"
                          , transactionAmount   = amount 48.07
                          }
+    let t8 = Transaction { transactionAccount = Account "Investment"
+                         , transactionDate    = theDay 2020 8 6
+                         , transactionNotes   = Just $ Note "a long category name indeed"
+                         , transactionName    = Just $ Name "A name that contains more than forty characters" 
+                         , transactionCategory = Category "Devices"
+                         , transactionAmount   = amount (-1000.00)
+                         }
+    let t9 = Transaction { transactionAccount = Account "Investment"
+                         , transactionDate    = theDay 2020 8 6
+                         , transactionNotes   = Just $ Note "a long category name indeed"
+                         , transactionName    = Just $ Name "A name that contains more than forty characters but is a different name" 
+                         , transactionCategory = Category "Devices"
+                         , transactionAmount   = amount (-1000.00)
+                         }
     describe "import" $ do
         describe "append transactions" $ do
             it "from a new list to an existing list" $ do
@@ -100,6 +114,20 @@ spec = do
                     fmap (length . fst) result `shouldBe` Right 2 
                     fmap fst result `shouldBe` Right [ t1 , t2 ]
                     fmap snd result `shouldBe` Right [ t1 , t2 ]
+            it "should not import transactions already imported based on same first 40 chars of the name" $ do
+                    let existing = [t1,t8] 
+                    let to_import = [t1,t9]
+                    let result = importTransactions "CreditFoo" existing to_import 
+                    fmap (length . fst) result `shouldBe` Right 2 
+                    fmap fst result `shouldBe` Right [ t1 , t8 ]
+                    fmap snd result `shouldBe` Right [ t1 , t9 ]
+            it "should not import transactions that are duplicate in the import list" $ do
+                    let existing = [t1,t2] 
+                    let to_import = [t1,t8,t9]
+                    let result = importTransactions "CreditFoo" existing to_import 
+                    fmap (length . fst) result `shouldBe` Right 3
+                    fmap fst result `shouldBe` Right [ t1 , t2, t8 ]
+                    fmap snd result `shouldBe` Right [ t1 , t9 ]
             it "should not import transactions already imported even with status = posted" $ do
                     let existing = [t1,t2,t3] 
                     let to_import = [t1,t2,t3]

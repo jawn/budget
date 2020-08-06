@@ -22,7 +22,8 @@ importTransactions name transactions importations =
           , duplicates )
     where
         duplicates :: [Transaction]
-        duplicates = importations `transactionIntersect` transactions
+        duplicates = (importUniques `transactionIntersect` transactions) ++ importDuplicates
+        (importUniques, importDuplicates) = transactionDeduplicate importations
 
 showDuplicates :: [Transaction] -> [String]
 showDuplicates = map showDuplicate

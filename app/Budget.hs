@@ -61,7 +61,7 @@ doCommand cfg (Import importFilePath (Just account)) = do
     liftIO (putStrLn (show result_length ++ " transactions imported"))
     liftIO (putStrLn (case result_dupes of
                         [] -> "no duplicates were found"
-                        _ -> unlines ([ "transactions that were already in the main file and were not imported:" ] 
+                        _ -> unlines ([ "transactions that were already in the main file, or that were duplicates in the import file, and were NOT imported:" ] 
                               ++ (showDuplicates result_dupes))))
 
 doCommand cfg (Import importFilePath Nothing) = do

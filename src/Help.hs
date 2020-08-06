@@ -149,7 +149,7 @@ doHelp TopicImport =
         [ "    budget import MyTransactions.csv Checking"
         , ""
         , "will import the transactions from the file MyTransactions.csv into the main transactions file, "
-        , "assigning 'Checkingr' as the Account for these transactions. If the transactions have already been"
+        , "assigning 'Checking' as the Account for these transactions. If the transactions have already been"
         , "imported (based on the same Name, Date, and Amount) the import will be cancelled."
         , ""
         , "Any transaction with a status different from 'posted' will not be imported."
@@ -164,7 +164,9 @@ doHelp TopicImport =
         , "will import all the transactions files from the 'downloads' folder, assigning Account names"
         , "according to filenames."
         , ""
-        , "files containing transactions that are already in the main transaction file will no be imported."
+        , "files containing transactions that are already in the main transaction file will not be imported."
+        , ""
+        , "transactions that are duplicates (same Name, Date and Amount) in the import file will not be imported."
         ]
 
 doHelp TopicSort = 

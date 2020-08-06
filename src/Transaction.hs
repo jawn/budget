@@ -36,8 +36,11 @@ data Transaction = Transaction { transactionAccount  :: Account
 
 sameTransaction :: Transaction -> Transaction -> Bool
 sameTransaction t1 t2 = transactionDate t1 == transactionDate t2
-                    && transactionName t1 == transactionName t2
+                    && fmap namePrefix (transactionName t1) == fmap namePrefix (transactionName t2)
                     && transactionAmount t1 == transactionAmount t2
+                where
+                    namePrefix :: Name -> String
+                    namePrefix (Name name) = take 40 name
 
 withCategoryIn :: Transaction -> [Category] -> Bool
 _ `withCategoryIn` [] = True

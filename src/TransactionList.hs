@@ -4,6 +4,7 @@ module TransactionList ( TransactionList
                        , fromPeriod
                        , totalTransactions
                        , summarizeTransactionsMonths
+                       , transactionDeduplicate
                        , transactionsFromFile
                        , transactionsPeriod
                        , transactionsToFile
@@ -52,6 +53,12 @@ transactionsToByteString =
 
 transactionIntersect :: TransactionList -> TransactionList -> TransactionList
 transactionIntersect  = intersectBy sameTransaction
+
+transactionDeduplicate :: TransactionList -> (TransactionList, TransactionList)
+transactionDeduplicate ts = (notDuplicates, duplicates)
+    where
+        notDuplicates = [ t | t <- ts, not (t `elem` duplicates)]
+        duplicates    = [t | t <- ts, u <- ts, t > u && t `sameTransaction` u]
 
 
 totalTransactions :: TransactionList -> Amount
