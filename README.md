@@ -54,7 +54,7 @@ from the budget repository directory
 
 ## how to make the main transactions file permanent
 
-let's say the main transaction csv file, called `Transactions.csv` resides in a folder `Documents/MyData/Budget` on your personnal folder.
+let's say the main transaction csv file, called `Transactions.csv` resides in a folder `Documents/MyData/Budget` on your personal folder.
 
 edit the file `~/.budget_conf` (on your home directory) to contain (here `you` is your user name; to know your user name, type `whoami`):
 
